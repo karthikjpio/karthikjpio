@@ -1,13 +1,11 @@
 ## Hi, I'm Karthik 👋
 
-**Most enterprise AI dies between the demo and the day job.** 🪦
-I stay in the room until the thing is actually being used.
+> **Most enterprise AI dies between the demo and the day job.**
+> I stay in the room until the thing is actually being used.
 
-🛠️ Forward deployed AI engineer. I build agent systems inside enterprise workflows
-and own them through adoption, not through handover.
-🎯 Founder who carried a P&L, consultant who held the room, engineer who shipped the
-code. The overlap is the job I want.
-📍 Germany, no sponsorship required. Open to forward deployed and AI consulting roles.
+- 🛠️ **Forward deployed AI engineer.** I build agent systems inside enterprise workflows and own them through adoption, not through handover.
+- 🎯 **Founder who carried a P&L, consultant who held the room, engineer who shipped the code.** Each pair of those is a common profile. All three is the job I want.
+- 📍 **Germany, no sponsorship required.** Open to forward deployed and AI consulting roles, comfortable 2 to 3 days a week onsite.
 
 🌐 [karthikjp.io](https://karthikjp.io) · 💼 [LinkedIn](https://www.linkedin.com/in/karthikjp/) · 📫 [kjavanappa@gmail.com](mailto:kjavanappa@gmail.com) · 📄 [CV](https://karthikjp.io/assets/Karthik_Javanappa_CV.pdf)
 
@@ -47,8 +45,8 @@ ADLS Gen2, Azure SQL) · 🗂️ SharePoint and Graph API · 📊 Power BI · �
 | 2020 to 2023 | 🚀 Co-founder & COO, **Entuition** |
 | 2018 to 2020 | 🔧 Team Lead & Product Engineer, **Micelio Mobility** |
 
-🎓 MBA, HHL Leipzig Graduate School of Management (CGPA 1.4, top 5%,
-Deutschlandstipendium) · B.E. Electronics & Communication, VTU
+🎓 MBA, HHL Leipzig Graduate School of Management (CGPA 1.4, top 5%, Deutschlandstipendium) · B.E. Electronics & Communication, VTU
+
 🗣️ English C1 · German B2 · Kannada native · Hindi B1
 
 ### 📦 This repository
