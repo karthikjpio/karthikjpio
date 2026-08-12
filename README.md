@@ -1,81 +1,61 @@
-# karthikjp.io
+## Karthik Javanappa
 
-Personal site for Karthik Javanappa, forward deployed AI engineer. One HTML file,
-one stylesheet, one script. No framework, no build step, no dependencies at
-runtime: open `index.html` and it works.
+**Most enterprise AI dies between the demo and the day job.** I stay in the room
+until the thing is actually being used.
 
-## Run it
+Forward deployed AI engineer. I build agent systems inside enterprise workflows and
+own them through adoption, not through handover. Founder who carried a P&L,
+consultant who held the room, engineer who shipped the code. Based in Germany, no
+sponsorship required.
 
-```bash
-python3 -m http.server 4174     # then open http://localhost:4174
-```
+[karthikjp.io](https://karthikjp.io) · [LinkedIn](https://www.linkedin.com/in/karthikjp/) · [kjavanappa@gmail.com](mailto:kjavanappa@gmail.com)
 
-A file:// open works too. The only reason to use a server is that `assets/kb.json`
-is fetched by the chat widget, and `fetch` on `file://` is blocked in some browsers.
+Open to forward deployed and AI consulting roles.
 
-## Test it
+### What I have shipped
 
-```bash
-npm i -D jsdom                                    # required
-npm i -D playwright && npx playwright install chromium   # optional, for the layout pass
-node smoke-test.js
-```
+Four systems in daily use by the EY-Parthenon strategy and M&A teams when I handed
+over in June 2026. Client work, so the code is not public.
 
-173 assertions. Two layers, and the split matters:
+| System | Status | What it does |
+|---|---|---|
+| `due-diligence-agents` | shipped | Agentic research for commercial due diligence |
+| `deepquery-agent` | shipped | Automated document Q&A for project teams |
+| `proposal-engine` | shipped | Knowledge retrieval over past proposals |
+| `entity-resolution` | shipped | Company-name cleansing for M&A analytics |
+| `job-search-agents` | live | Autonomous pipeline that finds roles and tailors applications |
+| `ask-my-ai` | local | The chatbot on my site, answering from a local keyword match |
 
-- **jsdom** covers logic and content: the scrubber state machine, the triad radio
-  group, the command palette, WCAG AA contrast computed per theme (dark, light and
-  print), the type scale and spacing ramp, the first-view transfer budget, and the
-  honesty invariants below.
-- **Chromium via playwright** covers layout at 320, 360, 390 and 430px, because
-  jsdom has no layout engine. It opens every `<details>` first, since a closed one
-  is not laid out. This layer exists because the suite was green at 149 assertions
-  while the phone layout was broken: the proof strip was four fixed columns inside
-  `overflow: hidden` at every width, so half of it was clipped off the right edge
-  on every phone. A jsdom assertion cannot see that. Skipped, loudly, if playwright
-  is not installed.
+`local` means local. It is not a model behind a webhook, and calling it live would
+be the kind of thing this list exists to avoid. The full registry, including three
+planned open-source twins of the client systems, is on
+[karthikjp.io](https://karthikjp.io/#systems) with the same statuses.
 
-## Layout
+### Stack
 
-```
-index.html               the page
-assets/css/styles.css    design tokens, then components, then breakpoints
-assets/js/main.js        progressive enhancement only, nothing structural
-assets/kb.json           answers for the on-page chat widget
-assets/Karthik_Javanappa_CV.pdf
-assets/img/Portrait.jpeg
-smoke-test.js            the runnable check
-```
+Python · agent orchestration (n8n, Claude API, Copilot Studio) · RAG, document
+intelligence and prompt engineering · Azure (Data Factory, Logic Apps, ADLS Gen2,
+Azure SQL) · SharePoint and Graph API · Power BI · MySQL
 
-## Rules this repo keeps
+### Background
 
-**Every status is true.** The deployment registry marks each system `shipped`,
-`live`, `planned` or `local`, and those words track reality rather than ambition.
-The chat widget says `local` because it answers from a keyword match over
-`kb.json`, not from a model. If a claim cannot be verified it does not go on the
-page. This is the whole differentiator, so the test suite asserts it.
+| | |
+|---|---|
+| 2025 to 2026 | AI & Automation, **EY-Parthenon** |
+| 2024 to 2025 | Strategy & Business Development, **Schaeffler AG** |
+| 2024 | Student Consultant, **Porsche Ventures** |
+| 2023 | Chief of Staff & Strategy Consultant, **Xtrawrkx** |
+| 2020 to 2023 | Co-founder & COO, **Entuition** |
+| 2018 to 2020 | Team Lead & Product Engineer, **Micelio Mobility** |
 
-**First view stays under 42 KB gzipped** across HTML, CSS and JS summed. New
-features are paid for by deletions, not by raising the ceiling. Currently 42,461
-bytes of 43,008.
+MBA, HHL Leipzig Graduate School of Management (CGPA 1.4, top 5%,
+Deutschlandstipendium). B.E. Electronics & Communication, VTU.
 
-**It works without JavaScript.** Every interactive component rests on its
-conclusion: the scrubber sits at production, the triad shows the intersection
-panel, the registry rows are `<details>`. JS adds auto-cycling and the palette and
-nothing you need.
+English C1 · German B2 · Kannada native · Hindi B1
 
-**Reduced motion, print and light theme are real targets**, not afterthoughts.
-Every colour token has a print and a light override, and the contrast assertions
-run against all three.
+### This repository
 
-**No em dashes anywhere.**
-
-## Deploy
-
-karthikjp.io is served from Hostinger, so this repo is source control rather than
-the deployment trigger: upload `index.html` and `assets/` to the web root, or point
-a deploy step at them. There is no build, so what is in the repo is what ships.
-
-If it ever moves to GitHub Pages on the apex domain, add a `CNAME` file containing
-`karthikjp.io`. On Vercel or Netlify set the domain in the dashboard and leave the
-repo alone.
+The source of [karthikjp.io](https://karthikjp.io): one HTML file, one stylesheet,
+one script. No framework, no build step, nothing to install to read it. Build notes,
+the constraints it holds itself to and how to run the test suite are in
+[SITE.md](SITE.md).
