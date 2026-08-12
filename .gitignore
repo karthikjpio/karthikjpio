@@ -1,0 +1,14 @@
+.DS_Store
+node_modules/
+package-lock.json
+package.json
+
+# editor and agent config, local to one machine
+.claude/
+
+# working notes: positioning strategy, salary anchors, build plans.
+# these stay on disk and out of a public repo.
+DESIGN-vercel.md
+FDE-REPOSITION-PLAN.md
+SPINE-COPY.md
+WEEKEND-BUILD-PLAN.md
