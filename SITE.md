@@ -57,9 +57,10 @@ The chat widget says `local` because it answers from a keyword match over
 `kb.json`, not from a model. If a claim cannot be verified it does not go on the
 page. This is the whole differentiator, so the test suite asserts it.
 
-**First view stays under 42 KB gzipped** across HTML, CSS and JS summed. New
-features are paid for by deletions, not by raising the ceiling. Currently 42,461
-bytes of 43,008.
+**First view stays under 43 KB gzipped** across HTML, CSS and JS summed. New
+features are paid for by deletions, not by raising the ceiling. The one raise so
+far, from 43,008 to 44,032 on 12 August 2026, bought the GitHub and X links and is
+recorded in the assertion itself. Currently 43,298 bytes of 44,032.
 
 **It works without JavaScript.** Every interactive component rests on its
 conclusion: the scrubber sits at production, the triad shows the intersection

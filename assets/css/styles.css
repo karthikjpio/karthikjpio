@@ -1445,6 +1445,11 @@ main section[id], .job[id] { scroll-margin-top: 96px; }
   .footer-bottom { flex-direction: column; align-items: flex-start; gap: 12px; }
   .statbar-track { height: 6px; }
 
+  /* Two fixed buttons live in the bottom-right corner, and at the very end of the
+     page they sat on top of the copyright line: "hand-bu" then a back-to-top
+     button. The extra footer padding gives them empty space to sit over. */
+  .footer { padding-bottom: 96px; }
+
   /* On a phone the portrait was eating the entire first screen: pill plus a 220px
      photo put the H1 at ~540px, so the headline and the CTA were both below the
      fold. The float is already off at this width, so flex ordering is free: the

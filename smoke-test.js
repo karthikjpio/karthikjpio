@@ -119,11 +119,16 @@ t("chat degrades with a message instead of throwing when kb is unreachable", () 
 /* The gate that matters is what the visitor downloads for the first screen, not
    any one file. Per-file ceilings kept getting raised feature by feature, which
    is how budgets die; this one is the sum and it is the number worth defending. */
-t("first view stays under 42KB gzipped, all three files", () => {
+/* Raised from 43008 to 44032 on 12 August 2026, on Karthik's explicit call, to pay
+   for the GitHub and X links: two icon paths plus a fourth contact row, 290 bytes
+   gzipped. Recording it because the standing rule is that features are paid for by
+   deletions and the ceiling holds, and a raise nobody wrote down is how a budget
+   quietly stops meaning anything. This was the exception, not the new habit. */
+t("first view stays under 43KB gzipped, all three files", () => {
   const gz = (f) => require("zlib").gzipSync(fs.readFileSync(f), { level: 9 }).length;
   const total = gz("index.html") + gz("assets/css/styles.css") + gz("assets/js/main.js");
-  if (total >= 43008) console.log("    first view is " + total + " B gzipped");
-  return total < 43008;
+  if (total >= 44032) console.log("    first view is " + total + " B gzipped");
+  return total < 44032;
 });
 /* There was a per-file JS ceiling here too. It got raised three times in three
    passes, which is a gate that is not gating anything, and it measured a subset of

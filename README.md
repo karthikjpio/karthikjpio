@@ -52,8 +52,8 @@ ADLS Gen2, Azure SQL) · 🗂️ SharePoint and Graph API · 📊 Power BI · �
 ### 📦 This repository
 
 The source of [karthikjp.io](https://karthikjp.io): one HTML file, one stylesheet, one
-script. No framework, no build step, nothing to install to read it. 🪶 42 KB gzipped
-for the first view, and that ceiling is paid for by deletions rather than raised.
+script. No framework, no build step, nothing to install to read it. 🪶 43 KB gzipped
+for the first view, with a test that fails the moment it grows past that.
 
 Build notes, the constraints it holds itself to and how to run the 194-assertion test
 suite are in [SITE.md](SITE.md). 🧪
