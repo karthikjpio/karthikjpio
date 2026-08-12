@@ -184,7 +184,8 @@
      the chat. Trade-off: the chat needs http, so it is inert on a file:// open.
      ponytail: no cache-busting. Add a hash to the URL if it ever goes stale. */
   let KB = null;
-  const loadKB = () => fetch("assets/kb.json").then((r) => r.json()).then((d) => (KB = d));
+  /* same 7-day cache applies to kb.json, so it carries the same version token */
+  const loadKB = () => fetch("assets/kb.json?v=20260812b").then((r) => r.json()).then((d) => (KB = d));
 
   const chatFab = $("#chatFab");
   const chatPanel = $("#chatPanel");

@@ -22,7 +22,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="assets/css/styles.css" />
+  <!-- The ?v= is not decoration. Hostinger serves the CSS and JS with
+       "cache-control: public, max-age=604800", so a returning visitor keeps a
+       week-old stylesheet and never asks whether it changed. That is how a phone
+       ended up showing fresh HTML with the pre-fix layout: new markup, old rules.
+       The HTML itself revalidates, so bumping this token is what pulls new assets.
+       BUMP IT ON EVERY DEPLOY that touches styles.css, main.js or kb.json. -->
+  <link rel="stylesheet" href="assets/css/styles.css?v=20260812b" />
 
   <!-- theme before first paint. main.js runs after the body, which meant a
        returning light-theme visitor got a dark flash. Same try/catch as there. -->
@@ -971,6 +977,6 @@
     </section>
   </div>
 
-  <script src="assets/js/main.js"></script>
+  <script src="assets/js/main.js?v=20260812b"></script>
 </body>
 </html>

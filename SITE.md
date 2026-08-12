@@ -79,6 +79,15 @@ karthikjp.io is served from Hostinger, so this repo is source control rather tha
 the deployment trigger: upload `index.html` and `assets/` to the web root, or point
 a deploy step at them. There is no build, so what is in the repo is what ships.
 
+**Bump the `?v=` token in `index.html` on every deploy** that touches
+`styles.css`, `main.js` or `kb.json`, and keep the one in `main.js` for `kb.json` in
+step. The host sends `cache-control: public, max-age=604800` on those files with no
+revalidation, so without a new URL a returning visitor keeps a week-old stylesheet.
+That happened on 12 August 2026: a phone showed the new markup with the pre-fix
+layout, which looked exactly like the fix had failed when it was live and correct.
+`smoke-test.js` fails if the three tokens are missing or disagree, but it cannot
+know whether you remembered to change them, so that part is on you.
+
 If it ever moves to GitHub Pages on the apex domain, add a `CNAME` file containing
 `karthikjp.io`. On Vercel or Netlify set the domain in the dashboard and leave the
 repo alone.

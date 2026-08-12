@@ -834,6 +834,27 @@ t("the mobile hero caps its flex children", () =>
 t("the chat pill becomes a corner circle on a phone", () =>
   /\.chat-fab \{ width: 52px; height: 52px;[^}]*border-radius: 50%/.test(cssNoComments));
 
+/* ---- cache busting ----
+   The host serves CSS and JS with max-age=604800 and no revalidation, so without a
+   version in the URL a returning visitor keeps a week-old stylesheet. This is not
+   hypothetical: it shipped a phone showing fresh HTML with the pre-fix layout, and
+   it looked like the fix had failed when the fix was live and correct. */
+t("the CSS, JS and kb.json all carry the same cache-busting version", () => {
+  const css = html.match(/styles\.css\?v=([\w.-]+)/);
+  const jsv = html.match(/main\.js\?v=([\w.-]+)/);
+  const kbv = js.match(/kb\.json\?v=([\w.-]+)/);
+  if (!css || !jsv || !kbv) {
+    console.log("    missing version token: " +
+      [!css && "styles.css", !jsv && "main.js", !kbv && "kb.json"].filter(Boolean).join(", "));
+    return false;
+  }
+  if (css[1] !== jsv[1] || css[1] !== kbv[1]) {
+    console.log("    versions disagree: css=" + css[1] + " js=" + jsv[1] + " kb=" + kbv[1]);
+    return false;
+  }
+  return true;
+});
+
 const report = () => {
   pass.forEach((p) => console.log("  ✓ " + p));
   if (fail.length) { console.log("\nFAIL:"); fail.forEach((f) => console.log("  ✗ " + f)); }
