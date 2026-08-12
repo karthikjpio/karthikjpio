@@ -5,7 +5,7 @@
 
 - 🛠️ **Forward deployed AI engineer.** I build agent systems inside enterprise workflows and own them through adoption, not through handover.
 - 🎯 **Founder who carried a P&L, consultant who held the room, engineer who shipped the code.** Each pair of those is a common profile. All three is the job I want.
-- 📍 **Germany, no sponsorship required.** Open to forward deployed and AI consulting roles, comfortable 2 to 3 days a week onsite.
+- 📍 **Based in Germany.** Open to forward deployed and AI consulting roles, comfortable 2 to 3 days a week onsite.
 
 🌐 [karthikjp.io](https://karthikjp.io) · 💼 [LinkedIn](https://www.linkedin.com/in/karthikjp/) · 📫 [kjavanappa@gmail.com](mailto:kjavanappa@gmail.com) · 📄 [CV](https://karthikjp.io/assets/Karthik_Javanappa_CV.pdf)
 
