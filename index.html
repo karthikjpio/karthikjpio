@@ -28,7 +28,7 @@
        ended up showing fresh HTML with the pre-fix layout: new markup, old rules.
        The HTML itself revalidates, so bumping this token is what pulls new assets.
        BUMP IT ON EVERY DEPLOY that touches styles.css or main.js. -->
-  <link rel="stylesheet" href="assets/css/styles.css?v=20260812c" />
+  <link rel="stylesheet" href="assets/css/styles.css?v=20260813a" />
 
   <!-- theme before first paint. main.js runs after the body, which meant a
        returning light-theme visitor got a dark flash. Same try/catch as there. -->
@@ -289,28 +289,87 @@
     <section class="section alt" id="overlap">
       <div class="container">
         <div class="section-head reveal">
-          <span class="eyebrow">$ cat overlap.md</span>
+          <span class="eyebrow">$ cat triad.md</span>
           <h2>Three jobs. One <em class="accent-text">intersection</em>.</h2>
-          <p>Each pair of these is a common profile. All three at once, inside a regulated enterprise, in Germany, working in English, is a narrower job description, and it is the one I am applying for.</p>
+          <p>Each pair of these is a common profile. All three at once, inside a regulated enterprise, in Germany, working in English, is a narrower job description, and it is the one I am applying for. Pick a lobe.</p>
         </div>
 
-        <div class="lobes reveal">
-          <div class="lobe-card">
-            <span class="lobe-tag">Founder</span>
-            <h3>I own the outcome</h3>
-            <p>Co-founded an ed-tech, ran it as COO for two years: <b>₹20M revenue</b>, team <b>5 to 20+</b>, universities <b>3 to 17</b>. Before that, Micelio's first commercial EV prototype in 12 months, <b>100+ pilot units</b> at client sites.</p>
+        <!-- ===== TRIAD ====================================================
+             State is a native radio group, so one tab stop, arrow keys,
+             :checked styling and the no-JS case all come free. The SVG is
+             aria-hidden: every semantic lives in the radios and panels, so
+             there is exactly one accessible representation at every width.
+             Default is `fde`, so reduced-motion, print, no-JS and the OG
+             screenshot all get the conclusion, not an empty diagram. -->
+        <fieldset class="triad reveal" id="triad">
+          <legend class="sr-only">Choose a capability to see the evidence behind it</legend>
+
+          <input class="sr-only tr-in" type="radio" name="triad" id="t-f" />
+          <input class="sr-only tr-in" type="radio" name="triad" id="t-c" />
+          <input class="sr-only tr-in" type="radio" name="triad" id="t-e" />
+          <input class="sr-only tr-in" type="radio" name="triad" id="t-fde" checked />
+
+          <div class="triad-stage">
+            <svg class="triad-svg" viewBox="-44 0 468 292" aria-hidden="true" focusable="false">
+              <g class="lens" aria-hidden="true">
+                <circle class="lobe lobe-f" cx="180" cy="113" r="76" data-for="t-f" />
+                <circle class="lobe lobe-e" cx="228" cy="196" r="76" data-for="t-e" />
+                <circle class="lobe lobe-c" cx="132" cy="196" r="76" data-for="t-c" />
+              </g>
+              <g class="triad-core" data-for="t-fde" role="presentation">
+                <circle cx="180" cy="168" r="20" />
+                <text x="180" y="172" text-anchor="middle">FDE</text>
+              </g>
+              <text class="tl tl-f" x="180" y="18" text-anchor="middle" data-for="t-f">FOUNDER</text>
+              <text class="tl tl-c" x="51" y="247" text-anchor="end" data-for="t-c">CONSULTANT</text>
+              <text class="tl tl-e" x="309" y="247" text-anchor="start" data-for="t-e">ENGINEER</text>
+            </svg>
+
+            <div class="triad-panels">
+
+            <article class="tp tp-f">
+              <svg class="tp-glyph" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path pathLength="1" d="M5 21V4"/><path pathLength="1" d="M5 4h11l-2 4 2 4H5"/></svg>
+              <h3>Founder<span>: I own the outcome</span></h3>
+              <p>Co-founded an ed-tech, ran it as COO for two years: <b>₹20M revenue</b>, team <b>5 to 20+</b>, universities <b>3 to 17</b>. Before that, Micelio Mobility's first commercial EV prototype in 12 months, <b>100+ pilot units</b> at client sites.</p>
+              <p class="tp-why">There was no escalation path. When a pilot unit failed at a client site, the person who had to be there was me.</p>
+            </article>
+
+            <article class="tp tp-c">
+              <svg class="tp-glyph" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path pathLength="1" d="M3 6h12a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H8l-5 4z"/><path pathLength="1" d="M9 18h7l5 3v-8a2 2 0 0 0-2-2h-1"/></svg>
+              <h3>Consultant<span>: I hold the room</span></h3>
+              <p>Three post-merger workshops at Schaeffler aligning <b>100+ managers</b>. Four investment presentations at Porsche Ventures. At EY-Parthenon I <b>built the tooling the strategy and M&amp;A teams run on</b>, then trained the people who had to trust it.</p>
+              <p class="tp-why">Shipping the agent is the easy half. The hard half is a partner asking why he should defend your output to a client.</p>
+            </article>
+
+            <article class="tp tp-e">
+              <svg class="tp-glyph" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path pathLength="1" d="m8 8-4 4 4 4"/><path pathLength="1" d="m16 8 4 4-4 4"/><path pathLength="1" d="M13 6l-2 12"/></svg>
+              <h3>Engineer<span>: I write what ships</span></h3>
+              <p><b>4 AI systems in daily use</b> by EY-Parthenon strategy and M&amp;A teams at handover: n8n agent orchestration with Claude, Copilot Studio document Q&amp;A, a Python/ML entity-resolution pipeline, Azure underneath. Outside work, a macOS utility in <b>Swift 6, zero dependencies</b>.</p>
+              <p class="tp-why">I write the boring deterministic path first and spend the model budget only where it earns its keep. Cleverness that cannot be audited does not ship.</p>
+            </article>
+
+            <article class="tp tp-fde">
+              <svg class="tp-glyph" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle pathLength="1" cx="12" cy="9" r="3.2"/><path pathLength="1" d="M5.5 20a6.5 6.5 0 0 1 13 0"/><path pathLength="1" d="M3 4.5h3.5V8M21 4.5h-3.5V8"/></svg>
+              <h3>Forward deployed<span>: the intersection is the job</span></h3>
+              <p class="tp-elim">Founder + Consultant = <i>advisor</i><br />Consultant + Engineer = <i>solution architect</i><br />Founder + Engineer = <i>technical founder</i></p>
+              <p><b>All three, inside a regulated enterprise, in Germany, working in English.</b> Scope it in the meeting, build it against constraints nobody will relax, still be there when adoption stalls.</p>
+            </article>
+            </div>
           </div>
-          <div class="lobe-card">
-            <span class="lobe-tag">Consultant</span>
-            <h3>I hold the room</h3>
-            <p>Three post-merger workshops at Schaeffler aligning <b>100+ managers</b>. Four investment presentations at Porsche Ventures. At EY-Parthenon I <b>built the tooling the strategy and M&amp;A teams run on</b>, then trained the people who had to trust it.</p>
+
+          <div class="triad-controls">
+            <div class="triad-pills">
+              <label for="t-f">Founder</label>
+              <label for="t-c">Consultant</label>
+              <label for="t-e">Engineer</label>
+              <label for="t-fde">● Forward deployed</label>
+            </div>
+            <div class="triad-auto" id="triadAuto" aria-hidden="true">
+              <span class="ship-bar"><i id="triadBar"></i></span>
+              <p class="triad-hint" id="triadHint">cycling all four. Click any lobe to stop.</p>
+            </div>
           </div>
-          <div class="lobe-card">
-            <span class="lobe-tag">Engineer</span>
-            <h3>I write what ships</h3>
-            <p><b>Four AI systems in daily use</b> by EY-Parthenon strategy and M&amp;A teams at handover: n8n orchestration with Claude, Copilot Studio document Q&amp;A, a Python/ML entity-resolution pipeline, Azure underneath.</p>
-          </div>
-        </div>
+        </fieldset>
 
         <p class="overlap-close reveal"><span class="oc-eq">= forward deployed</span> The overlap is the job: scope it in the room, build it against real constraints, and stay when adoption stalls.</p>
       </div>
@@ -339,10 +398,10 @@
           <div class="ready-col">
             <h3 class="ready-title">Deployment readiness</h3>
             <dl class="elig">
-              <div><dt>Work authorisation</dt><dd>German residence permit. <b>No sponsorship required.</b></dd></div>
+              <div><dt>Work authorisation</dt><dd><b>German resident.</b></dd></div>
               <div><dt>Base</dt><dd>Aachen. NRW and Rhine-Main within reach.</dd></div>
               <div><dt>Onsite and travel</dt><dd>Comfortable 2&ndash;3 days a week onsite, across DACH.</dd></div>
-              <div><dt>Languages</dt><dd>English C1 · German B2 · Kannada native · Hindi B1</dd></div>
+              <div><dt>Languages</dt><dd>English C1 · German B2</dd></div>
             </dl>
           </div>
         </div>
@@ -443,8 +502,6 @@
             <div class="tag-row">
               <span class="tag">English · C1</span>
               <span class="tag">German · B2</span>
-              <span class="tag">Kannada · Native</span>
-              <span class="tag">Hindi · B1</span>
             </div>
           </div>
           <div>
@@ -474,27 +531,45 @@
         <div class="section-head reveal">
           <span class="eyebrow">// reviewed by humans</span>
           <h2>The people I worked with.</h2>
+          <p class="scroll-hint">Ivan managed the AI work directly. <span>Scroll for more &rarr;</span></p>
         </div>
-        <div class="quote-grid">
-          <!-- Ivan first: the only person here who managed the AI work directly, so
-               his is the one a deployment panel will weigh. -->
-          <figure class="quote-card quote-feature reveal">
+        <!-- A horizontal scroll strip: Ivan first and featured, the rest scroll in
+             from the right. scroll-snap so each card settles, and a faded right edge
+             to signal there is more. -->
+        <div class="quote-scroll reveal">
+          <figure class="quote-card quote-feature">
             <blockquote>
               <p>Karthik brings a very positive can-do attitude with great technical skills. His contributions were notable and impactful for our team, proving he is a good team-player, while also delivering valuable individual contributions.</p>
               <p>Whenever there are any AI topics I can confidently say he is my go-to person.</p>
             </blockquote>
             <figcaption class="quote-who">
               <span class="av">I</span>
-              <div><b>Ivan Libedinsky</b><span>Assistant Director, Financial Data Science, Strategy &amp; Transactions, EY-Parthenon</span></div>
+              <div><b>Ivan Libedinsky</b><span>Assistant Director, EY-Parthenon</span></div>
               <span class="q-ok" aria-hidden="true">direct manager ✓</span>
             </figcaption>
           </figure>
-          <figure class="quote-card reveal">
+          <figure class="quote-card">
             <blockquote><p>Karthik was able to demonstrate his ability to work on both conceptual and data-driven projects, and to transfer his theoretical knowledge on strategy building into practice. Thank you for your support in our team.</p></blockquote>
             <figcaption class="quote-who">
               <span class="av">K</span>
               <div><b>Katharina Löw</b><span>Schaeffler E-Mobility</span></div>
               <span class="q-ok" aria-hidden="true">cross-functional ✓</span>
+            </figcaption>
+          </figure>
+          <figure class="quote-card">
+            <blockquote><p>Karthik has shown a great deal of talent and business acumen across the various projects he worked on with us. I'm sure he is poised to achieve greater heights with his management education now.</p></blockquote>
+            <figcaption class="quote-who">
+              <span class="av">H</span>
+              <div><b>Hiten Saklani</b><span>Xtrawrkx Consulting</span></div>
+              <span class="q-ok" aria-hidden="true">approved ✓</span>
+            </figcaption>
+          </figure>
+          <figure class="quote-card">
+            <blockquote><p>I've closely observed Karthik's journey from a fresh graduate to a skilled engineer with startup potential. At Micelio he was comfortable with ambiguity and had the right balance of creativity and pragmatism. His confidence in meeting EV-industry executives and presenting concise reports to leadership impressed me.</p></blockquote>
+            <figcaption class="quote-who">
+              <span class="av">A</span>
+              <div><b>Anand GCP</b><span>Sun Mobility</span></div>
+              <span class="q-ok" aria-hidden="true">approved ✓</span>
             </figcaption>
           </figure>
         </div>
@@ -550,7 +625,8 @@
             </div>
           </div>
 
-          <form class="contact-form reveal" data-delay="1" id="contactForm" novalidate>
+          <div class="contact-right reveal" data-delay="1">
+          <form class="contact-form" id="contactForm" novalidate>
             <div class="field">
               <label for="cf-name">Name</label>
               <input type="text" id="cf-name" name="name" placeholder="Your name" required />
@@ -569,6 +645,18 @@
             </button>
             <p class="form-note" id="formNote" aria-live="polite">Opens your email app with the message pre-filled. I usually reply within a day.</p>
           </form>
+
+          <!-- fills the space beside the taller contact column, and answers the
+               reader's real next question: what happens after I write. -->
+          <div class="whatnext">
+            <p class="wn-head"><span class="wn-prompt">$</span> ./what-happens-next<span class="wn-caret" aria-hidden="true"></span></p>
+            <ul class="wn-list">
+              <li><b>You write</b> a paragraph. No cover letter, no form to fight, no ATS in the middle.</li>
+              <li><b>I reply</b> within a day, from kjavanappa@gmail.com.</li>
+              <li><b>We talk</b> for thirty minutes. If it fits I will say so, and if it does not I will say that too.</li>
+            </ul>
+          </div>
+          </div>
         </div>
       </div>
     </section>
@@ -600,7 +688,7 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <p>© <span id="year">2026</span> Karthik Javanappa · karthikjp.io · hand-built, no template. View source and check. <span class="f-upd">Last updated 12 August 2026.</span></p>
+        <p>© <span id="year">2026</span> Karthik Javanappa · karthikjp.io · hand-built, no template. View source and check. <span class="f-upd">Last updated 13 August 2026.</span></p>
         <div class="footer-social">
           <a href="https://www.linkedin.com/in/karthikjp/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM10 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.4c0-1.3-.02-2.96-1.8-2.96-1.8 0-2.08 1.4-2.08 2.86V21h-4z"/></svg></a>
           <a href="https://github.com/karthikjpio" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5A11.5 11.5 0 0 0 .5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-1.98c-3.2.7-3.87-1.54-3.87-1.54-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .96-.31 3.15 1.18a10.9 10.9 0 0 1 5.74 0c2.18-1.49 3.14-1.18 3.14-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.69 5.39-5.25 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.68.8.56A11.5 11.5 0 0 0 12 .5z"/></svg></a>
@@ -615,6 +703,6 @@
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
   </a>
 
-  <script src="assets/js/main.js?v=20260812c"></script>
+  <script src="assets/js/main.js?v=20260813a"></script>
 </body>
 </html>

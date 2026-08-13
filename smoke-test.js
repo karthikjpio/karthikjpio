@@ -52,8 +52,8 @@ t("no em dashes anywhere in the shipped files", () =>
 
 /* ---- the interactions the report cut are actually gone ---- */
 t("command palette, chat widget, gap scrubber and marquee are removed", () =>
-  !$("#palette") && !$("#chat") && !$("#gap") && !$(".marquee") && !$(".triad") && !$(".statbar") &&
-  !/CHAT_WEBHOOK_URL|gapRange|triadBar|palOut|showModal/.test(js));
+  !$("#palette") && !$("#chat") && !$("#gap") && !$(".marquee") && !$(".statbar") &&
+  !/CHAT_WEBHOOK_URL|gapRange|palOut|showModal/.test(js));
 t("the nine-row registry is replaced by exactly three case studies", () =>
   $$(".sys").length === 0 && $$("#work .case").length === 3);
 t("kb.json is gone and nothing still fetches it", () =>
@@ -126,13 +126,25 @@ t("the 'also shipped' line is present and quiet, not a fourth case", () => {
     /Swift 6/.test(also.textContent) && $$("#work .case").length === 3;
 });
 
-/* ---- the overlap block is static, three lobes, no radios or auto-cycle ---- */
-t("the overlap is a static three-column block, not an interactive diagram", () =>
-  $$("#overlap .lobe-card").length === 3 && $$("#overlap input").length === 0 &&
-  !/triad|animationiteration|setInterval/.test(jsNoComments));
-t("the three lobes are Founder, Consultant, Engineer", () =>
-  JSON.stringify($$("#overlap .lobe-tag").map((n) => n.textContent.trim())) ===
-  JSON.stringify(["Founder", "Consultant", "Engineer"]));
+/* ---- the overlap is the interactive triad (brought back on request) ---- */
+t("the overlap is the interactive triad, defaulting to the FDE conclusion", () =>
+  !!$("#overlap #triad") && $("#t-fde").checked &&
+  $$("#overlap .tp").length === 4 && $$("#overlap .tr-in").length === 4);
+t("every triad pill points at a real radio", () =>
+  $$("#overlap .triad-pills label").length === 4 &&
+  $$("#overlap .triad-pills label").every((l) => !!$("#" + l.htmlFor)));
+t("the triad auto-cycles on animationiteration, with no timer", () =>
+  /addEventListener\("animationiteration"/.test(js) &&
+  !/setInterval|requestAnimationFrame/.test(js));
+t("the triad panels carry cleaned copy, with no self-disqualifying line", () => {
+  const body = $("#overlap").textContent;
+  return /I own the outcome/.test(body) && /I hold the room/.test(body) && /I write what ships/.test(body) &&
+    !/public code surface is thin/.test(body) && !/Anthropic/.test(body);
+});
+t("clicking a lobe checks its radio (this mutates state, so it runs last)", () => {
+  $("#overlap .lobe-f").dispatchEvent(new window.MouseEvent("click", { bubbles: true }));
+  return $("#t-f").checked && !$("#t-fde").checked;
+});
 t("the overlap closes on the intersection line", () =>
   /scope it in the room, build it against real constraints, and stay when adoption stalls/
     .test($("#overlap .overlap-close").textContent));
@@ -142,8 +154,10 @@ t("readiness shows production judgment and deployment facts", () => {
   const r = $("#readiness");
   return /Source-linked outputs/.test(r.textContent) && /Refusal over guessing/.test(r.textContent) &&
     /Human review at the decision gates/.test(r.textContent) &&
-    /No sponsorship required/.test(r.textContent);
+    /German resident/.test(r.textContent);
 });
+t("the no-sponsorship signal still lives in the hero and contact", () =>
+  /no sponsorship/i.test($(".hero-avail").textContent) && /no sponsorship/i.test($("#contact").textContent));
 t("readiness does not overclaim mature eval expertise", () =>
   !/mature eval|expert in evaluation|world-class eval/i.test($("#readiness").textContent));
 
@@ -159,15 +173,19 @@ t("awards are trimmed to three and keep HackAIVerse", () => {
   return awards.length === 3 && /HackAIVerse/.test($("#experience .awards-list").textContent);
 });
 
-/* ---- trust: two testimonials, Ivan featured ---- */
-t("exactly two testimonials, Ivan then Katharina", () =>
+/* ---- trust: four testimonials in a horizontal scroll strip, Ivan featured ---- */
+t("four testimonials in a horizontal strip: Ivan, Katharina, Hiten, Anand", () =>
+  !!$("#trust .quote-scroll") &&
   JSON.stringify($$("#trust .quote-who b").map((n) => n.textContent.trim().split(" ")[0])) ===
-  JSON.stringify(["Ivan", "Katharina"]));
-t("the direct-manager quote is the featured one and comes first", () => {
+  JSON.stringify(["Ivan", "Katharina", "Hiten", "Anand"]));
+t("the strip actually scrolls horizontally and snaps", () => {
+  const rule = cssNoComments.match(/\.quote-scroll \{([^}]*)\}/);
+  return !!rule && /overflow-x: auto/.test(rule[1]) && /scroll-snap-type/.test(rule[1]);
+});
+t("the direct-manager quote is first and featured", () => {
   const first = $("#trust .quote-card");
   return first.classList.contains("quote-feature") && /Ivan/.test(first.textContent) &&
-    /direct manager/.test(first.textContent) &&
-    /\.quote-feature \{ border-color/.test(cssNoComments);
+    /direct manager/.test(first.textContent);
 });
 t("every avatar initial matches its name", () =>
   $$("#trust .quote-who").every((w) => $(".av", w).textContent.trim() === $("b", w).textContent.trim()[0]));
@@ -214,10 +232,10 @@ t("availability now names the target regions the report asked for", () => {
   return /forward-deployed/.test(avail) && /NRW/.test(avail) && /Rhine-Main/.test(avail) &&
     /no sponsorship/i.test(avail) && !/Frankfurt/.test(avail);
 });
-t("German is B2 everywhere, and Hindi is untouched at B1", () => {
+t("German is B2, and Kannada and Hindi were dropped from the languages", () => {
   const all = $("main").textContent;
   return !/German\s*[·(]?\s*B1/.test(all) && /German\s*[·(]?\s*B2/.test(all) &&
-         /Hindi\s*[·(]?\s*B1/.test(all);
+         !/Kannada/.test(all) && !/Hindi/.test(all);
 });
 
 /* ---- headings & sections ---- */
@@ -299,7 +317,8 @@ t("no hardcoded hex outside the token blocks except print and traffic tokens", (
     .replace(/\[data-theme="light"\]\s*\{[^}]*\}/, "");
   const hexes = (body.match(/#[0-9a-f]{3,6}\b/gi) || []).map((h) => h.toLowerCase());
   const allowed = ["#fff", "#111", "#333", "#555", "#bbb", "#ddd",
-                   "#0a5c28", "#0b4a6f", "#7a4a06", "#8a1c1c"];
+                   "#0a5c28", "#0b4a6f", "#7a4a06", "#8a1c1c",
+                   "#000"];   /* a mask-image stop: only its alpha is used, never painted */
   const bad = [...new Set(hexes.filter((h) => !allowed.includes(h)))];
   if (bad.length) console.log("    untokenised colours:", bad.join(", "));
   return bad.length === 0;
@@ -447,6 +466,7 @@ const report = () => {
       for (const el of document.querySelectorAll("body *")) {
         const cs = getComputedStyle(el);
         if (cs.display === "none" || cs.visibility === "hidden" || el.classList.contains("sr-only")) continue;
+        if (el.closest(".quote-scroll")) continue;   /* a horizontal scroll region is meant to run off the right edge */
         const b = el.getBoundingClientRect();
         if (!b.width && !b.height) continue;
         if (b.right > vw + 1 || b.left < -1) out.past.push(name(el));

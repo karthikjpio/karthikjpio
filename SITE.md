@@ -23,10 +23,11 @@ npm i -D playwright && npx playwright install chromium   # optional, for the lay
 node smoke-test.js
 ```
 
-94 assertions. Two layers, and the split matters:
+99 assertions. Two layers, and the split matters:
 
 - **jsdom** covers content and logic: the three case studies and their common structure,
-  the static overlap block, the enterprise-readiness facts, the two testimonials, the
+  the interactive triad (radio-group state, auto-cycle, cleaned copy), the
+  enterprise-readiness facts, the four testimonials in the horizontal scroll strip, the
   contact fallback, WCAG AA contrast computed per theme (dark, light and print), the type
   scale and 4px spacing ramp, the first-view transfer budget, and the honesty and
   location/language invariants.
@@ -60,10 +61,12 @@ command palette, chat widget, deployment scrubber, interactive triad and marquee
 the first view from ~43 KB to ~21 KB, so the budget has real headroom again. New features
 are paid for by deletions, not by raising the ceiling.
 
-**It works without JavaScript.** Nothing structural depends on the script: the case
-studies, diagrams, overlap block and readiness facts are all static markup. JS adds a
-theme toggle, a mobile menu, scroll reveal, a mailto helper and click-to-copy, and nothing
-you need to read the page.
+**It works without JavaScript.** Nothing structural depends on the script. The triad is a
+native radio group that defaults to the conclusion, so no-JS, print and reduced-motion land
+on the answer rather than an empty diagram; the case studies, diagrams and readiness facts
+are static markup; the testimonials are a plain horizontal scroll. JS only adds a theme
+toggle, a mobile menu, scroll reveal, the triad auto-cycle, a mailto helper and
+click-to-copy.
 
 **Reduced motion, print and light theme are real targets**, not afterthoughts. Every
 colour token has a print and a light override, and the contrast assertions run against all
