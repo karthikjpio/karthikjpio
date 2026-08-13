@@ -140,4 +140,35 @@
     clearTimeout(copyBtn._t);
     copyBtn._t = setTimeout(() => copyBtn.classList.remove("copied"), 1800);
   });
+
+  /* ---- Triad: click the circles, and auto-cycle until the visitor takes over --
+     State, styling, keyboard and the no-JS case are all handled by the radio group
+     in the markup. This only buys click-on-lobe and a gentle auto-rotation that
+     stops for good on the first interaction. */
+  const triad = $("#triad");
+  triad?.addEventListener("click", (e) => {
+    const id = e.target.closest?.("[data-for]")?.dataset.for;
+    if (id) $("#" + id).click();
+  });
+  const triadAuto = $("#triadAuto"), triadBar = $("#triadBar");
+  if (triad && triadAuto && triadBar && !prefersReduced) {
+    /* cycle the radios themselves, so the diagram, pills and panel all follow from
+       the one piece of state they already share */
+    const radios = $$(".tr-in", triad);
+    const order = ["t-f", "t-c", "t-e", "t-fde"].map((id) => radios.find((r) => r.id === id));
+    let stopped = false;
+    triadBar.addEventListener("animationiteration", () => {
+      if (stopped) return;
+      const at = order.findIndex((r) => r.checked);
+      order[(at + 1) % order.length].checked = true;
+    });
+    /* a click means the visitor has taken over: stop for this visit, not persisted */
+    const stop = () => {
+      if (stopped) return;
+      stopped = true;
+      triadAuto.hidden = true;
+    };
+    triad.addEventListener("change", stop);
+    triad.addEventListener("click", stop);
+  }
 })();
