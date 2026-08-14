@@ -48,6 +48,7 @@ button{font-family:inherit; cursor:pointer; border:none; background:none; color:
 .hidden{display:none!important}
 
 /* ---------- HOME ---------- */
+#home{flex:1; min-height:0; overflow-y:auto; -webkit-overflow-scrolling:touch}
 .brand{display:flex; align-items:center; gap:10px; padding:6px 2px 2px}
 .brand .logo{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-weight:800;color:#fff;
   background:linear-gradient(135deg,var(--der),var(--die) 55%,var(--das)); box-shadow:0 6px 16px rgba(var(--shadow),.18)}
@@ -58,7 +59,7 @@ button{font-family:inherit; cursor:pointer; border:none; background:none; color:
 .legend span{flex:1; text-align:center; font-size:12px; font-weight:700; padding:7px 4px; border-radius:11px; background:var(--soft)}
 .legend .l-der{color:var(--der)} .legend .l-die{color:var(--die)} .legend .l-das{color:var(--das)}
 .section-t{font-size:12px; text-transform:uppercase; letter-spacing:.09em; color:var(--muted); margin:16px 4px 8px; font-weight:700}
-.lessons{display:flex; flex-direction:column; gap:12px; overflow:auto; padding:2px 2px 8px; -webkit-overflow-scrolling:touch}
+.lessons{display:flex; flex-direction:column; gap:12px; padding:2px 2px 8px}
 .lesson{display:flex; align-items:center; gap:14px; background:var(--card); border:1px solid var(--line);
   border-radius:18px; padding:15px 16px; text-align:left; width:100%; transition:transform .12s, box-shadow .12s;
   box-shadow:0 2px 10px rgba(var(--shadow),.05)}
