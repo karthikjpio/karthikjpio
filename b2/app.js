@@ -23,22 +23,50 @@ function cst(l,i){ return store.cards[cid(l,i)] || {box:0, due:0, seen:false}; }
 if(store.theme) document.documentElement.setAttribute("data-theme", store.theme);
 
 // ---------- audio ----------
-let actx=null;
-function initAudio(){ if(!actx){ try{ actx = new (window.AudioContext||window.webkitAudioContext)(); }catch(e){} } }
-function tone(freq,dur,type,vol,when){
-  if(!store.sound || !actx) return;
-  const t = actx.currentTime + (when||0);
-  const o = actx.createOscillator(), g = actx.createGain();
-  o.type = type||"sine"; o.frequency.value = freq;
-  g.gain.setValueAtTime(0, t);
-  g.gain.linearRampToValueAtTime(vol||0.12, t+0.012);
-  g.gain.exponentialRampToValueAtTime(0.0001, t+dur);
-  o.connect(g); g.connect(actx.destination); o.start(t); o.stop(t+dur+0.02);
+let actx=null, master=null;
+function initAudio(){
+  if(!actx){ try{ actx = new (window.AudioContext||window.webkitAudioContext)();
+    master = actx.createGain(); master.gain.value=0.9; master.connect(actx.destination);
+  }catch(e){} }
+  if(actx && actx.state==="suspended") actx.resume().catch(()=>{});
 }
-const sFlip  = ()=>tone(520,0.08,"triangle",0.06);
-const sKnow  = ()=>{ tone(587,0.09,"sine",0.10); tone(880,0.16,"sine",0.10,0.07); };
-const sAgain = ()=>tone(300,0.16,"sine",0.09);
-const sDone  = ()=>{ [523,659,784,1047].forEach((f,i)=>tone(f,0.18,"sine",0.09,i*0.09)); };
+// one voice: freq (+ optional glide), envelope, optional lowpass for warmth
+function note(freq,start,dur,opt){
+  if(!store.sound || !actx) return;
+  opt = opt||{};
+  const t = actx.currentTime + (start||0);
+  const o = actx.createOscillator(), g = actx.createGain();
+  o.type = opt.type||"sine";
+  o.frequency.setValueAtTime(freq, t);
+  if(opt.glide) o.frequency.exponentialRampToValueAtTime(opt.glide, t+dur);
+  let out = o;
+  if(opt.filter){ const f=actx.createBiquadFilter(); f.type="lowpass"; f.frequency.value=opt.filter; o.connect(f); out=f; }
+  const peak = opt.peak==null?0.12:opt.peak;
+  g.gain.setValueAtTime(0.0001, t);
+  g.gain.exponentialRampToValueAtTime(peak, t+(opt.attack||0.012));
+  g.gain.exponentialRampToValueAtTime(0.0001, t+dur);
+  out.connect(g); g.connect(master||actx.destination);
+  o.start(t); o.stop(t+dur+0.03);
+}
+// bright rewarding rise: D5 · A5 · D6 with a shimmer + warm body  (the "ta-da-DAA")
+const sKnow = ()=>{
+  note(587.33, 0.00, 0.13, {type:"triangle", peak:0.13});
+  note(880.00, 0.085,0.15, {type:"triangle", peak:0.13});
+  note(1174.66,0.185,0.5,  {type:"triangle", peak:0.15});
+  note(2349.32,0.185,0.42, {type:"sine",     peak:0.035});      // sparkle an octave up
+  note(587.33, 0.185,0.5,  {type:"sine",     peak:0.05});       // warm body underneath
+};
+// soft, gentle "not yet" — muffled two-note fall, never harsh (E4 → A3)
+const sAgain = ()=>{
+  note(329.63, 0.00, 0.15, {type:"triangle", peak:0.10, filter:900});
+  note(220.00, 0.11, 0.26, {type:"triangle", peak:0.11, filter:800, attack:0.02});
+};
+const sFlip = ()=> note(660, 0, 0.06, {type:"triangle", peak:0.05, filter:2200});
+// little fanfare on session finish: C E G C rising + sparkle
+const sDone = ()=>{
+  [523.25,659.25,783.99,1046.5].forEach((f,i)=> note(f, i*0.10, 0.5, {type:"triangle", peak:0.11}));
+  note(2093, 0.30, 0.5, {type:"sine", peak:0.04});
+};
 function buzz(ms){ if(navigator.vibrate) try{navigator.vibrate(ms);}catch(e){} }
 
 // ---------- speech ----------

@@ -1,5 +1,5 @@
 /* offline cache — bump VERSION to force update */
-const VERSION = "vb2-v1";
+const VERSION = "vb2-v2";
 const ASSETS = [
   "./","index.html","app.js",
   "deck_l1.js","deck_l2.js","deck_l3.js","deck_l4.js",
