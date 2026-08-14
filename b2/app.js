@@ -196,6 +196,7 @@ function cardHTML(l,idx,top){
       '</div>'+
       '<div class="hinttap" style="text-align:center">'+(isNoun?"Artikel raten · tippen zum Umdrehen":"Tippen zum Umdrehen")+'</div>'+
     '</div>';
+  const emo = (window.EMOJI && window.EMOJI[c.w]) ? '<div class="b-emoji">'+window.EMOJI[c.w]+'</div>' : '';
   const artHtml = c.a ? '<span class="b-art g-'+g+'">'+c.a+'</span>' : '';
   const plHtml = (c.pl && c.pl!=="—") ? '<span class="b-plural">Pl.: '+c.pl+'</span>' : (c.pl==="—"?'<span class="b-plural">kein Pl.</span>':'');
   const noteHtml = c.g && c.pos==="n" ? '<div class="b-note">'+c.g+'</div>' : '';
@@ -205,6 +206,7 @@ function cardHTML(l,idx,top){
         '<span class="chip pos-'+c.pos+'">'+posName+'</span>'+
         '<button class="spk" data-say="'+encodeURIComponent((c.a?c.a+" ":"")+c.w)+'">🔊</button>'+
       '</div>'+
+      emo+
       '<div class="b-head">'+artHtml+'<span class="b-word g-'+(c.a?g:'none')+'">'+escapeHtml(c.w)+'</span>'+plHtml+'</div>'+
       noteHtml+
       '<div class="def" data-de="'+encodeURIComponent(c.de)+'" data-en="'+encodeURIComponent(c.en)+'">'+escapeHtml(store.enDefault?c.en:c.de)+'</div>'+

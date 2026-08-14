@@ -1,7 +1,7 @@
 /* offline cache — bump VERSION to force update */
-const VERSION = "vb2-v2";
+const VERSION = "vb2-v3";
 const ASSETS = [
-  "./","index.html","app.js",
+  "./","index.html","app.js","emoji.js",
   "deck_l1.js","deck_l2.js","deck_l3.js","deck_l4.js",
   "manifest.webmanifest","icon-192.png","icon-512.png","icon-180.png"
 ];
