@@ -137,6 +137,10 @@ function renderHome(){
     el.onclick = ()=>{ initAudio(); openLesson(l); };
     list.appendChild(el);
   });
+  const soon = document.createElement("div");
+  soon.className = "soon";
+  soon.innerHTML = '<span>🚧</span> Weitere Lektionen kommen bald';
+  list.appendChild(soon);
   $("#streakN").textContent = store.streak.count||0;
 }
 
