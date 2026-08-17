@@ -7,7 +7,7 @@
 <meta name="theme-color" content="#121319" media="(prefers-color-scheme: dark)">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<link rel="manifest" href="manifest.webmanifest?v=4">
+<link rel="manifest" href="manifest.webmanifest?v=5">
 <link rel="apple-touch-icon" href="icon-180.png">
 <title>Vokabel B2</title>
 <style>
@@ -82,6 +82,50 @@ button{font-family:inherit; cursor:pointer; border:none; background:none; color:
 .foot{display:flex; gap:10px; margin-top:12px}
 .foot button{flex:1; font-size:13px; font-weight:700; color:var(--muted); background:var(--soft); border-radius:12px; padding:11px}
 .version{text-align:center; font-size:11px; letter-spacing:.04em; color:var(--muted); opacity:.65; margin-top:12px; padding-bottom:4px}
+
+/* ---------- STATS ---------- */
+#stats{flex:1; min-height:0; display:flex; flex-direction:column}
+.statsbody{flex:1; min-height:0; overflow-y:auto; -webkit-overflow-scrolling:touch; padding:4px 2px 20px}
+.hero{display:flex; align-items:center; gap:16px; background:var(--card); border:1px solid var(--line);
+  border-radius:18px; padding:16px; margin-top:6px}
+#stRing{width:74px;height:74px}
+#stRing::after{inset:7px}
+#stRing b{font-size:16px}
+.herotxt{flex:1; min-width:0}
+.hn{font-size:14px; font-weight:650; line-height:1.35}
+.hn b{font-size:20px}
+.bar{display:flex; height:9px; border-radius:99px; background:var(--soft); overflow:hidden; margin-top:9px}
+.bar .seg{display:block; height:100%}
+.seg.mastered{background:var(--das)} .seg.learning{background:var(--der)}
+.keys{display:flex; flex-wrap:wrap; gap:10px; margin-top:8px; font-size:11.5px; color:var(--muted)}
+.keys span{display:flex; align-items:center; gap:5px}
+.keys b{width:8px;height:8px;border-radius:3px;display:inline-block}
+.k-mastered{background:var(--das)} .k-learning{background:var(--der)} .k-fresh{background:var(--soft); border:1px solid var(--line)}
+.tiles{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px}
+.tile{background:var(--card); border:1px solid var(--line); border-radius:15px; padding:13px 14px}
+.tile b{display:block; font-size:23px; letter-spacing:-.02em}
+.tile span{font-size:11.5px; color:var(--muted); font-weight:600}
+.heatwrap{overflow-x:auto; padding-bottom:4px}
+.heat{display:grid; grid-auto-flow:column; grid-template-rows:repeat(7,12px); gap:3px; min-width:min-content}
+.hc{width:12px;height:12px;border-radius:3px; background:var(--soft); display:block}
+.hc.l1{background:color-mix(in srgb,var(--das) 30%,var(--soft))}
+.hc.l2{background:color-mix(in srgb,var(--das) 55%,var(--soft))}
+.hc.l3{background:color-mix(in srgb,var(--das) 78%,var(--soft))}
+.hc.l4{background:var(--das)}
+.hc.future{background:transparent}
+.heatlegend{display:flex; align-items:center; gap:4px; justify-content:flex-end; margin-top:7px; font-size:10.5px; color:var(--muted)}
+.heatlegend .hc{width:10px;height:10px}
+.lrow{margin-bottom:12px}
+.lrow-t{display:flex; justify-content:space-between; font-size:12.5px; font-weight:650; gap:10px}
+.lrow-t span{overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.lrow-t b{color:var(--muted); flex:none}
+.rrow{display:flex; align-items:center; gap:10px; padding:10px 12px; background:var(--card);
+  border:1px solid var(--line); border-radius:12px; margin-bottom:8px; font-size:12.5px}
+.rrow span:first-child{flex:1; color:var(--muted); font-weight:600}
+.rrow b{font-weight:750}
+.rrow .rk{color:var(--good); font-weight:700} .rrow .ra{color:var(--again); font-weight:700}
+.empty{font-size:13px; color:var(--muted); padding:14px; text-align:center; border:1.5px dashed var(--line); border-radius:14px}
+.streak{cursor:pointer}
 
 /* ---------- STUDY ---------- */
 #study{flex:1; display:flex; flex-direction:column; min-height:0}
@@ -175,7 +219,7 @@ button{font-family:inherit; cursor:pointer; border:none; background:none; color:
       <div class="logo">V</div>
       <div>
         <h1>Vokabel B2</h1>
-        <div class="sub">Kompass DaF · Lektion 1–4</div>
+        <div class="sub">Kompass DaF · Lektion 1–5</div>
       </div>
       <div class="streak" id="streak" title="Lernserie">🔥 <span id="streakN">0</span></div>
     </div>
@@ -190,10 +234,45 @@ button{font-family:inherit; cursor:pointer; border:none; background:none; color:
     <div class="lessons" id="lessonList"></div>
 
     <div class="foot">
+      <button id="statsBtn">📊 Fortschritt</button>
       <button id="themeBtn">🌓 Design</button>
-      <button id="resetBtn">↺ Fortschritt</button>
+      <button id="resetBtn">↺ Reset</button>
     </div>
-    <div class="version">v1.1</div>
+    <div class="version">v1.2</div>
+  </div>
+
+  <!-- STATS -->
+  <div id="stats" class="hidden">
+    <div class="topbar">
+      <button class="iconbtn" id="statsBack">‹</button>
+      <div style="flex:1"><b style="font-size:17px">Dein Fortschritt</b></div>
+    </div>
+    <div class="statsbody">
+      <div class="hero">
+        <div class="ring" id="stRing"><b id="stRingN">0%</b></div>
+        <div class="herotxt">
+          <div class="hn"><b id="stMastered">0</b> von <span id="stTotalW">0</span> Wörtern gemeistert</div>
+          <div id="stBreak" class="break"></div>
+        </div>
+      </div>
+
+      <div class="tiles">
+        <div class="tile"><b id="stStreak">0</b><span>🔥 Serie (Tage)</span></div>
+        <div class="tile"><b id="stBest">0</b><span>Beste Serie</span></div>
+        <div class="tile"><b id="stAcc">0%</b><span>Trefferquote</span></div>
+        <div class="tile"><b id="stReviews">0</b><span>Karten geübt</span></div>
+      </div>
+
+      <div class="section-t">Aktivität · <span id="stDays">0</span> Lerntage</div>
+      <div class="heatwrap"><div class="heat" id="stHeat"></div></div>
+      <div class="heatlegend"><span>weniger</span><i class="hc l0"></i><i class="hc l1"></i><i class="hc l2"></i><i class="hc l3"></i><i class="hc l4"></i><span>mehr</span></div>
+
+      <div class="section-t">Nach Lektion</div>
+      <div id="stLessons"></div>
+
+      <div class="section-t">Letzte Tage</div>
+      <div id="stRecent"></div>
+    </div>
   </div>
 
   <!-- STUDY -->
@@ -233,11 +312,12 @@ button{font-family:inherit; cursor:pointer; border:none; background:none; color:
 </div>
 <div class="toast" id="toast"></div>
 
-<script src="emoji.js?v=4"></script>
-<script src="deck_l1.js?v=4"></script>
-<script src="deck_l2.js?v=4"></script>
-<script src="deck_l3.js?v=4"></script>
-<script src="deck_l4.js?v=4"></script>
-<script src="app.js?v=4"></script>
+<script src="emoji.js?v=5"></script>
+<script src="deck_l1.js?v=5"></script>
+<script src="deck_l2.js?v=5"></script>
+<script src="deck_l3.js?v=5"></script>
+<script src="deck_l4.js?v=5"></script>
+<script src="deck_l5.js?v=5"></script>
+<script src="app.js?v=5"></script>
 </body>
 </html>
