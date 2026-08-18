@@ -1,0 +1,182 @@
+/* ===========================================================================
+   Project registry styles. Restored from the pre-redesign homepage (git e5275d2^).
+   Consumed only by projekte.html and en/projekte.html. Design tokens
+   (--accent, --card, --border, fonts, light/dark) live in styles.css; this file
+   assumes it is loaded second. No em dashes anywhere by house rule.
+   =========================================================================== */
+
+/* ---------- back-to-home link above the registry ---------- */
+.back-link {
+  display: inline-block; margin-bottom: 20px;
+  font: 500 13px var(--font-mono); color: var(--muted);
+  text-decoration: none;
+}
+.back-link:hover { color: var(--accent); }
+
+/* ---------- the registry table ---------- */
+.registry {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--card);
+  overflow: hidden;
+  box-shadow: var(--edge);
+}
+.reg-head {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr) 118px 130px 30px;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--card-2);
+  border-bottom: 1px solid var(--border-soft);
+  font: 500 12px var(--font-mono);
+  color: var(--faint);
+  text-transform: lowercase;
+}
+
+.sys { border-bottom: 1px solid var(--border-soft); }
+.sys:last-child { border-bottom: 0; }
+.sys summary {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr) 118px 130px 30px;
+  gap: 12px;
+  align-items: center;
+  padding: 16px 16px;
+  cursor: pointer;
+  list-style: none;
+  transition: background .15s ease;
+}
+.sys summary::-webkit-details-marker { display: none; }
+.sys summary:hover { background: var(--card-2); }
+.sys summary:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+
+.sys-id { font: 500 13px var(--font-mono); color: var(--faint); }
+.sys-name { min-width: 0; }
+.sys-name b { display: block; font: 600 15px var(--font-mono); letter-spacing: -.01em; }
+.sys-name small { display: block; color: var(--muted); font-size: 13px; margin-top: 2px; }
+
+.sys-status {
+  display: inline-flex; align-items: center; gap: 8px;
+  font: 500 12px var(--font-mono);
+  padding: 4px 8px;
+  border-radius: 999px;
+  white-space: nowrap;
+  justify-self: start;
+}
+.sys-status i { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.s-shipped { color: var(--accent); background: var(--accent-dim); }
+.s-live { color: var(--live); background: var(--live-dim); }
+.s-local { color: color-mix(in srgb, var(--live) 78%, var(--muted)); background: var(--live-dim); }
+/* only genuinely running things pulse. "planned" is static on purpose, a pulsing
+   dot next to work that has not started is the exact overclaim this page avoids. */
+.s-live i { animation: pulse 1.8s ease infinite; }
+.s-planned { color: var(--build); background: var(--build-dim); }
+.s-planned i { opacity: .55; }
+@keyframes pulse { 50% { opacity: .35; } }
+@media (prefers-reduced-motion: reduce) { .s-live i { animation: none; } }
+
+.sys-env { font: 400 13px var(--font-mono); color: var(--muted); }
+.sys-chev { color: var(--faint); font-size: 13px; text-align: right; transition: transform .2s ease; }
+.sys[open] .sys-chev { transform: rotate(90deg); }
+.sys[open] summary { background: var(--card-2); }
+
+.sys-body { padding: 4px 16px 24px; }
+@media (min-width: 861px) { .sys-body { padding-left: 96px; padding-right: 32px; } }
+
+.pc-tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 16px; }
+.pc-tags span {
+  font: 500 12px var(--font-mono);
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 2px 8px;
+}
+
+.pc-pai { display: grid; gap: 12px; margin: 0 0 12px; }
+.pc-pai > div {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr);
+  gap: 12px;
+  align-items: baseline;
+}
+.pc-pai dt {
+  font: 500 12px var(--font-mono);
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+.pc-pai dd {
+  max-width: 62ch;      /* cap the text, not the padded box */ margin: 0; color: var(--text); font-size: 15px; }
+
+.sys-more {
+  max-width: 62ch;
+  margin: 0;
+  padding: 12px 16px;
+  background: var(--bg-2);
+  border-left: 2px solid var(--border);
+  border-radius: 0 8px 8px 0;
+  color: var(--muted);
+  font-size: 15px;
+}
+
+.reg-foot { margin-top: 16px; font: 400 13px var(--font-mono); color: var(--muted); }
+.reg-foot .dep-label { display: inline; margin: 0 8px 0 0; }
+
+@media (max-width: 860px) {
+  .reg-head { display: none; }
+  .sys summary { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "name chev" "status status"; row-gap: 8px; }
+  .sys-id { display: none; }
+  .sys-name { grid-area: name; }
+  .sys-status { grid-area: status; }
+  .sys-env { display: none; }
+  .sys-chev { grid-area: chev; }
+  .pc-pai > div { grid-template-columns: 1fr; gap: 2px; }
+}
+
+/* ---------- the constraint ledger ---------- */
+.ledger {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1px; margin-top: 16px;
+  background: var(--border-soft);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.led-col { background: var(--card-2); padding: 16px 16px; }
+.led-title { font: 500 12px var(--font-mono); color: var(--faint); margin-bottom: 12px; letter-spacing: .04em; text-transform: uppercase; }
+.led-col ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.led-col li { font: 400 13px/1.55 var(--font-body); color: var(--muted); }
+/* the strike is the argument: these did not move, and it shipped regardless */
+.led-no li { text-decoration: line-through; text-decoration-color: var(--warn); text-decoration-thickness: 2px; }
+.led-yes li { padding-left: 16px; position: relative; color: var(--text); }
+.led-yes li::before { content: "\2192"; position: absolute; left: 0; color: var(--accent); }
+.adopt {
+  margin: 16px 0 0; padding-top: 12px;
+  border-top: 1px solid var(--border-soft);
+  font: 400 13px/1.7 var(--font-body); color: var(--faint);
+}
+.adopt b { color: var(--muted); font-weight: 500; }
+@media (max-width: 640px) { .ledger { grid-template-columns: 1fr; } }
+
+/* ---------- the poke hint on the first, closed row ---------- */
+.sys-poke {
+  grid-column: 2;
+  justify-self: start;
+  margin-top: 4px;
+  font: 500 12px var(--font-mono);
+  color: var(--accent);
+  display: inline-flex; align-items: center; gap: 4px;
+}
+.sys-poke::before { content: "\25BE"; animation: poke 1.8s ease-in-out infinite; }
+@keyframes poke {
+  0%, 100% { transform: translateY(0); opacity: .5; }
+  50%      { transform: translateY(3px); opacity: 1; }
+}
+.sys[open] .sys-poke, .registry.poked .sys-poke { display: none; }
+@media (prefers-reduced-motion: reduce) { .sys-poke::before { animation: none; } }
+@media (max-width: 860px) { .sys-poke { grid-column: 1; } }
+
+/* ---------- print: show the body of any row a reader has opened ---------- */
+@media print {
+  .sys-body { display: block !important; }
+  .sys, .ledger { break-inside: avoid; }
+}

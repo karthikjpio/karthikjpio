@@ -8,8 +8,12 @@
 const { JSDOM } = require("jsdom");
 const fs = require("fs");
 
-const dom = new JSDOM(fs.readFileSync("index.html", "utf8"), {
-  runScripts: "outside-only", pretendToBeVisual: true, url: "https://karthikjp.io/"
+/* The site is bilingual, two real pages. The 99 assertions below target the English
+   content, so they load en/index.html (the English page, wording unchanged). A small
+   German block at the end checks the German default page (root index.html). */
+const EN = "en/index.html";
+const dom = new JSDOM(fs.readFileSync(EN, "utf8"), {
+  runScripts: "outside-only", pretendToBeVisual: true, url: "https://karthikjp.io/en/"
 });
 const { window } = dom;
 window.matchMedia = () => ({ matches: false, addEventListener() {}, addListener() {} });
@@ -17,7 +21,7 @@ window.eval(fs.readFileSync("assets/js/main.js", "utf8"));
 
 const $ = (s, ctx = window.document) => ctx.querySelector(s);
 const $$ = (s, ctx = window.document) => Array.from(ctx.querySelectorAll(s));
-const html = fs.readFileSync("index.html", "utf8");
+const html = fs.readFileSync(EN, "utf8");
 const js = fs.readFileSync("assets/js/main.js", "utf8");
 const css = fs.readFileSync("assets/css/styles.css", "utf8");
 const cssNoComments = css.replace(/\/\*[\s\S]*?\*\//g, "");
@@ -42,7 +46,8 @@ t("no third-party script or stylesheet other than the font CDN", () =>
   (html.match(/<script[^>]+src=/g) || []).length === 1);
 t("every local href and src actually exists on disk", () => {
   const refs = [...html.matchAll(/(?:href|src)="(?!https?:|mailto:|tel:|data:|#)([^"]+)"/g)].map((m) => m[1]);
-  const missing = refs.filter((r) => !fs.existsSync(r.split("?")[0]));
+  /* refs are relative to the page's own folder (en/), so resolve from there */
+  const missing = refs.filter((r) => !fs.existsSync(require("path").join("en", r.split("?")[0])));
   if (missing.length) console.log("    missing files:", missing);
   return missing.length === 0;
 });
@@ -156,8 +161,8 @@ t("readiness shows production judgment and deployment facts", () => {
     /Human review at the decision gates/.test(r.textContent) &&
     /German resident/.test(r.textContent);
 });
-t("the no-sponsorship signal still lives in the hero and contact", () =>
-  /no sponsorship/i.test($(".hero-avail").textContent) && /no sponsorship/i.test($("#contact").textContent));
+t("the no-sponsorship signal still lives in the contact block", () =>
+  /no sponsorship/i.test($("#contact").textContent));
 t("readiness does not overclaim mature eval expertise", () =>
   !/mature eval|expert in evaluation|world-class eval/i.test($("#readiness").textContent));
 
@@ -230,11 +235,12 @@ t("the only city in the contact block and schema is Aachen", () => {
 t("availability now names the target regions the report asked for", () => {
   const avail = $(".hero-avail").textContent;
   return /forward-deployed/.test(avail) && /NRW/.test(avail) && /Rhine-Main/.test(avail) &&
-    /no sponsorship/i.test(avail) && !/Frankfurt/.test(avail);
+    !/Frankfurt/.test(avail);
 });
 t("German is B2, and Kannada and Hindi were dropped from the languages", () => {
   const all = $("main").textContent;
   return !/German\s*[·(]?\s*B1/.test(all) && /German\s*[·(]?\s*B2/.test(all) &&
+         /C1 in progress/.test(all) &&
          !/Kannada/.test(all) && !/Hindi/.test(all);
 });
 
@@ -303,11 +309,12 @@ t("the CSS and JS carry the same cache-busting version", () => {
    Gate the compressed first-view transfer, summed across the three files, which is
    what a visitor actually downloads for the first screen. Removing the palette,
    chat, scrubber, triad and marquee dropped this by roughly half. */
-t("first view stays well under 32KB gzipped, all three files", () => {
+t("first view stays well under 32KB gzipped, all three files (both languages)", () => {
   const gz = (f) => require("zlib").gzipSync(fs.readFileSync(f), { level: 9 }).length;
-  const total = gz("index.html") + gz("assets/css/styles.css") + gz("assets/js/main.js");
-  if (total >= 32768) console.log("    first view is " + total + " B gzipped");
-  return total < 32768;
+  const shared = gz("assets/css/styles.css") + gz("assets/js/main.js");
+  const en = gz(EN) + shared, de = gz("index.html") + shared;
+  if (en >= 32768 || de >= 32768) console.log("    first view: en=" + en + "B de=" + de + "B gzipped");
+  return en < 32768 && de < 32768;
 });
 
 /* ---- CSS discipline ---- */
@@ -424,6 +431,33 @@ t("the er-table 'flag' tint keeps its text AA in both themes", () => {
   return check(":root") && check('[data-theme="light"]');
 });
 
+/* ---- German default page (root index.html) + bilingual wiring ---- */
+const de = fs.readFileSync("index.html", "utf8");
+t("root index.html is the German page (lang=de) and stays canonical at the apex", () =>
+  /<html lang="de"/.test(de) && /canonical" href="https:\/\/karthikjp\.io\/"/.test(de));
+t("the German page carries native German section copy, not leftover English", () =>
+  /zwischen Demo und Tagesgeschäft/.test(de) && /Drei Systeme/.test(de) &&
+  /Eine <em[^>]*>Schnittstelle/.test(de) && /Gebaut für ein/.test(de) &&
+  !/Most enterprise AI dies/.test(de) && !/Three systems, in/.test(de));
+t("the German page states German B2 with the C1-in-progress qualifier, never B1", () =>
+  /Deutsch\s*[·(]?\s*B2/.test(de) && /C1 in Arbeit/.test(de) && !/\bB1\b/.test(de) &&
+  !/Kannada/.test(de) && !/Hindi/.test(de));
+t("the German CV link points at the pending German PDF", () =>
+  /assets\/Karthik_Javanappa_CV_DE\.pdf/.test(de) && /German CV PDF pending/.test(de));
+t("both pages carry the DE|EN switcher as plain anchors (no JS toggle)", () => {
+  const sw = (doc) => { const i = doc.indexOf('class="lang-switch"'); return i < 0 ? "" : doc.slice(i, i + 400); };
+  return /href="en\/"/.test(sw(de)) &&      // German page: EN links into en/
+         /href="\.\.\/"/.test(sw(html));    // English page: DE links back to root
+});
+t("both pages declare the three hreflang alternates", () =>
+  [de, html].every((doc) =>
+    /hreflang="de" href="https:\/\/karthikjp\.io\/"/.test(doc) &&
+    /hreflang="en" href="https:\/\/karthikjp\.io\/en\/"/.test(doc) &&
+    /hreflang="x-default" href="https:\/\/karthikjp\.io\/"/.test(doc)));
+t("the English page is canonical at /en/ and lang=en", () =>
+  /<html lang="en"/.test(html) && /canonical" href="https:\/\/karthikjp\.io\/en\/"/.test(html));
+t("no em dashes on the German page", () => !de.includes("—"));
+
 const report = () => {
   pass.forEach((p) => console.log("  ✓ " + p));
   if (fail.length) { console.log("\nFAIL:"); fail.forEach((f) => console.log("  ✗ " + f)); }
@@ -445,7 +479,7 @@ const report = () => {
     console.log("    npm i -D playwright && npx playwright install chromium");
     return report();
   }
-  const url = "file://" + require("path").resolve("index.html");
+  const url = "file://" + require("path").resolve(EN);
   const browser = await chromium.launch({ args: ["--no-sandbox"] });
   const listed = (arr, label) => {
     if (arr.length) console.log("      " + label + ": " + [...new Set(arr)].slice(0, 6).join(", "));

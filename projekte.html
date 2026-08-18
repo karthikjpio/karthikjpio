@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projekte · Karthik Javanappa</title>
+  <meta name="description" content="Das vollständige Register der AI-Systeme, die Karthik Javanappa gebaut, konzipiert und ausgeliefert hat: Due-Diligence-Agenten, Dokumenten-Q&A, Entity Resolution, eine live laufende Job-Search-Pipeline und Open-Source-Tools in Arbeit. Shipped, live, local und planned, mit ehrlichen Status." />
+  <meta name="author" content="Karthik Javanappa" />
+  <link rel="canonical" href="https://karthikjp.io/projekte.html" />
+
+  <link rel="alternate" hreflang="de" href="https://karthikjp.io/projekte.html" />
+  <link rel="alternate" hreflang="en" href="https://karthikjp.io/en/projekte.html" />
+  <link rel="alternate" hreflang="x-default" href="https://karthikjp.io/projekte.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Projekte · Karthik Javanappa" />
+  <meta property="og:description" content="Das vollständige Register der AI-Systeme, die Karthik Javanappa gebaut, konzipiert und ausgeliefert hat. Shipped, live, local und planned, mit ehrlichen Status." />
+  <meta property="og:url" content="https://karthikjp.io/projekte.html" />
+  <meta property="og:image" content="https://karthikjp.io/assets/img/Portrait.jpeg" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230a0c10'/%3E%3Ctext x='50' y='70' font-family='monospace' font-size='58' font-weight='700' text-anchor='middle' fill='%234ade80'%3E%3E_%3C/text%3E%3C/svg%3E" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="assets/css/styles.css?v=20260818a" />
+  <link rel="stylesheet" href="assets/css/projects.css?v=20260818a" />
+
+  <!-- Thema vor dem ersten Paint. main.js läuft nach dem Body, was einem
+       zurückkehrenden Hell-Besucher einen Dunkel-Blitz gab. Gleiches try/catch wie dort. -->
+  <script>
+    try { var s = localStorage.getItem("kj-theme"); if (s) document.documentElement.setAttribute("data-theme", s); } catch (e) {}
+  </script>
+</head>
+<body>
+
+  <!-- ===================== NAV ===================== -->
+  <header class="nav" id="nav">
+    <div class="container nav-inner">
+      <a href="index.html" class="brand" aria-label="Karthik Javanappa, Startseite">
+        <span class="prompt" aria-hidden="true">~/</span>karthik<span class="caret" aria-hidden="true"></span>
+      </a>
+
+      <nav class="nav-links" id="navLinks" aria-label="Primär">
+        <a href="index.html#work">systeme</a>
+        <a href="index.html#overlap">schnittstelle</a>
+        <a href="index.html#experience">werdegang</a>
+        <a href="index.html#contact">kontakt</a>
+      </nav>
+
+      <div class="nav-actions">
+        <span class="lang-switch" aria-label="Sprache" style="display:inline-flex;align-items:center;gap:6px;font-family:var(--mono,ui-monospace,monospace);font-size:13px;margin-right:2px;">
+          <span aria-current="true" style="color:var(--accent);font-weight:600;">DE</span>
+          <span aria-hidden="true" style="color:var(--faint);">|</span>
+          <a href="en/projekte.html" hreflang="en" style="color:var(--muted);text-decoration:none;">EN</a>
+        </span>
+        <button class="icon-btn theme-toggle" id="themeToggle" aria-label="Farbthema umschalten" title="Thema umschalten">
+          <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+          <svg class="moon" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        </button>
+        <!-- TODO: German CV PDF pending -->
+        <a href="assets/Karthik_Javanappa_CV_DE.pdf" class="btn btn-ghost nav-cta" download>cv.pdf ↓</a>
+        <button class="icon-btn nav-toggle" id="navToggle" aria-label="Menü öffnen" aria-expanded="false" aria-controls="navLinks">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section" id="projects">
+      <div class="container">
+        <a class="back-link" href="index.html">← Zurück zur Startseite</a>
+
+        <div class="section-head">
+          <p class="eyebrow">// vollständiges register</p>
+          <h2>Projekte</h2>
+          <p>Jedes System, das ich gebaut, ausgeliefert oder konzipiert habe: ausgeliefert in einer Firma, live in meinem eigenen Stack, lokal auf dieser Seite oder noch geplant. Die Status bilden die Realität ab, nicht den Anspruch.</p>
+        </div>
+
+        <div class="registry">
+          <div class="reg-head" aria-hidden="true">
+            <span>id</span><span>system</span><span>status</span><span>umgebung</span>
+          </div>
+
+          <!-- ── shipped @ EY-Parthenon ─────────────────────────────── -->
+          <details class="sys" name="registry" open>
+            <summary>
+              <span class="sys-id">01</span>
+              <span class="sys-name"><b>due-diligence-agents</b><small>Agentische Recherche für Commercial Due Diligence</small></span>
+              <span class="sys-status s-shipped"><i></i>shipped</span>
+              <span class="sys-env">EY-Parthenon</span>
+              <span class="sys-chev" aria-hidden="true">▸</span>
+              <!-- nur in der ersten Zeile, und nur bis eine Zeile geöffnet wird -->
+              <span class="sys-poke" aria-hidden="true">zum Öffnen klicken</span>
+            </summary>
+            <div class="sys-body">
+              <div class="pc-tags"><span>n8n</span><span>Claude</span><span>Websuche</span></div>
+              <dl class="pc-pai">
+                <div><dt>Problem</dt><dd>Target-Benchmarking und Peer-Recherche in der Due Diligence sind repetitiv, manuell und über Teams hinweg inkonsistent.</dd></div>
+                <div><dt>Ansatz</dt><dd>KI-Agenten in n8n, die LLM-Reasoning mit Live-Websuche orchestrieren und strukturierte, quellenverlinkte Ergebnisse liefern.</dd></div>
+                <div><dt>Wirkung</dt><dd>Die Peer-Auswahl wurde <b>wiederholbar und erklärbar</b> statt analystenabhängig, und genau das machte Partner bereit, das Ergebnis vor dem Kunden zu vertreten. Mehrere Berater-Tage Peer-Analyse schrumpften auf unter 40 Minuten; das Tempo war der Nebeneffekt, die Belastbarkeit war der Punkt.</dd></div>
+              </dl>
+              <p class="sys-more">Getrennte Workflows übernehmen Target-Screening, Peer-Identifikation und Kennzahlen-Erhebung. Jeder Agent zerlegt die Recherchefrage, führt Suchen parallel aus, validiert Ergebnisse gegen mehrere Quellen und schreibt sie in eine einheitliche Vorlage, sodass zwei Teams, die denselben Markt recherchieren, nicht länger zwei verschiedene Antworten produzieren.</p>
+
+              <!-- Das Constraint-Ledger. Nur wer im Raum war, weiß, was der Raum
+                   abgelehnt hat, und genau darum steht es hier. -->
+              <div class="ledger">
+                <div class="led-col led-no">
+                  <h3 class="led-title">Was der Raum nicht ändern wollte</h3>
+                  <ul>
+                    <li>keine Kundendaten verlassen den Tenant</li>
+                    <li>das Ergebnis muss in die bestehende Vorlage der Firma passen</li>
+                    <li>jede Zahl auf eine Quelle zurückführbar, sonst unbrauchbar</li>
+                    <li>kein Onboarding neuer Anbieter</li>
+                  </ul>
+                </div>
+                <div class="led-col led-yes">
+                  <h3 class="led-title">Was trotzdem ausgeliefert wurde</h3>
+                  <ul>
+                    <li>parallele Suche mit quellenübergreifender Validierung</li>
+                    <li>Quellenlink an jeder erhobenen Kennzahl</li>
+                    <li>Peer-Auswahl erklärbar gemacht, nicht analystenabhängig</li>
+                    <li>eine 90-minütige Session, die es an das Team übergab</li>
+                  </ul>
+                </div>
+              </div>
+              <p class="adopt"><b>Go-live</b> 2026 · <b>im täglichen Einsatz</b> bei der Übergabe, Juni 2026 · <b>Nutzung nach der Übergabe</b> nicht gemessen. Ich bin gegangen, bevor ich es instrumentieren konnte, und das sage ich lieber, als eine Zahl zu nennen, die ich nicht habe.</p>
+            </div>
+          </details>
+
+          <details class="sys" name="registry">
+            <summary>
+              <span class="sys-id">02</span>
+              <span class="sys-name"><b>deepquery-agent</b><small>Automatisiertes Dokumenten-Q&amp;A für Projektteams</small></span>
+              <span class="sys-status s-shipped"><i></i>shipped</span>
+              <span class="sys-env">EY-Parthenon</span>
+              <span class="sys-chev" aria-hidden="true">▸</span>
+            </summary>
+            <div class="sys-body">
+              <div class="pc-tags"><span>Copilot Studio</span><span>SharePoint</span><span>LLM</span></div>
+              <dl class="pc-pai">
+                <div><dt>Problem</dt><dd>Teams beantworten lange Listen wiederkehrender Fragen aus hunderten Seiten Projektdokumenten. Langsam und fehleranfällig.</dd></div>
+                <div><dt>Ansatz</dt><dd>Ein Copilot-Studio-Agent: eine Excel-Fragenliste und PDF-Quellen hochladen, der Agent verarbeitet sie in Batches und schreibt die Antworten Zeile für Zeile zurück.</dd></div>
+                <div><dt>Wirkung</dt><dd>Reduziert die manuelle Dokumentenprüfung auf einen Bruchteil; wiederverwendbar über neue und bestehende Projekte.</dd></div>
+              </dl>
+              <p class="sys-more">Der Agent erzeugt SharePoint-Upload-Links, überwacht das Repository auf neue Dateien, verarbeitet Fragensätze in Batches gegen die Quelldokumente und erstellt Zusammenfassungen pro Batch. Der Fortschritt ist in Echtzeit über die OneDrive-synchronisierte Excel-Datei sichtbar, sodass Nutzer die Antworten erscheinen sehen, während der Agent arbeitet.</p>
+
+              <div class="ledger">
+                <div class="led-col led-no">
+                  <h3 class="led-title">Was der Raum nicht ändern wollte</h3>
+                  <ul>
+                    <li>Excel ist die Oberfläche, nicht verhandelbar</li>
+                    <li>SharePoint-Berechtigungen, geerbt</li>
+                    <li>16&nbsp;MB Dateigrenze</li>
+                    <li>gescannte PDFs ohne Textebene</li>
+                  </ul>
+                </div>
+                <div class="led-col led-yes">
+                  <h3 class="led-title">Was trotzdem ausgeliefert wurde</h3>
+                  <ul>
+                    <li>Antworten Zeile für Zeile in ihr eigenes Sheet zurückgeschrieben</li>
+                    <li>Batching, damit die Grenze nicht mehr blockiert</li>
+                    <li>Fortschritt live sichtbar in der Datei, die sie ohnehin offen hatten</li>
+                    <li>wiederverwendbar über neue und bestehende Projekte</li>
+                  </ul>
+                </div>
+              </div>
+              <p class="adopt"><b>prägende Einschränkung</b> der Kunde wollte keine neue UI übernehmen, also wurde die UI zur Tabelle, die er ohnehin schon nutzte. <b>OCR auf gescannten Seiten</b> blieb unzuverlässig: eine bekannte offene Kante, kein gelöstes Problem.</p>
+            </div>
+          </details>
+
+          <details class="sys" name="registry">
+            <summary>
+              <span class="sys-id">03</span>
+              <span class="sys-name"><b>proposal-engine</b><small>LLM-gestützte Wissenssuche über frühere Angebote</small></span>
+              <span class="sys-status s-shipped"><i></i>shipped</span>
+              <span class="sys-env">EY-Parthenon</span>
+              <span class="sys-chev" aria-hidden="true">▸</span>
+            </summary>
+            <div class="sys-body">
+              <div class="pc-tags"><span>Claude</span><span>Copilot Studio</span><span>Graph API</span></div>
+              <dl class="pc-pai">
+                <div><dt>Problem</dt><dd>Jahre an RFP- und Angebotswissen liegen in verstreuten Dateien; Teams bauen Inhalte von Grund auf neu und fragen herum nach Präzedenzfällen.</dd></div>
+                <div><dt>Ansatz</dt><dd>Ein zentrales Repository mit LLM-basierter Metadaten-Extraktion und einer Parent/Child-Agenten-Pipeline für die Suche, zugänglich über eine Chat-Oberfläche.</dd></div>
+                <div><dt>Wirkung</dt><dd>MVP im Einsatz beim Team. Ehrliche Grenzen dieses MVP: eine 16&nbsp;MB Dateigrenze, unzuverlässige OCR bei gescannten Dokumenten, keine semantische Suche und keine teamspezifische Zugriffskontrolle, was genau der Grund ist, warum das Redesign unten existiert. Die Suchzeit verbesserte sich; ich habe es nie instrumentiert, also nenne ich keine Zahl.</dd></div>
+              </dl>
+              <p class="sys-more">Das MVP läuft auf Copilot Studio mit SharePoint-Speicher und automatischen Benachrichtigungen. Das Redesign, das ich vor der Übergabe konzipiert habe, verlagert es in eine VS-Code-Erweiterung auf GitHub Copilot Chat, mit Claude als LLM und der Microsoft Graph API für semantische Suche über teamspezifische Repositories, was die Grenzen des MVP bei Dateigröße, OCR und Zugriffskontrolle aufhebt. Ich habe die Firma im Juni 2026 verlassen, ob dieses Redesign tatsächlich gebaut wurde, kann ich also nicht für mich beanspruchen.</p>
+            </div>
+          </details>
+
+          <details class="sys" name="registry">
+            <summary>
+              <span class="sys-id">04</span>
+              <span class="sys-name"><b>entity-resolution</b><small>Firmennamen-Bereinigung für M&amp;A-Analytik</small></span>
+              <span class="sys-status s-shipped"><i></i>shipped</span>
+              <span class="sys-env">EY-Parthenon</span>
+              <span class="sys-chev" aria-hidden="true">▸</span>
+            </summary>
+            <div class="sys-body">
+              <div class="pc-tags"><span>Python</span><span>ML</span><span>Azure</span></div>
+              <dl class="pc-pai">
+                <div><dt>Problem</dt><dd>M&amp;A-Datensätze stecken voller unsauberer Firmennamen und unklarer Eigentümerstrukturen; manuelle Bereinigung frisst Analystenzeit.</dd></div>
+                <div><dt>Ansatz</dt><dd>Eine modulare Pipeline, die deterministische Regeln, ML-Matching und gezielte Websuche kombiniert, um Namen zu bereinigen und Mutter-Tochter-Beziehungen abzubilden.</dd></div>
+                <div><dt>Wirkung</dt><dd>Reduzierte den manuellen Aufwand und verbesserte die Konsistenz der Entitätsdaten über die M&amp;A-Analytik hinweg.</dd></div>
+              </dl>
+              <p class="sys-more">Deterministische Regeln fangen die häufigen Normalisierungsfälle günstig ab, ein ML-Matcher löst Beinahe-Duplikate auf, und die Websuche übernimmt den langen Schwanz mehrdeutiger Entitäten. Jede Stufe eskaliert nur, was sie nicht selbst lösen kann, was die Pipeline schnell und nachvollziehbar hält. Dieselbe Architektur trägt nachgelagerte Benchmarking- und Peer-Recherche-Workflows.</p>
+            </div>
+          </details>
+
+          <!-- ── live personal systems ──────────────────────────────── -->
+          <details class="sys" name="registry">
+            <summary>
+              <span class="sys-id">05</span>
+              <span class="sys-name"><b>job-search-agents</b><small>Autonome Pipeline, die Stellen findet und jede Bewerbung maßschneidert</small></span>
+              <span class="sys-status s-live"><i></i>live</span>
+              <span class="sys-env">eigener Stack</span>
+              <span class="sys-chev" aria-hidden="true">▸</span>
+            </summary>
+            <div class="sys-body">
+              <div class="pc-tags"><span>Claude-Agenten</span><span>Airtable</span><span>Agent Skills</span></div>
+              <dl class="pc-pai">
+                <div><dt>Problem</dt><dd>Sich gut zu bewerben kostet Stunden pro Stelle, und gute Ausschreibungen rutschen durch, während man noch die letzte maßschneidert.</dd></div>
+                <div><dt>Ansatz</dt><dd>Eine Pipeline aus zwei Agenten. Ein Discovery-Agent scannt neue Ausschreibungen und bewertet jede gegen ein strukturiertes Archiv meiner Erfahrung, und schreibt bewertete Leads in einen Airtable-Tracker. Ein Bewerbungs-Agent nimmt dann einen eingereihten Lead und erstellt einen maßgeschneiderten Lebenslauf, ein Anschreiben und einen Unternehmens-One-Pager, legt alles in einen datierten Bewerbungsordner und aktualisiert den Tracker.</dd></div>
+                <div><dt>Wirkung</dt><dd>Jede Bewerbung ist wirklich maßgeschneidert, nichts fällt durchs Raster, und die gesamte Pipeline ist auf einem Dashboard sichtbar. Läuft täglich in meiner eigenen Suche.</dd></div>
+              </dl>
+              <p class="sys-more">Gebaut als Claude Agent Skills mit Airtable als System of Record: eine Searches-Tabelle speist den Discovery-Agenten, bewertete Leads landen in einer Prüf-Queue, und das Verschieben eines Leads in die „Queue“ löst den Bewerbungs-Workflow aus. Wenn Sie als Recruiter eine maßgeschneiderte Bewerbung von mir lesen, hat dieses System die erste Fassung mit einiger Wahrscheinlichkeit entworfen.</p>
+            </div>
+          </details>
+
+          <details class="sys" name="registry">
+            <summary>
+              <span class="sys-id">06</span>
+              <span class="sys-name"><b>ask-my-ai</b><small>Der Recruiter-Chatbot, der auf der Startseite läuft</small></span>
+              <span class="sys-status s-local"><i></i>local</span>
+              <span class="sys-env">diese Seite</span>
+              <span class="sys-chev" aria-hidden="true">▸</span>
+            </summary>
+            <div class="sys-body">
+              <div class="pc-tags"><span>n8n</span><span>Webhook</span><span>vanilla JS</span></div>
+              <dl class="pc-pai">
+                <div><dt>Problem</dt><dd>Recruiter überfliegen. Sie haben eine konkrete Frage („Hat er X gemacht?“) und eine statische Seite zwingt sie zum Suchen.</dd></div>
+                <div><dt>Ansatz</dt><dd>Das Chat-Widget in der Ecke der Startseite. Zwei Stufen: eine abhängigkeitsfreie, keyword-basierte Wissensbasis, die in die Seite eingebacken ist, und ein n8n-LLM-Workflow hinter einem Webhook, auf den es transparent hochschaltet, sobald der Endpunkt gesetzt ist.</dd></div>
+                <div><dt>Status</dt><dd><b>Läuft gerade auf der lokalen Stufe.</b> Der Webhook ist nicht gesetzt, also bekommen Sie tippfehler-tolerantes Keyword-Matching über eine handgeschriebene Wissensbasis, kein LLM. Aus diesem Grund als <code>local</code> statt <code>live</code> gekennzeichnet. Probieren Sie es trotzdem, unten rechts auf der Startseite.</dd></div>
+              </dl>
+              <p class="sys-more">Abhängigkeitsfreies JavaScript, Fuzzy-Matching, bewusst eingebautes Graceful Degradation. Der Fallback ist das Produkt, bis ich entscheide, dass die gehostete Stufe die laufenden Kosten wert ist. Ich zeige Ihnen lieber die ehrliche Stufe, als das hier als <code>live</code> zu labeln und mich dabei erwischen zu lassen.</p>
+            </div>
+          </details>
+
+          <!-- ── planned. bewusst undatiert: siehe die Ehrlichkeitsnotiz unten ── -->
+          <details class="sys" name="registry">
+            <summary>
+              <span class="sys-id">07</span>
+              <span class="sys-name"><b>peerbench</b><small>Open-Source-Agent für Peer-Benchmarking · öffentlicher Zwilling von System 01</small></span>
+              <span class="sys-status s-planned"><i></i>planned</span>
+              <span class="sys-env">nicht begonnen</span>
+              <span class="sys-chev" aria-hidden="true">▸</span>
+            </summary>
+            <div class="sys-body">
+              <div class="pc-tags"><span>Python</span><span>Claude API</span><span>Websuche</span></div>
+              <dl class="pc-pai">
+                <div><dt>Problem</dt><dd>Meine Due-Diligence-Agenten leben hinter den Mauern einer Firma, deshalb kann ich Ihnen den Code nicht zeigen. Diesen hier werden Sie selbst ausführen können.</dd></div>
+                <div><dt>Ansatz</dt><dd>Geben Sie ihm ein Zielunternehmen; er identifiziert Peers, sammelt vergleichbare Kennzahlen per Live-Websuche, validiert über Quellen hinweg und gibt eine quellenbelegte Vergleichstabelle plus ein kurzes Benchmarking-Memo aus.</dd></div>
+                <div><dt>Status</dt><dd>Konzipiert, nicht begonnen. Kein Datum, weil ich schon einmal eines genannt und verpasst habe. Der Repo-Link erscheint hier, sobald der Code öffentlich ist, und keinen Tag früher.</dd></div>
+              </dl>
+            </div>
+          </details>
+
+          <details class="sys" name="registry">
+            <summary>
+              <span class="sys-id">08</span>
+              <span class="sys-name"><b>dataroom-qa</b><small>Zitatgestütztes Dokumenten-Q&amp;A · öffentlicher Zwilling von System 02</small></span>
+              <span class="sys-status s-planned"><i></i>planned</span>
+              <span class="sys-env">nicht begonnen</span>
+              <span class="sys-chev" aria-hidden="true">▸</span>
+            </summary>
+            <div class="sys-body">
+              <div class="pc-tags"><span>Python</span><span>RAG</span><span>Zitate</span></div>
+              <dl class="pc-pai">
+                <div><dt>Problem</dt><dd>Data-Room-Q&amp;A-Tools, die die Seite, aus der eine Antwort stammt, nicht zitieren können, sind in der Due Diligence unbrauchbar.</dd></div>
+                <div><dt>Ansatz</dt><dd>PDFs und eine Fragenliste (CSV/Excel) einwerfen; es beantwortet jede Frage mit seitengenauen Zitaten und markiert die, die es nicht in den Dokumenten belegen kann. Ablehnen schlägt Halluzinieren.</dd></div>
+                <div><dt>Status</dt><dd>Konzipiert, nicht begonnen. Kein Datum, weil ich schon einmal eines genannt und verpasst habe. Der Repo-Link erscheint hier, sobald der Code öffentlich ist, und keinen Tag früher.</dd></div>
+              </dl>
+            </div>
+          </details>
+
+          <details class="sys" name="registry">
+            <summary>
+              <span class="sys-id">09</span>
+              <span class="sys-name"><b>market-sizer</b><small>TAM/SAM/SOM-Schätzungsagent mit nachvollziehbarem Annahmenbaum</small></span>
+              <span class="sys-status s-planned"><i></i>planned</span>
+              <span class="sys-env">nicht begonnen</span>
+              <span class="sys-chev" aria-hidden="true">▸</span>
+            </summary>
+            <div class="sys-body">
+              <div class="pc-tags"><span>Python</span><span>Claude API</span><span>Structured Output</span></div>
+              <dl class="pc-pai">
+                <div><dt>Problem</dt><dd>LLMs geben einem bereitwillig eine Marktgröße, ohne dass man die Rechnung prüfen kann.</dd></div>
+                <div><dt>Ansatz</dt><dd>Beschreiben Sie einen Markt; der Agent baut eine Top-down- und Bottom-up-Schätzung als expliziten Annahmenbaum: jede Zahl belegt oder als Annahme markiert, die Sie bearbeiten können, wobei sich die Schätzung aus Ihren Eingaben neu berechnet.</dd></div>
+                <div><dt>Status</dt><dd>Konzipiert, nicht begonnen. Kein Datum, weil ich schon einmal eines genannt und verpasst habe. Der Repo-Link erscheint hier, sobald der Code öffentlich ist, und keinen Tag früher.</dd></div>
+              </dl>
+            </div>
+          </details>
+        </div>
+
+        <p class="reg-foot"><span class="dep-label">// Ehrlichkeitsprinzip</span> Die Status auf dieser Seite bilden die Realität ab, nicht den Anspruch. Drei dieser Einträge sagten „Auslieferung Juli 2026“ und wurden nicht ausgeliefert, also sagen sie jetzt <b>planned</b> ganz ohne Datum. Ein überfälliges Versprechen kostet mehr als ein ausgebliebenes. Dieselbe Regel für den Chatbot: Er ist als <b>local</b> gekennzeichnet, nicht als <b>live</b>, weil die gehostete Stufe abgeschaltet ist.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="index.html" class="brand"><span class="prompt" aria-hidden="true">~/</span>karthik</a>
+          <p>Forward Deployed AI Engineer. Ich gehe in den Raum, finde, wo der Workflow bricht, und liefere den Agenten, der es behebt.</p>
+        </div>
+        <div class="footer-cols">
+          <div class="footer-col">
+            <h5>entdecken</h5>
+            <a href="index.html#work">Systeme</a>
+            <a href="index.html#overlap">Schnittstelle</a>
+            <a href="index.html#experience">Werdegang</a>
+          </div>
+          <div class="footer-col">
+            <h5>verbinden</h5>
+            <a href="mailto:kjavanappa@gmail.com">E-Mail</a>
+            <a href="https://www.linkedin.com/in/karthikjp/" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="https://github.com/karthikjpio" target="_blank" rel="noopener">GitHub</a>
+            <a href="https://x.com/karthikjpio" target="_blank" rel="noopener">X</a>
+            <a href="assets/Karthik_Javanappa_CV_DE.pdf" download>Lebenslauf herunterladen</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© <span id="year">2026</span> Karthik Javanappa · karthikjp.io · handgebaut, kein Template. Quelltext ansehen und prüfen.</p>
+        <div class="footer-social">
+          <a href="https://www.linkedin.com/in/karthikjp/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM10 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.4c0-1.3-.02-2.96-1.8-2.96-1.8 0-2.08 1.4-2.08 2.86V21h-4z"/></svg></a>
+          <a href="https://github.com/karthikjpio" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5A11.5 11.5 0 0 0 .5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-1.98c-3.2.7-3.87-1.54-3.87-1.54-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .96-.31 3.15 1.18a10.9 10.9 0 0 1 5.74 0c2.18-1.49 3.14-1.18 3.14-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.69 5.39-5.25 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.68.8.56A11.5 11.5 0 0 0 12 .5z"/></svg></a>
+          <a href="https://x.com/karthikjpio" target="_blank" rel="noopener" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-7 8 8.2 12h-6.4l-5-7.3L5.9 22H2.8l7.5-8.6L2.5 2H9l4.7 6.9z"/></svg></a>
+          <a href="mailto:kjavanappa@gmail.com" aria-label="E-Mail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <a href="#projects" class="to-top" id="toTop" aria-label="Nach oben">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+  </a>
+
+  <script src="assets/js/main.js?v=20260818a"></script>
+</body>
+</html>
