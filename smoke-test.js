@@ -83,10 +83,10 @@ t("exactly one filled accent button above the fold", () => {
   const above = [...$$(".nav .btn-primary"), ...$$(".hero .btn-primary")];
   return above.length === 1;
 });
-t("the hero states the overlap thesis and the four-systems claim", () => {
+t("the hero states the overlap thesis and the role triad", () => {
   const hero = $(".hero").textContent;
   return /overlap between AI engineering and strategy consulting/.test(hero) &&
-    /Four AI systems shipped/.test(hero) && /Founder\. Consultant\. Engineer\./.test(hero);
+    /Founder\. Consultant\. Engineer\./.test(hero);
 });
 t("employer names survive as a quiet static credit line, not a marquee", () => {
   const credit = $(".hero .credit");
