@@ -7,9 +7,9 @@
 <meta name="theme-color" content="#121319" media="(prefers-color-scheme: dark)">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<link rel="manifest" href="manifest.webmanifest?v=7">
+<link rel="manifest" href="manifest.webmanifest?v=8">
 <link rel="apple-touch-icon" href="icon-180.png">
-<title>Vokabel B2</title>
+<title>Lernvokabeln</title>
 <style>
 :root{
   --bg:#f4f1ea; --bg2:#ece7dc; --card:#fffdf9; --card2:#fbf8f1;
@@ -54,11 +54,14 @@ input,textarea{font-family:inherit}
 /* ---------- HOME ---------- */
 #home{flex:1; min-height:0; display:flex; flex-direction:column}
 .brand{display:flex; align-items:center; gap:10px; padding:6px 2px 2px}
-.brand .logo{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-weight:800;color:#fff;
+.brand .logo{width:36px;height:36px;border-radius:11px;display:grid;place-items:center;font-size:21px;line-height:1;
   background:linear-gradient(135deg,var(--der),var(--die) 55%,var(--das)); box-shadow:0 6px 16px rgba(var(--shadow),.18)}
 .brand h1{font-size:19px; margin:0; letter-spacing:-.02em}
 .brand .sub{font-size:12px; color:var(--muted); margin-top:1px}
-.streak{margin-left:auto; font-size:13px; font-weight:700; color:var(--muted); display:flex; align-items:center; gap:5px; cursor:pointer}
+.tbtn{margin-left:auto; width:36px;height:36px;border-radius:11px; background:var(--soft); display:grid; place-items:center; font-size:17px; line-height:1}
+.tbtn:active{transform:scale(.9)}
+.streak{margin-left:9px; font-size:13px; font-weight:700; color:var(--muted); display:flex; align-items:center; gap:5px; cursor:pointer;
+  background:var(--soft); padding:8px 11px; border-radius:11px}
 .goal{display:flex; align-items:center; gap:13px; background:var(--card); border:1px solid var(--line);
   border-radius:16px; padding:12px 14px; margin-top:12px}
 .goal .ring{width:46px;height:46px}
@@ -93,8 +96,10 @@ input,textarea{font-family:inherit}
 .ring b{position:relative; font-size:13px; font-weight:800}
 .foot{display:flex; gap:10px; margin-top:12px}
 .foot button{flex:1; font-size:13px; font-weight:700; color:var(--muted); background:var(--soft); border-radius:12px; padding:11px}
-.version{text-align:center; font-size:11px; letter-spacing:.04em; color:var(--muted); opacity:.65; margin-top:12px; padding-bottom:4px}
-.version a{color:inherit}
+.madeby{text-align:center; font-size:11px; color:var(--muted); opacity:.72; margin-top:12px; padding-bottom:4px}
+.madeby a{color:inherit; font-weight:700; text-decoration:none}
+.madeby a:hover{text-decoration:underline}
+.verscroll{text-align:center; font-size:11px; letter-spacing:.04em; color:var(--muted); opacity:.5; padding:8px 0 2px}
 
 /* ---------- STUDY ---------- */
 #study{flex:1; display:flex; flex-direction:column; min-height:0}
@@ -291,8 +296,9 @@ input,textarea{font-family:inherit}
   <!-- HOME -->
   <div id="home">
     <div class="brand">
-      <div class="logo">V</div>
-      <div><h1>Vokabel B2</h1><div class="sub">Kompass DaF · Lektion 1–5</div></div>
+      <div class="logo">🐝</div>
+      <div><h1>Lernvokabeln</h1><div class="sub">Kompass B2 DaF · Lektion 1–5</div></div>
+      <button class="tbtn" id="themeToggle" title="Hell / Dunkel">🌙</button>
       <div class="streak" id="streak" title="Fortschritt">🔥 <span id="streakN">0</span></div>
     </div>
 
@@ -308,10 +314,9 @@ input,textarea{font-family:inherit}
 
     <div class="foot">
       <button id="statsBtn">📊 Fortschritt</button>
-      <button id="themeBtn">🌓 Design</button>
       <button id="resetBtn">↺ Reset</button>
     </div>
-    <div class="version">v1.3 · <a href="CHANGELOG.md">Änderungen</a></div>
+    <div class="madeby">Gebaut von <a href="https://karthikjp.io" target="_blank" rel="noopener">karthikjp.io</a></div>
   </div>
 
   <!-- STUDY -->
@@ -403,12 +408,12 @@ input,textarea{font-family:inherit}
 </div>
 <div class="toast" id="toast"></div>
 
-<script src="emoji.js?v=7"></script>
-<script src="deck_l1.js?v=7"></script>
-<script src="deck_l2.js?v=7"></script>
-<script src="deck_l3.js?v=7"></script>
-<script src="deck_l4.js?v=7"></script>
-<script src="deck_l5.js?v=7"></script>
-<script src="app.js?v=7"></script>
+<script src="emoji.js?v=8"></script>
+<script src="deck_l1.js?v=8"></script>
+<script src="deck_l2.js?v=8"></script>
+<script src="deck_l3.js?v=8"></script>
+<script src="deck_l4.js?v=8"></script>
+<script src="deck_l5.js?v=8"></script>
+<script src="app.js?v=8"></script>
 </body>
 </html>

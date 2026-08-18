@@ -198,6 +198,10 @@ function renderHome(){
   soon.className="soon";
   soon.innerHTML='<span>🚧</span> Weitere Lektionen kommen bald';
   list.appendChild(soon);
+  const ver=document.createElement("div");
+  ver.className="verscroll";
+  ver.textContent="v1.3";
+  list.appendChild(ver);
   // daily goal
   const n=todayCount(), goal=store.goal||20, gp=Math.min(100, Math.round(n/goal*100));
   $("#goalRing").style.setProperty("--p", gp);
@@ -694,11 +698,16 @@ $("#pText").addEventListener("input",e=>{
 $("#statsBtn").onclick=()=>show("stats");
 $("#statsBack").onclick=()=>show("home");
 $("#streak").onclick=()=>show("stats");
-$("#themeBtn").onclick=()=>{
-  const cur=document.documentElement.getAttribute("data-theme");
-  const nx=cur==="dark"?"light":cur==="light"?null:"dark";
-  if(nx) document.documentElement.setAttribute("data-theme",nx); else document.documentElement.removeAttribute("data-theme");
-  store.theme=nx; save();
+function effectiveTheme(){
+  const t=document.documentElement.getAttribute("data-theme");
+  if(t) return t;
+  return (window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light";
+}
+function updateThemeIcon(){ $("#themeToggle").textContent = effectiveTheme()==="dark" ? "☀️" : "🌙"; }
+$("#themeToggle").onclick=()=>{
+  const nx = effectiveTheme()==="dark" ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", nx);
+  store.theme=nx; save(); updateThemeIcon();
 };
 $("#resetBtn").onclick=()=>{
   if(confirm("Gesamten Lernfortschritt zurücksetzen?")){ store=fresh(); save(); renderHome(); toast("Zurückgesetzt"); }
@@ -713,6 +722,8 @@ document.addEventListener("keydown",e=>{
 });
 
 if(store.theme) document.documentElement.setAttribute("data-theme",store.theme);
+updateThemeIcon();
+if(window.matchMedia) matchMedia("(prefers-color-scheme: dark)").addEventListener("change", ()=>{ if(!store.theme) updateThemeIcon(); });
 $("#soundBtn").textContent=store.sound?"🔊":"🔇";
 show("home");
 if("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(()=>{});

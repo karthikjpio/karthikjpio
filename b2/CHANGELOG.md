@@ -1,4 +1,11 @@
-# Änderungen · Vokabel B2
+# Änderungen · Lernvokabeln
+
+## Rebrand — 18.08.2026
+- Neuer Name **Lernvokabeln** mit Bienen-Logo 🐝, eigene Domain **learnvokabeln.com**,
+  eigenes öffentliches GitHub-Repo.
+- Untertitel: „Kompass B2 DaF · Lektion 1–5“.
+- Hell/Dunkel-Umschalter (☀️/🌙) oben neben der Serie; Design-Knopf unten entfernt.
+- Fußzeile „Gebaut von karthikjp.io“ mittig; Versionsnummer im Scroll unter „Weitere Lektionen“.
 
 ## v1.3 — 17.08.2026
 **Learn und Practice sind jetzt eine einzige Session.** Die Übungsform richtet sich nach dem
