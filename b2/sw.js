@@ -1,9 +1,9 @@
 /* offline cache — bump VERSION to force update */
-const VERSION = "vb2-v6";
+const VERSION = "vb2-v8";
 const ASSETS = [
-  "./","index.html","app.js?v=5","emoji.js?v=5",
-  "deck_l1.js?v=5","deck_l2.js?v=5","deck_l3.js?v=5","deck_l4.js?v=5","deck_l5.js?v=5",
-  "manifest.webmanifest?v=5","icon-192.png","icon-512.png","icon-180.png"
+  "./","index.html","app.js?v=7","emoji.js?v=7",
+  "deck_l1.js?v=7","deck_l2.js?v=7","deck_l3.js?v=7","deck_l4.js?v=7","deck_l5.js?v=7",
+  "manifest.webmanifest?v=7","icon-192.png","icon-512.png","icon-180.png"
 ];
 self.addEventListener("install", e=>{
   self.skipWaiting();
