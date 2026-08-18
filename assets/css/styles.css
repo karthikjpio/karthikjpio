@@ -875,7 +875,6 @@ main section[id], .job[id] { scroll-margin-top: 96px; }
   margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--border);
   display: grid; grid-template-columns: 1fr 1fr; column-gap: 64px;
 }
-.contact-details .ci:first-child { grid-column: 1 / -1; }
 .contact-details .ci:first-child > div { flex: 0 0 auto; }  /* keep Kopieren next to the email, not pushed to the far edge */
 .contact-details .ci-copy { margin-left: 0; }
 @media (max-width: 860px) {
