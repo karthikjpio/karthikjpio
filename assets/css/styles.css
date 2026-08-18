@@ -213,7 +213,19 @@ p { margin: 0 0 1em; }
 }
 
 /* ---------- hero ---------- */
-.hero { padding: 64px 0 32px; }
+/* The first screen is the whole screen: nothing from the next section peeks above
+   the fold. The nav is sticky and in flow at 64px, so subtracting it makes hero plus
+   nav exactly one viewport. svh rather than vh so the mobile URL bar does not push
+   the CTA out of view; the vh line above it is the fallback for older engines.
+   min-height, not height, so a short laptop or landscape phone grows instead of
+   clipping the portrait. */
+.hero {
+  min-height: calc(100vh - 64px);
+  min-height: calc(100svh - 64px);
+  display: grid;
+  align-content: center;
+  padding: 64px 0;
+}
 /* Portrait floats beside the copy so the H1 owns the top-left, where the eye
    lands. Float rather than grid: the copy wraps past the image and the credit
    line runs full width underneath. */
