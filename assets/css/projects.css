@@ -180,3 +180,7 @@
   .sys-body { display: block !important; }
   .sys, .ledger { break-inside: avoid; }
 }
+
+/* Wall of Love: every reference in full, one column, read top to bottom. The home
+   page keeps the two strongest in a scroll strip; this page never scrolls sideways. */
+.wall-grid { display: grid; gap: 16px; max-width: 760px; }

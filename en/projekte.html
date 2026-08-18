@@ -17,7 +17,9 @@
   <meta property="og:title" content="Projects · Karthik Javanappa" />
   <meta property="og:description" content="The full registry of AI systems Karthik Javanappa has built, scoped and shipped. Shipped, live, local and planned, with honest statuses." />
   <meta property="og:url" content="https://karthikjp.io/en/projekte.html" />
-  <meta property="og:image" content="https://karthikjp.io/assets/img/Portrait.jpeg" />
+  <meta property="og:image" content="https://karthikjp.io/assets/og/og-en.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
 
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230a0c10'/%3E%3Ctext x='50' y='70' font-family='monospace' font-size='58' font-weight='700' text-anchor='middle' fill='%234ade80'%3E%3E_%3C/text%3E%3C/svg%3E" />
@@ -26,8 +28,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="../assets/css/styles.css?v=20260818a" />
-  <link rel="stylesheet" href="../assets/css/projects.css?v=20260818a" />
+  <link rel="stylesheet" href="../assets/css/styles.css?v=20260818c" />
+  <link rel="stylesheet" href="../assets/css/projects.css?v=20260818c" />
 
   <!-- theme before first paint. main.js runs after the body, which meant a
        returning light-theme visitor got a dark flash. Same try/catch as there. -->
@@ -101,7 +103,7 @@
               <dl class="pc-pai">
                 <div><dt>Problem</dt><dd>Target benchmarking and peer research in due diligence is repetitive, manual and inconsistent across teams.</dd></div>
                 <div><dt>Approach</dt><dd>AI agents in n8n that orchestrate LLM reasoning with live web search and return structured, source-linked outputs.</dd></div>
-                <div><dt>Impact</dt><dd>Peer selection became <b>repeatable and explainable</b> instead of analyst-dependent, which is what made partners willing to defend the output in front of a client. Several consultant-days of peer analysis compressed to under 40 minutes; the speed was the side effect, the defensibility was the point.</dd></div>
+                <div><dt>Impact</dt><dd>Peer selection became <b>repeatable and explainable</b> instead of analyst-dependent, which is what made partners willing to defend the output in front of a client. The company-research pipeline and the peer finder together compressed several consultant-days of work to under 40 minutes; the speed was the side effect, the defensibility was the point.</dd></div>
               </dl>
               <p class="sys-more">Separate workflows handle target screening, peer identification and metric collection. Each agent decomposes the research question, runs searches in parallel, validates findings against multiple sources and writes results into a consistent template, so two teams researching the same market no longer produce two different answers.</p>
 
@@ -127,7 +129,7 @@
                   </ul>
                 </div>
               </div>
-              <p class="adopt"><b>go-live</b> 2026 · <b>in daily use</b> at handover, June 2026 · <b>adoption after handover</b> not measured. I left before I could instrument it, and I would rather say so than quote a number I do not have.</p>
+              <p class="adopt"><b>go-live</b> 2026 · <b>in use</b> at handover, June 2026 · <b>adoption after handover</b> not measured. I left before I could instrument it, and I would rather say so than quote a number I do not have.</p>
             </div>
           </details>
 
@@ -233,19 +235,19 @@
           <details class="sys" name="registry">
             <summary>
               <span class="sys-id">06</span>
-              <span class="sys-name"><b>ask-my-ai</b><small>The recruiter-facing chatbot running on this page</small></span>
-              <span class="sys-status s-local"><i></i>local</span>
-              <span class="sys-env">this site</span>
+              <span class="sys-name"><b>ask-my-ai</b><small>Recruiter-facing chatbot for the home page</small></span>
+              <span class="sys-status s-planned"><i></i>planned</span>
+              <span class="sys-env">not built</span>
               <span class="sys-chev" aria-hidden="true">▸</span>
             </summary>
             <div class="sys-body">
               <div class="pc-tags"><span>n8n</span><span>webhook</span><span>vanilla JS</span></div>
               <dl class="pc-pai">
                 <div><dt>Problem</dt><dd>Recruiters skim. They have one specific question ("has he done X?") and a static page makes them dig for it.</dd></div>
-                <div><dt>Approach</dt><dd>The chat widget in the corner of the home page. Two tiers: a zero-dependency keyword-matched knowledge base baked into the page, and an n8n LLM workflow behind a webhook that it upgrades to transparently when the endpoint is set.</dd></div>
-                <div><dt>Status</dt><dd><b>Running the local tier right now.</b> The webhook is unset, so what you get is typo-tolerant keyword matching over a hand-written knowledge base, not an LLM. Labelled <code>local</code> rather than <code>live</code> for that reason. Try it anyway, bottom-right corner of the home page.</dd></div>
+                <div><dt>Approach</dt><dd>A chat widget in the corner of the home page. Two tiers were planned: a zero-dependency keyword-matched knowledge base baked into the page, and an n8n LLM workflow behind a webhook that it upgrades to transparently when the endpoint is set.</dd></div>
+                <div><dt>Status</dt><dd><b>Scoped, not built.</b> The widget is not on the home page, so this row says <code>planned</code>. An earlier version ran a local tier with typo-tolerant keyword matching over a hand-written knowledge base; it came out when the home page was cut back. When the widget is there again, this row changes, and not before.</dd></div>
               </dl>
-              <p class="sys-more">Dependency-free JavaScript, fuzzy matching, graceful degradation by design. The fallback is the product until I decide the hosted tier is worth the running cost. I would rather show you the honest tier than badge this <code>live</code> and have you catch it.</p>
+              <p class="sys-more">Dependency-free JavaScript, fuzzy matching, graceful degradation by design. I would rather have this row say <code>planned</code> than send you to a corner of the page with nothing in it.</p>
             </div>
           </details>
 
@@ -305,7 +307,7 @@
           </details>
         </div>
 
-        <p class="reg-foot"><span class="dep-label">// honesty policy</span> statuses on this page track reality, not ambition. Three of these entries said "shipping July 2026" and did not ship, so they now say <b>planned</b> with no date at all. An overdue promise costs more than an absent one. Same rule for the chatbot: it is labelled <b>local</b>, not <b>live</b>, because the hosted tier is switched off.</p>
+        <p class="reg-foot"><span class="dep-label">// honesty policy</span> statuses on this page track reality, not ambition. Three of these entries said "shipping July 2026" and did not ship, so they now say <b>planned</b> with no date at all. An overdue promise costs more than an absent one. Same rule for the chatbot: this page called it <b>local</b> while the widget was no longer on the home page. It now says <b>planned</b>.</p>
       </div>
     </section>
   </main>
@@ -351,6 +353,6 @@
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
   </a>
 
-  <script src="../assets/js/main.js?v=20260818a"></script>
+  <script src="../assets/js/main.js?v=20260818c"></script>
 </body>
 </html>

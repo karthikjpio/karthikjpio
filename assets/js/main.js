@@ -94,31 +94,6 @@
     reveals.forEach((el) => io.observe(el));
   }
 
-  /* ---- Contact form → mailto ------------------------------------------- */
-  const form = $("#contactForm");
-  const note = $("#formNote");
-  form?.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const name = $("#cf-name").value.trim();
-    const email = $("#cf-email").value.trim();
-    const msg = $("#cf-msg").value.trim();
-    const fields = [["#cf-name", name], ["#cf-email", email], ["#cf-msg", msg]];
-    fields.forEach(([s]) => $(s).removeAttribute("aria-invalid"));   /* clear first, every time */
-    const empty = fields.filter(([, v]) => !v);
-    if (empty.length) {
-      note.textContent = "Please fill in every field before sending.";
-      note.style.color = "var(--warn)";
-      empty.forEach(([s]) => $(s).setAttribute("aria-invalid", "true"));
-      $(empty[0][0]).focus();   /* an error nobody is sent to is not feedback */
-      return;
-    }
-    const subject = encodeURIComponent(`Portfolio enquiry from ${name}`);
-    const body = encodeURIComponent(`${msg}\n\n${name}\n${email}`);
-    window.location.href = `mailto:kjavanappa@gmail.com?subject=${subject}&body=${body}`;
-    note.textContent = "Opening your email app… if nothing happens, write to kjavanappa@gmail.com. I usually reply within a day.";
-    note.style.color = "var(--muted)";
-  });
-
   /* ---- Footer year ------------------------------------------------------ */
   const yearEl = $("#year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();

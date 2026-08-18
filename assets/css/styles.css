@@ -132,7 +132,7 @@ p { margin: 0 0 1em; }
 
 .icon-btn {
   display: inline-flex; align-items: center; justify-content: center;
-  width: 38px; height: 38px;
+  width: 44px; height: 44px;
   border-radius: 8px;
   border: 1px solid var(--border);
   background: transparent;
@@ -143,10 +143,6 @@ p { margin: 0 0 1em; }
 .icon-btn:hover { background: var(--card); border-color: var(--muted); }
 .icon-btn svg { width: 18px; height: 18px; }
 
-/* the arrow travels on hover: same idea, one primary action */
-.btn-dl svg path { transition: transform .22s cubic-bezier(.4,0,.2,1); }
-.btn-dl:hover svg path:first-child { transform: translateY(2px); }
-@media (prefers-reduced-motion: reduce) { .btn-dl svg path { transition: none; } }
 
 /* ---------- nav ---------- */
 .nav {
@@ -222,7 +218,7 @@ p { margin: 0 0 1em; }
    lands. Float rather than grid: the copy wraps past the image and the credit
    line runs full width underneath. */
 .hero-top { max-width: 100%; }
-.hero-photo { float: right; width: 300px; margin: 0 0 24px 48px; }
+.hero-photo { float: right; width: 260px; margin: 0 0 24px 48px; }
 .hero-top::after { content: ""; display: block; clear: both; }
 @media (max-width: 820px) {
   .hero-photo { float: none; width: 220px; margin: 0 0 24px; }
@@ -247,8 +243,18 @@ p { margin: 0 0 1em; }
   margin-bottom: 16px;
 }
 .hero-lead { font-size: 21px; line-height: 1.5; color: var(--muted); max-width: 56ch; margin-bottom: 16px; }
-.hero-sub { font-size: 17px; color: var(--muted); max-width: 56ch; margin-bottom: 24px; }
-.hero-sub b { color: var(--text); font-weight: 600; }
+/* the strongest fact belongs above the fold. This slot used to hold the role
+   triad, which told a recruiter who Karthik is but not what he delivered. */
+.hero-proof {
+  width: fit-content; max-width: 100%;
+  margin: 0 0 24px;
+  font: 500 13px var(--font-mono); color: var(--muted);
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 8px; padding: 8px 12px;
+}
+.hero-proof b { color: var(--text); font-weight: 600; }
+.hero-cv { font: 500 13px var(--font-mono); color: var(--muted); text-decoration: none; }
+.hero-cv:hover { color: var(--accent); }
 
 .hero-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; }
 .credit { margin: 24px 0 0; font: 500 13px var(--font-mono); color: var(--muted); }
@@ -266,12 +272,6 @@ p { margin: 0 0 1em; }
 }
 .frame:hover { transform: rotate(0deg); }
 .frame img { border-radius: 7px; filter: saturate(.92); }
-.frame-tag {
-  font: 400 12px var(--font-mono);
-  color: var(--faint);
-  padding: 8px 4px 1px;
-  text-align: center;
-}
 
 /* the nav is sticky at 64px, so an anchor jump would land under it */
 main section[id], .job[id] { scroll-margin-top: 96px; }
@@ -335,8 +335,18 @@ main section[id], .job[id] { scroll-margin-top: 96px; }
 .case > summary.case-head:focus-visible { outline: 2px solid var(--accent); outline-offset: 6px; border-radius: 4px; }
 /* pulse the chevron on collapsed cases to hint they expand */
 @keyframes case-chev-bounce { 0%, 100% { translate: 0 0; } 50% { translate: 0 3px; } }
-.case:not([open]) > summary.case-head::after { animation: case-chev-bounce 1.5s ease-in-out infinite; }
-@media (prefers-reduced-motion: reduce) { .case:not([open]) > summary.case-head::after { animation: none; } }
+/* Every case stays collapsed. Only the first one signals, so the eye gets one target
+   instead of three competing ones. */
+.case:first-of-type:not([open]) > summary.case-head::after { animation: case-chev-bounce 1.5s ease-in-out infinite; }
+.case:first-of-type:not([open]) > summary.case-head .case-num {
+  color: var(--accent);
+  animation: case-num-pulse 2.2s ease-in-out infinite;
+}
+@keyframes case-num-pulse { 0%, 100% { opacity: 1; } 50% { opacity: .4; } }
+@media (prefers-reduced-motion: reduce) {
+  .case:first-of-type:not([open]) > summary.case-head::after,
+  .case:first-of-type:not([open]) > summary.case-head .case-num { animation: none; }
+}
 /* link under the case studies to the full projects page */
 .cases-more { margin: 24px 0 0; }
 .cases-more-link {
@@ -537,7 +547,7 @@ main section[id], .job[id] { scroll-margin-top: 96px; }
 .triad-pills label {
   font: 500 13px var(--font-mono);
   padding: 8px 12px;
-  min-height: 40px;
+  min-height: 44px;
   display: inline-flex; align-items: center;
   border: 1px solid var(--border);
   border-radius: 999px;
@@ -676,7 +686,6 @@ main section[id], .job[id] { scroll-margin-top: 96px; }
 .job-main ul { margin: 0; padding-left: 16px; color: var(--muted); }
 .job-main li { margin-bottom: 4px; font-size: 15px; }
 .job-oneline { margin: 4px 0 0; color: var(--muted); font-size: 15px; }
-.job-line { padding-top: 8px; padding-bottom: 8px; }
 
 @media (max-width: 860px) {
   .joblog::before { left: 4px; }
@@ -697,6 +706,15 @@ main section[id], .job[id] { scroll-margin-top: 96px; }
   margin-bottom: 24px;
 }
 .bt-hash { color: var(--faint); font: 700 17px var(--font-mono); }
+/* two former top-level sections now live as blocks inside their parent, so the nav
+   stays at four items. They need a heading step and some air, nothing more. */
+.block-title.spaced {
+  margin-top: 96px;
+  padding-top: 48px;
+  border-top: 1px solid var(--border-soft);
+}
+@media (max-width: 620px) { .block-title.spaced { margin-top: 64px; padding-top: 32px; } }
+.block-lead { margin: 0 0 24px; color: var(--muted); font-size: 15px; max-width: 62ch; }
 
 .edu-item { margin-bottom: 24px; padding-left: 16px; border-left: 2px solid var(--border); }
 .e-date { font: 500 13px var(--font-mono); color: var(--faint); }
@@ -737,8 +755,9 @@ main section[id], .job[id] { scroll-margin-top: 96px; }
 /* ---------- testimonials: a horizontal scroll strip ----------
    Ivan first and featured, the rest scroll in from the right. scroll-snap settles
    each card; a faded right edge and a hint signal there is more. */
-.scroll-hint { font: 500 13px var(--font-mono); color: var(--faint); margin: 0; }
-.scroll-hint span { color: var(--accent); }
+.scroll-hint { font: 500 13px var(--font-mono); color: var(--faint); margin: 0 0 24px; }
+.scroll-hint a { color: var(--accent); text-decoration: none; border-bottom: 1px solid transparent; }
+.scroll-hint a:hover { border-bottom-color: var(--accent); }
 .quote-scroll {
   display: flex; gap: 16px;
   overflow-x: auto;
@@ -844,31 +863,32 @@ main section[id], .job[id] { scroll-margin-top: 96px; }
   padding: 4px 8px;
 }
 
-.contact-form {
+ /* A form that only checked for empty fields and then opened a mailto is a form in
+   costume: no endpoint, no real validation, nothing a link does not already do.
+   These are the two real next steps, addressed directly. */
+.contact-direct {
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: 24px;
   box-shadow: var(--edge);
+  display: flex; flex-direction: column; gap: 12px;
 }
-.field { margin-bottom: 16px; }
-.field label { display: block; font: 500 12px var(--font-mono); color: var(--muted); margin-bottom: 8px; }
-.field input, .field textarea {
-  width: 100%;
+.cd-note { margin: 0; font: 500 12px var(--font-mono); color: var(--faint); }
+.cd-row {
+  display: block;
+  text-decoration: none;
   background: var(--bg);
   border: 1px solid var(--border);
   border-radius: 8px;
-  color: var(--text);
-  font: 400 15px var(--font-body);
-  padding: 12px;
+  padding: 16px;
   transition: border-color .2s ease;
 }
-.field textarea { min-height: 120px; resize: vertical; }
-.field input:focus, .field textarea:focus { outline: none; border-color: var(--accent); }
-.form-note { margin: 12px 0 0; font-size: 13px; color: var(--faint); }
+.cd-row:hover { border-color: var(--accent); }
+.cd-row b { display: block; color: var(--text); font-size: 15px; font-weight: 600; }
+.cd-row small { display: block; margin-top: 4px; color: var(--muted); font-size: 13px; line-height: 1.5; }
 
-/* the right column stacks the form and a short terminal card, so the space beside
-   the taller contact column is used for the reader's real next question */
+/* the right column carries the two direct actions beside the taller contact copy */
 .contact-right { display: flex; flex-direction: column; gap: 24px; }
 /* contact details moved below the grid, two columns (email spans both, no gaps) */
 .contact-details {
@@ -970,19 +990,18 @@ main section[id], .job[id] { scroll-margin-top: 96px; }
 }
 
 /* ---------- hover: lift, not bounce ---------- */
-.job, .edu-item, .award, .quote-card, .contact-form, .case, .ci {
+.job, .edu-item, .award, .quote-card, .contact-direct, .case, .ci {
   transition: transform .18s ease-out, box-shadow .18s ease-out;
 }
 .job:hover, .edu-item:hover, .award:hover, .quote-card:hover, .ci:hover {
   transform: translateY(-2px);
 }
 .award:hover, .quote-card:hover { box-shadow: var(--edge), var(--shadow); }
-.contact-form:focus-within { border-color: var(--muted); box-shadow: var(--edge), var(--shadow); }
 .joblog .job:hover::before { transform: scale(1.15); }
 .job::before { transition: transform .18s ease-out; }
 
 @media (prefers-reduced-motion: reduce) {
-  .job, .edu-item, .award, .quote-card, .contact-form, .case, .ci, .job::before, .frame { transition: none; }
+  .job, .edu-item, .award, .quote-card, .contact-direct, .case, .ci, .job::before, .frame { transition: none; }
   .job:hover, .edu-item:hover, .award:hover, .quote-card:hover, .ci:hover { transform: none; }
 }
 @media (hover: none) {
@@ -993,4 +1012,23 @@ main section[id], .job[id] { scroll-margin-top: 96px; }
 @media (pointer: coarse) {
   .ci-copy { min-height: 44px; padding-inline: 12px; }
   .brand { padding-block: 12px; }
+  .cd-row { padding: 16px; }
 }
+
+/* ---------- keyboard floor ----------
+   One focus treatment for the whole page. The three scoped rules that already
+   existed (case heads, triad radios, triad pills) are more specific and still win
+   where they are more legible than a plain ring. */
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* keyboard users land on the nav first; this is the way past it */
+.skip-link {
+  position: absolute; left: 8px; top: 8px; z-index: 100;
+  transform: translateY(-200%);
+  background: var(--card); color: var(--text);
+  border: 1px solid var(--accent); border-radius: 8px;
+  padding: 12px 16px;
+  font: 500 13px var(--font-mono);
+  text-decoration: none;
+}
+.skip-link:focus { transform: translateY(0); }

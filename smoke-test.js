@@ -75,18 +75,36 @@ t("the hero primary action is 'View deployed systems' and points at #work", () =
   return primary && /View deployed systems/.test(primary.textContent) &&
     primary.getAttribute("href") === "#work";
 });
-t("the CV is the secondary hero action and downloads the PDF", () => {
-  const cv = $(".hero .btn-ghost");
-  return cv && /Karthik_Javanappa_CV\.pdf/.test(cv.getAttribute("href")) && cv.hasAttribute("download");
+t("the hero offers exactly one button, with the CV as a utility link beside it", () => {
+  const buttons = $$(".hero .btn"), cv = $(".hero .hero-cv");
+  return buttons.length === 1 && buttons[0].classList.contains("btn-primary") &&
+    cv && /Karthik_Javanappa_CV\.pdf/.test(cv.getAttribute("href")) && cv.hasAttribute("download");
 });
 t("exactly one filled accent button above the fold", () => {
   const above = [...$$(".nav .btn-primary"), ...$$(".hero .btn-primary")];
   return above.length === 1;
 });
-t("the hero states the overlap thesis and the role triad", () => {
+/* the biography line told a recruiter who Karthik is; the slot now says what he shipped */
+t("the hero carries hard proof on one line, not a biography line", () => {
   const hero = $(".hero").textContent;
-  return /overlap between AI engineering and strategy consulting/.test(hero) &&
-    /Founder\. Consultant\. Engineer\./.test(hero);
+  const proof = $(".hero .hero-proof");
+  return proof && proof.tagName === "P" &&
+    /4 systems shipped/.test(proof.textContent) && /EY-Parthenon/.test(proof.textContent) &&
+    !/Founder\. Consultant\. Engineer\./.test(hero) &&
+    !/overlap between AI engineering and strategy consulting/.test(hero);
+});
+t("the portrait carries no joke filename caption competing with the proof strip", () =>
+  !$(".hero .frame-tag") && !/human_in_the_loop/.test(html));
+/* the hero headline was lifted out of the consultant triad panel, which then read as
+   a duplicate. The page should make this argument once, at the top. */
+t("the hero thesis appears once, not echoed verbatim further down", () => {
+  const body = $("main").textContent;
+  const hits = (body.match(/easy half/gi) || []).length;
+  const deDoc = fs.readFileSync("index.html", "utf8");   /* `de` is declared further down */
+  const deMain = deDoc.slice(deDoc.indexOf("<main>"), deDoc.indexOf("</main>"));
+  const deHits = (deMain.match(/einfache Hälfte|leichte Hälfte/g) || []).length;
+  if (hits !== 1 || deHits !== 1) console.log("    en=" + hits + " de=" + deHits);
+  return hits === 1 && deHits === 1;
 });
 t("employer names survive as a quiet static credit line, not a marquee", () => {
   const credit = $(".hero .credit");
@@ -155,8 +173,10 @@ t("the overlap closes on the intersection line", () =>
     .test($("#overlap .overlap-close").textContent));
 
 /* ---- enterprise readiness closes both hiring objections ---- */
+/* readiness and the references are no longer top-level sections: they fold into
+   #overlap and #experience so the nav stays at four items. */
 t("readiness shows production judgment and deployment facts", () => {
-  const r = $("#readiness");
+  const r = $("#overlap");
   return /Source-linked outputs/.test(r.textContent) && /Refusal over guessing/.test(r.textContent) &&
     /Human review at the decision gates/.test(r.textContent) &&
     /German resident/.test(r.textContent);
@@ -164,14 +184,32 @@ t("readiness shows production judgment and deployment facts", () => {
 t("the no-sponsorship signal still lives in the contact block", () =>
   /no sponsorship/i.test($("#contact").textContent));
 t("readiness does not overclaim mature eval expertise", () =>
-  !/mature eval|expert in evaluation|world-class eval/i.test($("#readiness").textContent));
+  !/mature eval|expert in evaluation|world-class eval/i.test($("#overlap").textContent));
 
 /* ---- experience is trimmed, Xtrawrkx is one line ---- */
-t("six roles remain and Xtrawrkx is the single-line entry", () => {
+t("six roles remain and every one of them names its employer the same way", () => {
   const jobs = $$("#experience .job");
-  const xt = $("#job-xtrawrkx");
-  return jobs.length === 6 && xt && xt.classList.contains("job-line") &&
-    !$("ul", xt) && !!$(".job-oneline", xt);
+  return jobs.length === 6 && jobs.every((j) => {
+    const org = $(".job-org", j);
+    if (!org || !org.textContent.trim()) return false;
+    /* a role may carry a qualifier span ("master's thesis engagement"), but never the
+       employer: Xtrawrkx shipped as "Chief of Staff<span>, Xtrawrkx</span>" while every
+       other row used .job-org, and it read as a bug. */
+    const qual = $(".job-role span", j);
+    return !qual || !qual.textContent.includes(org.textContent.trim());
+  });
+});
+/* the registry shipped with Xtrawrkx (Jan 2023) sitting below Micelio (Sep 2018),
+   which reads as carelessness on the one section a recruiter scans for a timeline. */
+t("the career list runs strictly reverse-chronological by end date", () => {
+  const MON = { Jan:1, Feb:2, Mar:3, Apr:4, May:5, Jun:6, Jul:7, Aug:8, Sep:9, Oct:10, Nov:11, Dec:12 };
+  const ends = $$("#experience .job .job-date").map((d) => {
+    const m = d.textContent.split("–")[1].trim().match(/(\w+)\s+(\d{4})/);
+    return +m[2] * 12 + MON[m[1]];
+  });
+  const ok = ends.every((v, i) => i === 0 || v <= ends[i - 1]);
+  if (!ok) console.log("    out of order: " + $$("#experience .job .job-date").map((d) => d.textContent).join(" | "));
+  return ok;
 });
 t("awards are trimmed to three and keep HackAIVerse", () => {
   const awards = $$("#experience .award");
@@ -179,21 +217,26 @@ t("awards are trimmed to three and keep HackAIVerse", () => {
 });
 
 /* ---- trust: four testimonials in a horizontal scroll strip, Ivan featured ---- */
-t("four testimonials in a horizontal strip: Ivan, Katharina, Hiten, Anand", () =>
-  !!$("#trust .quote-scroll") &&
-  JSON.stringify($$("#trust .quote-who b").map((n) => n.textContent.trim().split(" ")[0])) ===
-  JSON.stringify(["Ivan", "Katharina", "Hiten", "Anand"]));
+/* Hiten and Anand vouch for the pre-AI career; on a page selling AI delivery they cost
+   length and a horizontal scroll without moving the hiring decision. They live in the CV. */
+t("two testimonials remain, the two that speak to AI delivery and strategy", () =>
+  !!$("#experience .quote-scroll") &&
+  JSON.stringify($$("#experience .quote-who b").map((n) => n.textContent.trim().split(" ")[0])) ===
+  JSON.stringify(["Ivan", "Katharina"]));
 t("the strip actually scrolls horizontally and snaps", () => {
   const rule = cssNoComments.match(/\.quote-scroll \{([^}]*)\}/);
   return !!rule && /overflow-x: auto/.test(rule[1]) && /scroll-snap-type/.test(rule[1]);
 });
 t("the direct-manager quote is first and featured", () => {
-  const first = $("#trust .quote-card");
+  const first = $("#experience .quote-card");
   return first.classList.contains("quote-feature") && /Ivan/.test(first.textContent) &&
     /direct manager/.test(first.textContent);
 });
-t("every avatar initial matches its name", () =>
-  $$("#trust .quote-who").every((w) => $(".av", w).textContent.trim() === $("b", w).textContent.trim()[0]));
+t("every avatar initial matches its name", () => {
+  const who = $$("#experience .quote-who");
+  return who.length === 2 &&
+    who.every((w) => $(".av", w).textContent.trim() === $("b", w).textContent.trim()[0]);
+});
 
 /* ---- contact: hiring CTA primary, consulting floor quiet, no 3-step ---- */
 t("the contact heading leads with the hiring ask", () =>
@@ -206,10 +249,17 @@ t("the consulting floor is present, concrete and below the hiring path", () => {
     svc.includes("AI workflow diagnostic") && svc.includes("EU AI Act readiness review") &&
     (($("#contact .contact-info").compareDocumentPosition(aside) & window.Node.DOCUMENT_POSITION_CONTAINED_BY) !== 0);
 });
-t("contact form falls back to mailto and validates every field", () =>
-  /window\.location\.href = `mailto:/.test(js) && /empty\.forEach/.test(js) && /aria-invalid/.test(js));
-t("form errors are announced as a polite live region", () =>
-  $("#formNote").getAttribute("aria-live") === "polite");
+/* the old form had no endpoint: it checked for empty strings, then opened a mailto.
+   Two honest links do the same job and stop promising a submission that never happened. */
+t("the faux form is gone: two direct mailto routes and no dead validation JS", () => {
+  const rows = $$("#contact .cd-row");
+  return rows.length === 2 &&
+    rows.every((r) => r.getAttribute("href").startsWith("mailto:kjavanappa@gmail.com")) &&
+    /hiring for a role/i.test(rows[0].textContent) &&
+    /not reaching production/i.test(rows[1].textContent) &&
+    !$("#contactForm") && !$("#formNote") &&
+    !/cf-name|contactForm|aria-invalid/.test(js);
+});
 
 /* ---- location & language policy ---- */
 t("no city locates him outside the job-history rows", () => {
@@ -237,12 +287,21 @@ t("availability now names the target regions the report asked for", () => {
   return /forward-deployed/.test(avail) && /NRW/.test(avail) && /Rhine-Main/.test(avail) &&
     !/Frankfurt/.test(avail);
 });
-t("German is B2, and Kannada and Hindi were dropped from the languages", () => {
+t("German is stated as B2 with no extra qualifier, Kannada and Hindi stay dropped", () => {
   const all = $("main").textContent;
   return !/German\s*[·(]?\s*B1/.test(all) && /German\s*[·(]?\s*B2/.test(all) &&
-         /C1 in progress/.test(all) &&
+         !/C1 in progress/.test(all) &&
          !/Kannada/.test(all) && !/Hindi/.test(all);
 });
+
+const PAGES_NAV = {
+  "index.html": fs.readFileSync("index.html", "utf8"),
+  "en/index.html": fs.readFileSync("en/index.html", "utf8"),
+  "projekte.html": fs.readFileSync("projekte.html", "utf8"),
+  "en/projekte.html": fs.readFileSync("en/projekte.html", "utf8"),
+  "wall-of-love.html": fs.readFileSync("wall-of-love.html", "utf8"),
+  "en/wall-of-love.html": fs.readFileSync("en/wall-of-love.html", "utf8"),
+};
 
 /* ---- headings & sections ---- */
 t("no h1/h2 heading text is duplicated inside one section", () => {
@@ -267,6 +326,17 @@ t("adjacent content sections alternate their background", () => {
 });
 t("every nav link points at a section that exists", () =>
   $$("#navLinks a").every((a) => !!$(a.getAttribute("href"))));
+/* five nav items is more than a recruiter scans. Readiness folded into the overlap
+   section and the references into the career section, which cost nothing structurally. */
+t("the nav stays at four items or fewer, on every page", () => {
+  const counts = Object.entries(PAGES_NAV).map(([n, doc]) => {
+    const nav = doc.slice(doc.indexOf('id="navLinks"'), doc.indexOf("</nav>"));
+    return [n, (nav.match(/<a /g) || []).length];
+  });
+  const bad = counts.filter(([, c]) => c > 4);
+  if (bad.length) console.log("    too many nav links: " + bad.map((b) => b.join("=")).join(", "));
+  return bad.length === 0;
+});
 
 /* ---- back-to-top and mobile menu behaviour ---- */
 t("back-to-top is not focusable while invisible", () => {
@@ -436,14 +506,14 @@ const de = fs.readFileSync("index.html", "utf8");
 t("root index.html is the German page (lang=de) and stays canonical at the apex", () =>
   /<html lang="de"/.test(de) && /canonical" href="https:\/\/karthikjp\.io\/"/.test(de));
 t("the German page carries native German section copy, not leftover English", () =>
-  /zwischen Demo und Tagesgeschäft/.test(de) && /Drei Systeme/.test(de) &&
+  /Die Demo ist die einfache Hälfte/.test(de) && /Drei Systeme/.test(de) &&
   /Eine <em[^>]*>Schnittstelle/.test(de) && /Gebaut für ein/.test(de) &&
-  !/Most enterprise AI dies/.test(de) && !/Three systems, in/.test(de));
-t("the German page states German B2 with the C1-in-progress qualifier, never B1", () =>
-  /Deutsch\s*[·(]?\s*B2/.test(de) && /C1 in Arbeit/.test(de) && !/\bB1\b/.test(de) &&
+  !/The demo is the easy half/.test(de) && !/Three systems, in/.test(de));
+t("the German page states Deutsch B2 with no qualifier, never B1", () =>
+  /Deutsch\s*[·(]?\s*B2/.test(de) && !/C1 in Arbeit/.test(de) && !/\bB1\b/.test(de) &&
   !/Kannada/.test(de) && !/Hindi/.test(de));
-t("the German CV link points at the pending German PDF", () =>
-  /assets\/Karthik_Javanappa_CV_DE\.pdf/.test(de) && /German CV PDF pending/.test(de));
+t("the German CV link points at the German PDF, with no TODO left in production HTML", () =>
+  /assets\/Karthik_Javanappa_CV_DE\.pdf/.test(de) && !/TODO/.test(de));
 t("both pages carry the DE|EN switcher as plain anchors (no JS toggle)", () => {
   const sw = (doc) => { const i = doc.indexOf('class="lang-switch"'); return i < 0 ? "" : doc.slice(i, i + 400); };
   return /href="en\/"/.test(sw(de)) &&      // German page: EN links into en/
@@ -457,6 +527,118 @@ t("both pages declare the three hreflang alternates", () =>
 t("the English page is canonical at /en/ and lang=en", () =>
   /<html lang="en"/.test(html) && /canonical" href="https:\/\/karthikjp\.io\/en\/"/.test(html));
 t("no em dashes on the German page", () => !de.includes("—"));
+
+/* ---- the claim gate ----------------------------------------------------------
+   Six live wordings outran the evidence record. Each fix was one string, and a string
+   is exactly what comes back through a copy-paste from an old draft. These assert the
+   old wording is absent from every shipped page in both languages, so it cannot return
+   quietly. A claim gate that is not executable is a claim gate nobody runs. */
+const PAGES = {
+  "index.html": de,
+  "en/index.html": html,
+  "projekte.html": fs.readFileSync("projekte.html", "utf8"),
+  "en/projekte.html": fs.readFileSync("en/projekte.html", "utf8"),
+  "wall-of-love.html": fs.readFileSync("wall-of-love.html", "utf8"),
+  "en/wall-of-love.html": fs.readFileSync("en/wall-of-love.html", "utf8"),
+};
+const noneOf = (label, patterns) =>
+  t(label, () => {
+    const hits = [];
+    for (const [name, doc] of Object.entries(PAGES))
+      for (const p of patterns) if (p.test(doc)) hits.push(name + ": " + p);
+    if (hits.length) console.log("    " + hits.join("\n    "));
+    return hits.length === 0;
+  });
+
+noneOf("claim gate: no C1 qualifier hangs off the German level anywhere",
+  [/C1 in Arbeit/, /C1 in progress/]);
+noneOf("claim gate: the 40-minute result is never attributed to peer analysis alone",
+  [/Beratertage Peer-Analyse/, /Berater-Tage Peer-Analyse/, /consultant-days of peer analysis/]);
+noneOf("claim gate: no eval-maturity overclaim",
+  [/nicht nach Bauchgefühl/, /not on vibes/, /Zitationsgenauigkeit/]);
+noneOf("claim gate: adoption is never claimed in the present tense",
+  [/täglich im Einsatz/, /im täglichen Einsatz/, /in daily use/]);
+noneOf("claim gate: the hero credit claims experience, not delivery, at all three orgs",
+  [/ausgeliefert bei<\/span>/, /shipped at<\/span>/]);
+noneOf("claim gate: the phone number is published on no page",
+  [/\+49 176 8794 9009/, /tel:\+49/, /"telephone"/]);
+/* the registry argues that its statuses track reality. It shipped pointing readers at
+   a chat widget in the corner of the home page that no longer exists there. The claim
+   and the reality have to agree in BOTH directions, so this also fails if the widget
+   comes back and the row still says planned. */
+t("the registry never points at a chat widget the home page does not have", () => {
+  const widget = !!$("#chat") || /chatWidget|CHAT_WEBHOOK_URL/.test(js);
+  const claimed = [PAGES["projekte.html"], PAGES["en/projekte.html"]].some((doc) =>
+    /bottom-right corner|unten rechts auf der Startseite|Running the local tier|Läuft gerade auf der lokalen|s-local/.test(doc));
+  if (widget !== claimed) console.log("    widget present=" + widget + " but registry claims it=" + claimed);
+  return widget === claimed;
+});
+t("the 40-minute result names both halves of the pipeline, in both languages", () =>
+  /Unternehmensrecherche-Pipeline und Peer-Finder/.test(de) &&
+  /company-research pipeline and the peer finder/.test(html));
+
+/* ---- accessibility floor ---- */
+t("a skip link is the first focusable thing on the page", () => {
+  const skip = $("body > a.skip-link");
+  return !!skip && skip.getAttribute("href") === "#home" && !!$("#home");
+});
+t("one global focus-visible ring covers the whole page, not three scoped ones", () =>
+  /\n:focus-visible \{[^}]*outline: 2px solid var\(--accent\)/.test(cssNoComments));
+t("the nav icon buttons meet the 44px touch minimum", () => {
+  const r = cssNoComments.match(/\.icon-btn \{([^}]*)\}/)[1];
+  return /width: 44px/.test(r) && /height: 44px/.test(r);
+});
+t("every case ships collapsed, and only the first one signals to be opened", () => {
+  const cases = $$("#work .case");
+  const allShut = cases.every((c) => !c.hasAttribute("open"));
+  const scoped = /\.case:first-of-type:not\(\[open\]\) > summary\.case-head::after \{ animation: case-chev-bounce/
+    .test(cssNoComments) &&
+    /\.case:first-of-type:not\(\[open\]\) > summary\.case-head \.case-num \{/.test(cssNoComments) &&
+    !/\n\.case:not\(\[open\]\) > summary\.case-head::after \{ animation/.test(cssNoComments);
+  const reducedMotion = /prefers-reduced-motion: reduce\)\s*\{[^}]*case-num[^}]*animation: none/.test(
+    cssNoComments.replace(/\n/g, " "));
+  return allShut && scoped && reducedMotion;
+});
+
+/* ---- distribution ---- */
+t("robots.txt and sitemap.xml exist and agree on all four URLs", () => {
+  if (!fs.existsSync("robots.txt") || !fs.existsSync("sitemap.xml")) return false;
+  const r = fs.readFileSync("robots.txt", "utf8"), sm = fs.readFileSync("sitemap.xml", "utf8");
+  return /Sitemap: https:\/\/karthikjp\.io\/sitemap\.xml/.test(r) &&
+    ["https://karthikjp.io/", "https://karthikjp.io/en/",
+     "https://karthikjp.io/projekte.html", "https://karthikjp.io/en/projekte.html"]
+      .every((u) => sm.includes("<loc>" + u + "</loc>"));
+});
+t("every page shares a dedicated 1200x630 card, not the tall portrait", () =>
+  Object.values(PAGES).every((doc) => {
+    const m = doc.match(/og:image" content="https:\/\/karthikjp\.io\/(assets\/og\/og-(?:de|en)\.png)"/);
+    return m && fs.existsSync(m[1]) &&
+      /og:image:width" content="1200"/.test(doc) && /og:image:height" content="630"/.test(doc);
+  }));
+t("all four pages share one cache-busting token", () => {
+  const tokens = new Set();
+  for (const doc of Object.values(PAGES))
+    for (const m of doc.matchAll(/\?v=([\w.-]+)/g)) tokens.add(m[1]);
+  if (tokens.size !== 1) console.log("    tokens in play: " + [...tokens].join(", "));
+  return tokens.size === 1;
+});
+/* the home page keeps the two references that speak to AI delivery. The other two are
+   real and should be readable, just not at the cost of a horizontal scroll on a phone. */
+t("the wall-of-love page holds all four references and both languages link to it", () => {
+  const wallDe = PAGES["wall-of-love.html"], wallEn = PAGES["en/wall-of-love.html"];
+  const names = ["Ivan", "Katharina", "Hiten", "Anand"];
+  const holdsAll = [wallDe, wallEn].every((w) =>
+    (w.match(/class="quote-card/g) || []).length === 4 && names.every((n) => w.includes(n)));
+  const linked = /href="wall-of-love\.html"/.test(de) && /href="wall-of-love\.html"/.test(html);
+  const notOnHome = !/Hiten|Anand/.test($("main").textContent);
+  return holdsAll && linked && notOnHome;
+});
+t("the scroll hint is a real link now, not a dead arrow", () => {
+  const hint = $("#experience .scroll-hint a");
+  return !!hint && hint.getAttribute("href") === "wall-of-love.html";
+});
+t("no em dashes on any shipped page", () =>
+  Object.values(PAGES).every((doc) => !doc.includes("—")));
 
 const report = () => {
   pass.forEach((p) => console.log("  ✓ " + p));

@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Karthik Javanappa · Forward Deployed AI Engineer</title>
-  <meta name="description" content="Ich arbeite an der Schnittstelle von AI-Engineering und Strategieberatung. Vier AI-Systeme für die Strategie- und M&A-Teams von EY-Parthenon ausgeliefert: Due Diligence, Entity Resolution, Dokumenten-Q&A. Gründer, Berater, Entwickler." />
+  <meta name="description" content="Vier AI-Systeme für die Strategie- und M&A-Teams von EY-Parthenon ausgeliefert: Due Diligence, Entity Resolution, Dokumenten-Q&A. Die Demo ist die einfache Hälfte, ich arbeite an der schwierigen." />
   <meta name="author" content="Karthik Javanappa" />
   <link rel="canonical" href="https://karthikjp.io/" />
 
@@ -15,9 +15,11 @@
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Karthik Javanappa · Forward Deployed AI Engineer" />
-  <meta property="og:description" content="Die meisten Enterprise-AI-Projekte sterben zwischen Demo und Tagesgeschäft. Ich finde die teure Stelle im Workflow, baue das System darum herum und bleibe, bis es wirklich genutzt wird. Vier AI-Systeme für Strategie- und M&A-Teams ausgeliefert." />
+  <meta property="og:description" content="Die Demo ist die einfache Hälfte. Die schwierige ist die Rahmenbedingung, die niemand aufgeschrieben hat, und der Partner, der das Ergebnis vor dem Mandanten vertreten muss. Vier AI-Systeme für Strategie- und M&A-Teams ausgeliefert." />
   <meta property="og:url" content="https://karthikjp.io/" />
-  <meta property="og:image" content="https://karthikjp.io/assets/img/Portrait.jpeg" />
+  <meta property="og:image" content="https://karthikjp.io/assets/og/og-de.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
 
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230a0c10'/%3E%3Ctext x='50' y='70' font-family='monospace' font-size='58' font-weight='700' text-anchor='middle' fill='%234ade80'%3E%3E_%3C/text%3E%3C/svg%3E" />
@@ -32,7 +34,7 @@
        ended up showing fresh HTML with the pre-fix layout: new markup, old rules.
        The HTML itself revalidates, so bumping this token is what pulls new assets.
        BUMP IT ON EVERY DEPLOY that touches styles.css or main.js. -->
-  <link rel="stylesheet" href="assets/css/styles.css?v=20260818b" />
+  <link rel="stylesheet" href="assets/css/styles.css?v=20260818c" />
 
   <!-- theme before first paint. main.js runs after the body, which meant a
        returning light-theme visitor got a dark flash. Same try/catch as there. -->
@@ -51,7 +53,6 @@
     "url": "https://karthikjp.io",
     "image": "https://karthikjp.io/assets/img/Portrait.jpeg",
     "email": "kjavanappa@gmail.com",
-    "telephone": "+49 176 8794 9009",
     "address": { "@type": "PostalAddress", "addressLocality": "Aachen", "addressCountry": "DE" },
     "alumniOf": "HHL Leipzig Graduate School of Management",
     "knowsAbout": ["Forward deployed engineering", "Agentic deployment", "AI agents", "LLM applications", "RAG", "Agent evaluation", "Python", "Automation", "M&A analytics", "Due diligence", "n8n", "Microsoft Copilot Studio", "Microsoft Azure", "Azure OpenAI", "EU AI Act"],
@@ -60,6 +61,7 @@
   </script>
 </head>
 <body>
+  <a class="skip-link" href="#home">Zum Inhalt springen</a>
 
   <!-- ===================== NAV ===================== -->
   <header class="nav" id="nav">
@@ -71,7 +73,6 @@
       <nav class="nav-links" id="navLinks" aria-label="Primär">
         <a href="#work">systeme</a>
         <a href="#overlap">schnittstelle</a>
-        <a href="#readiness">readiness</a>
         <a href="#experience">werdegang</a>
         <a href="#contact">kontakt</a>
       </nav>
@@ -86,7 +87,6 @@
           <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
           <svg class="moon" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
         </button>
-        <!-- TODO: German CV PDF pending -->
         <a href="assets/Karthik_Javanappa_CV_DE.pdf" class="btn btn-ghost nav-cta" download>lebenslauf.pdf ↓</a>
         <button class="icon-btn nav-toggle" id="navToggle" aria-label="Menü öffnen" aria-expanded="false" aria-controls="navLinks">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
@@ -110,28 +110,24 @@
           <figure class="frame">
             <img src="assets/img/Portrait.jpeg" alt="Porträt von Karthik Javanappa"
                  width="380" height="418" />
-            <figcaption class="frame-tag">human_in_the_loop.jpeg</figcaption>
           </figure>
         </div>
 
-        <h1 class="hero-h1">Die meisten Enterprise-AI-Projekte sterben zwischen Demo und Tagesgeschäft.</h1>
+        <h1 class="hero-h1">Die Demo ist die einfache Hälfte.</h1>
 
-        <p class="hero-lead">Ich arbeite an der Schnittstelle von AI-Engineering und Strategieberatung. Ich finde die teure Stelle im Workflow, baue das System darum herum, bis es genutzt wird.</p>
+        <p class="hero-lead">Die schwierige ist die Rahmenbedingung, die niemand aufgeschrieben hat, und der Partner, der das Ergebnis vor dem Mandanten vertreten muss. An dieser Hälfte arbeite ich.</p>
 
-        <p class="hero-sub"><b>Gründer. Berater. Entwickler.</b></p>
+        <p class="hero-proof"><b>4 Systeme ausgeliefert</b> für die Strategie- &amp; M&amp;A-Teams bei EY-Parthenon</p>
 
         <div class="hero-cta">
           <a href="#work" class="btn btn-primary">
             Ausgelieferte Systeme ansehen
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </a>
-          <a href="assets/Karthik_Javanappa_CV_DE.pdf" class="btn btn-ghost btn-dl" download>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
-            Lebenslauf herunterladen
-          </a>
+          <a href="assets/Karthik_Javanappa_CV_DE.pdf" class="hero-cv" download>Lebenslauf ↓</a>
         </div>
 
-        <p class="credit"><span class="credit-lab">// ausgeliefert bei</span> EY-Parthenon · Schaeffler · Porsche Ventures</p>
+        <p class="credit"><span class="credit-lab">// Erfahrung bei</span> EY-Parthenon · Schaeffler · Porsche Ventures</p>
       </div>
     </section>
 
@@ -156,7 +152,7 @@
           </summary>
 
           <dl class="case-facts">
-            <div><dt>Problem</dt><dd>Commercial Due Diligence beginnt mit dem Benchmarking von Peers und Targets: repetitiv, manuell und von Analyst zu Analyst uneinheitlich. Derselbe Markt zweimal recherchiert ergab zwei verschiedene Peer-Sets, sodass Partner die Shortlist gegenüber dem Mandanten nicht verteidigen konnten.</dd></div>
+            <div><dt>Problem</dt><dd>Derselbe Markt, zweimal recherchiert, ergab zwei verschiedene Peer-Sets. Das ist die Stelle, die weh tut: Ein Partner kann eine Shortlist nicht gegenüber dem Mandanten verteidigen, wenn der nächste Analyst eine andere gebaut hätte. Das Benchmarking von Peers und Targets ist repetitiv und manuell, aber der manuelle Teil war nie der eigentliche Preis.</dd></div>
             <div><dt>Meine Rolle</dt><dd>Mit dem Deal-Team gescoped, die n8n-Workflows gebaut, Claude-Reasoning an Live-Websuche und semantisches Matching über den Referenzdatensatz angebunden und die Übergabe-Session durchgeführt, die es in die Hände des Teams gab.</dd></div>
           </dl>
 
@@ -192,7 +188,7 @@
             </div>
           </div>
 
-          <p class="case-result"><span class="res-num">unter 40 Min.</span> Mehrere Beratertage Peer-Analyse verdichtet auf unter 40 Minuten. Das Tempo war der Nebeneffekt. Der Punkt war, dass die Peer-Auswahl <b>wiederholbar und erklärbar</b> wurde statt analystenabhängig, und genau das ließ Partner den Output gegenüber dem Mandanten verteidigen.</p>
+          <p class="case-result"><span class="res-num">unter 40 Min.</span> Unternehmensrecherche-Pipeline und Peer-Finder verdichten zusammen mehrere Beratertage Arbeit auf unter 40 Minuten. Das Tempo war der Nebeneffekt. Der Punkt war, dass die Peer-Auswahl <b>wiederholbar und erklärbar</b> wurde statt analystenabhängig, und genau das ließ Partner den Output gegenüber dem Mandanten verteidigen.</p>
 
           <p class="learned"><span class="learned-lab">Was ich gelernt habe</span> Mein erster Entwurf war Multi-Agent: Agenten, die die Shortlist parallel aushandeln. Schwer zu steuern und noch schwerer zu erklären. Ein serieller Funnel, bei dem eine bewertete Stufe die nächste speist, war langsamer zu schreiben und deutlich leichter zu vertrauen, zu auditieren und zu verteidigen. Steuerbarkeit schlug Cleverness.</p>
         </details>
@@ -235,6 +231,8 @@
             </table>
           </figure>
 
+          <p class="learned"><span class="learned-lab">Weiterhin offen</span> Wenn zwei Datensätze nur den Namen teilen und sonst nichts, etwa Apex Ltd in London und Apex Ltd in Delaware, markiert die Pipeline, statt zu entscheiden. Diese Warteschlange ist die Arbeit eines Menschen, und ich habe nicht versucht, sie wegzuautomatisieren.</p>
+
           <p class="case-result"><span class="res-num">Konsistenz</span> Reduzierte den manuellen Bereinigungsaufwand und verbesserte die Konsistenz der Entitätsdaten über die M&amp;A-Analytik hinweg. Konservativ formuliert: Ich bin gegangen, bevor ich die genau eingesparten Stunden messen konnte, also nenne ich keine Zahl, die ich nicht habe.</p>
 
           <p class="learned"><span class="learned-lab">Was ich gelernt habe</span> Deterministische Regeln sind langweilig, und sie haben meistens auch recht. Das Budget für ML und Websuche nur auf den Rest zu verwenden, den die Regeln nicht auflösen konnten, hielt die Pipeline schnell, günstig und auditierbar und ließ einen Menschen an den wirklich mehrdeutigen Fällen arbeiten, statt die Vermutung eines Modells durchzuwinken.</p>
@@ -252,7 +250,7 @@
           </summary>
 
           <dl class="case-facts">
-            <div><dt>Problem</dt><dd>Projektteams beantworten lange, wiederkehrende Fragenlisten anhand hunderter Seiten an Dokumenten. Das ist langsam, und dieselbe Frage bekommt je nachdem, wer welches PDF gelesen hat, eine andere Antwort.</dd></div>
+            <div><dt>Problem</dt><dd>Das Team würde kein neues Werkzeug übernehmen. Das war das Erste, was mir gesagt wurde, und es stand nicht zur Debatte. Gleichzeitig beantwortete es lange, wiederkehrende Fragenlisten anhand hunderter Seiten an Dokumenten, langsam, und dieselbe Frage bekam je nachdem, wer welches PDF gelesen hat, eine andere Antwort. Also musste das Interface die Tabelle werden, die ohnehin offen war.</dd></div>
             <div><dt>Meine Rolle</dt><dd>Den Copilot-Studio-Agenten gebaut, den SharePoint-Upload samt Monitoring, die Batch-Verarbeitung und das Zurückschreiben in die eigene Tabelle des Teams.</dd></div>
           </dl>
 
@@ -349,13 +347,13 @@
               <svg class="tp-glyph" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path pathLength="1" d="M3 6h12a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H8l-5 4z"/><path pathLength="1" d="M9 18h7l5 3v-8a2 2 0 0 0-2-2h-1"/></svg>
               <h3>Berater<span>: Ich überzeuge den Raum</span></h3>
               <p>Drei Post-Merger-Workshops bei Schaeffler, die <b>100+ Manager</b> auf Linie brachten. Vier Investment-Präsentationen bei Porsche Ventures. Bei EY-Parthenon habe ich <b>das Tooling gebaut, mit dem die Strategie- und M&amp;A-Teams arbeiten</b>, und dann die Leute geschult, die ihm vertrauen mussten.</p>
-              <p class="tp-why">Den Agenten auszuliefern ist die leichte Hälfte. Die schwere Hälfte ist ein Partner, der fragt, warum er deinen Output gegenüber einem Mandanten verteidigen sollte.</p>
+              <p class="tp-why">Menschen dazu zu bringen, einem System zu vertrauen, ist eine andere Arbeit, als es zu bauen. Die Frage, die über die Adoption entscheidet, ist keine technische.</p>
             </article>
 
             <article class="tp tp-e">
               <svg class="tp-glyph" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path pathLength="1" d="m8 8-4 4 4 4"/><path pathLength="1" d="m16 8 4 4-4 4"/><path pathLength="1" d="M13 6l-2 12"/></svg>
               <h3>Entwickler<span>: Ich schreibe, was ausgeliefert wird</span></h3>
-              <p><b>4 AI-Systeme im täglichen Einsatz</b> der Strategie- und M&amp;A-Teams von EY-Parthenon bei der Übergabe: n8n-Agenten-Orchestrierung mit Claude, Copilot-Studio-Dokumenten-Q&amp;A, eine Python/ML-Entity-Resolution-Pipeline, Azure darunter. Außerhalb der Arbeit ein macOS-Tool in <b>Swift 6, null Abhängigkeiten</b>.</p>
+              <p><b>4 AI-Systeme ausgeliefert</b>, bei der Übergabe von den Strategie- und M&amp;A-Teams von EY-Parthenon genutzt: n8n-Agenten-Orchestrierung mit Claude, Copilot-Studio-Dokumenten-Q&amp;A, eine Python/ML-Entity-Resolution-Pipeline, Azure darunter. Außerhalb der Arbeit ein macOS-Tool in <b>Swift 6, null Abhängigkeiten</b>.</p>
               <p class="tp-why">Ich schreibe zuerst den langweiligen deterministischen Pfad und gebe das Modell-Budget nur dort aus, wo es sich rechnet. Cleverness, die sich nicht auditieren lässt, geht nicht raus.</p>
             </article>
 
@@ -383,48 +381,42 @@
         </fieldset>
 
         <p class="overlap-close reveal"><span class="oc-eq">= Forward Deployed</span> Die Schnittstelle ist der Job: im Raum scopen, gegen echte Rahmenbedingungen bauen und bleiben, wenn die Adoption stockt.</p>
-      </div>
-    </section>
 
-    <!-- ===================== ENTERPRISE READINESS ===================== -->
-    <section class="section" id="readiness">
-      <div class="container">
-        <div class="section-head reveal">
-          <span class="eyebrow">// enterprise readiness</span>
-          <h2>Gebaut für ein <em class="accent-text">reguliertes</em> Unternehmen.</h2>
-          <p>Die zwei Fragen, die ein Deployment-Gremium tatsächlich stellt: Kann man dem Output vertrauen, und kann diese Person hier reibungslos arbeiten?</p>
-        </div>
+        <h3 class="block-title spaced"><span class="bt-hash">##</span> Gebaut für ein reguliertes Unternehmen</h3>
+        <p class="block-lead">Die zwei Fragen, die ein Deployment-Gremium tatsächlich stellt: Kann man dem Output vertrauen, und kann diese Person hier reibungslos arbeiten?</p>
 
         <div class="ready reveal">
           <div class="ready-col">
-            <h3 class="ready-title">Urteilsvermögen für den Produktivbetrieb</h3>
+            <h4 class="ready-title">Urteilsvermögen für den Produktivbetrieb</h4>
             <ul class="ready-list">
               <li><b>Quellenverknüpfte Outputs.</b> Jede Zahl lässt sich dahin zurückverfolgen, wo sie herkommt.</li>
               <li><b>Verweigern statt Raten.</b> „Nicht in den Dokumenten" ist eine gültige, erwünschte Antwort.</li>
               <li><b>Menschliche Prüfung an den Entscheidungs-Gates</b>, nie im Nachhinein.</li>
-              <li><b>Evaluation auf Grounding, Verweigerung und Zitationsgenauigkeit</b>, nicht nach Bauchgefühl.</li>
+              <li><b>Geerdete Workflows prüfe ich auf Zitationsabdeckung, Verweigerungsverhalten und Retrieval-Qualität</b>, bevor sie in den Betrieb gehen.</li>
               <li><b>Daten- und Vertraulichkeitsgrenzen</b> respektiert: Mandantendaten bleiben im Tenant.</li>
             </ul>
           </div>
           <div class="ready-col">
-            <h3 class="ready-title">Einsatzbereitschaft</h3>
+            <h4 class="ready-title">Einsatzbereitschaft</h4>
             <dl class="elig">
               <div><dt>Arbeitserlaubnis</dt><dd><b>Deutscher Wohnsitz.</b></dd></div>
               <div><dt>Standort</dt><dd>Aachen. NRW und Rhein-Main in Reichweite.</dd></div>
               <div><dt>Vor Ort und Reise</dt><dd>2 bis 3 Tage pro Woche vor Ort, DACH-weit.</dd></div>
-              <div><dt>Sprachen</dt><dd>Englisch C1 · Deutsch (B2, C1 in Arbeit)</dd></div>
+              <div><dt>Sprachen</dt><dd>Englisch C1 · Deutsch B2</dd></div>
             </dl>
           </div>
         </div>
       </div>
     </section>
 
+
     <!-- ===================== EXPERIENCE ===================== -->
-    <section class="section alt" id="experience">
+    <section class="section" id="experience">
       <div class="container">
         <div class="section-head reveal">
           <span class="eyebrow">$ git log --werdegang</span>
-          <h2>Wo ich <em class="accent-text">Wirkung</em> erzielt habe.</h2>
+          <h2>Sechs Rollen. <em class="accent-text">Eine Linie</em> hindurch.</h2>
+          <p>Von unten nach oben gelesen sind das keine fünf Kurswechsel. Hardware hat mir beigebracht, dass Ausliefern bei der Nutzung endet, die eigene Firma, dass das Produkt nie der schwierige Teil ist, die Strategiearbeit, wie Entscheidungen wirklich fallen. Forward Deployed will alles davon gleichzeitig.</p>
         </div>
 
         <ol class="joblog reveal">
@@ -434,8 +426,9 @@
               <h3 class="job-role">AI &amp; Automation<span>: Masterarbeit und Praktikum</span></h3>
               <div class="job-org">EY-Parthenon</div>
               <ul>
-                <li>Zehn Monate in einem laufenden Mandantenprogramm. Vier AI-Systeme ausgeliefert, bei der Übergabe täglich im Einsatz der Strategie- und M&amp;A-Teams: Due-Diligence-Agenten, Dokumenten-Q&amp;A, Proposal-Retrieval und Entity Resolution.</li>
+                <li>Zehn Monate in einem laufenden Mandantenprogramm. Vier AI-Systeme ausgeliefert, bei der Übergabe von den Strategie- und M&amp;A-Teams genutzt: Due-Diligence-Agenten, Dokumenten-Q&amp;A, Proposal-Retrieval und Entity Resolution.</li>
                 <li>End-to-end-Azure-Datenautomatisierung gebaut (SharePoint, Logic Apps, Data Factory, SQL), die manuelles, Excel-lastiges Reporting ablöste.</li>
+                <li>Masterarbeit und Praktikum, also von Anfang an mit Enddatum. Es war im Juni 2026 erreicht. Ich suche jetzt die feste Fassung derselben Arbeit.</li>
               </ul>
             </div>
           </li>
@@ -461,6 +454,14 @@
               </ul>
             </div>
           </li>
+          <li class="job" id="job-xtrawrkx">
+            <div class="job-meta"><span class="job-date">Jan 2023 – Jul 2023</span><span class="job-loc">Bengaluru, IN</span></div>
+            <div class="job-main">
+              <h3 class="job-role">Chief of Staff &amp; Strategy Consultant</h3>
+              <div class="job-org">Xtrawrkx</div>
+              <p class="job-oneline">Mandantenberatung und Angebote geleitet und damit in zwei Quartalen 50% Umsatzwachstum erreicht.</p>
+            </div>
+          </li>
           <li class="job" id="job-entuition">
             <div class="job-meta"><span class="job-date">Mär 2020 – Jan 2023</span><span class="job-loc">Bengaluru, IN</span></div>
             <div class="job-main">
@@ -481,13 +482,6 @@
                 <li>Den ersten kommerziellen Zweirad-EV-Prototyp des Unternehmens in 12 Monaten entworfen und gebaut, heute in Serienproduktion.</li>
                 <li>5 Ingenieure geführt und 100+ Pilot-Einheiten an Kundenstandorten ausgerollt.</li>
               </ul>
-            </div>
-          </li>
-          <li class="job job-line" id="job-xtrawrkx">
-            <div class="job-meta"><span class="job-date">Jan 2023 – Jul 2023</span><span class="job-loc">Bengaluru, IN</span></div>
-            <div class="job-main">
-              <h3 class="job-role">Chief of Staff &amp; Strategy Consultant<span>, Xtrawrkx</span></h3>
-              <p class="job-oneline">Mandantenberatung und Angebote geleitet und damit in zwei Quartalen 50% Umsatzwachstum erreicht.</p>
             </div>
           </li>
         </ol>
@@ -512,7 +506,7 @@
             <h3 class="block-title" style="margin-top:32px;"><span class="bt-hash">##</span> Sprachen</h3>
             <div class="tag-row">
               <span class="tag">Englisch · C1</span>
-              <span class="tag">Deutsch · B2 (C1 in Arbeit)</span>
+              <span class="tag">Deutsch · B2</span>
             </div>
           </div>
           <div>
@@ -533,17 +527,9 @@
             </div>
           </div>
         </div>
-      </div>
-    </section>
 
-    <!-- ===================== TRUST ===================== -->
-    <section class="section" id="trust">
-      <div class="container">
-        <div class="section-head reveal">
-          <span class="eyebrow">// von Menschen geprüft</span>
-          <h2>Die Menschen, mit denen ich gearbeitet habe.</h2>
-          <p class="scroll-hint">Ivan hat die AI-Arbeit direkt verantwortet. <span>Für mehr scrollen &rarr;</span></p>
-        </div>
+        <h3 class="block-title spaced"><span class="bt-hash">##</span> Die Menschen, mit denen ich gearbeitet habe</h3>
+        <p class="scroll-hint">Ivan hat die AI-Arbeit direkt verantwortet. <a href="wall-of-love.html">Alle Referenzen ansehen &rarr;</a></p>
         <!-- A horizontal scroll strip: Ivan first and featured, the rest scroll in
              from the right. scroll-snap so each card settles, and a faded right edge
              to signal there is more. -->
@@ -567,25 +553,10 @@
               <span class="q-ok" aria-hidden="true">bereichsübergreifend ✓</span>
             </figcaption>
           </figure>
-          <figure class="quote-card">
-            <blockquote><p>Karthik has shown a great deal of talent and business acumen across the various projects he worked on with us. I'm sure he is poised to achieve greater heights with his management education now.</p></blockquote>
-            <figcaption class="quote-who">
-              <span class="av">H</span>
-              <div><b>Hiten Saklani</b><span>Xtrawrkx Consulting</span></div>
-              <span class="q-ok" aria-hidden="true">bestätigt ✓</span>
-            </figcaption>
-          </figure>
-          <figure class="quote-card">
-            <blockquote><p>I've closely observed Karthik's journey from a fresh graduate to a skilled engineer with startup potential. At Micelio he was comfortable with ambiguity and had the right balance of creativity and pragmatism. His confidence in meeting EV-industry executives and presenting concise reports to leadership impressed me.</p></blockquote>
-            <figcaption class="quote-who">
-              <span class="av">A</span>
-              <div><b>Anand GCP</b><span>Sun Mobility</span></div>
-              <span class="q-ok" aria-hidden="true">bestätigt ✓</span>
-            </figcaption>
-          </figure>
         </div>
       </div>
     </section>
+
 
     <!-- ===================== CONTACT ===================== -->
     <section class="section alt" id="contact">
@@ -610,25 +581,17 @@
           </div>
 
           <div class="contact-right reveal" data-delay="1">
-          <form class="contact-form" id="contactForm" novalidate>
-            <div class="field">
-              <label for="cf-name">Name</label>
-              <input type="text" id="cf-name" name="name" placeholder="Ihr Name" required />
-            </div>
-            <div class="field">
-              <label for="cf-email">E-Mail</label>
-              <input type="email" id="cf-email" name="email" placeholder="sie@email.com" required />
-            </div>
-            <div class="field">
-              <label for="cf-msg">Nachricht</label>
-              <textarea id="cf-msg" name="message" placeholder="Erzählen Sie mir von der Rolle oder dem Projekt…" required></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary" style="width:100%;">
-              Nachricht senden
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4z"/></svg>
-            </button>
-            <p class="form-note" id="formNote" aria-live="polite">Öffnet Ihr E-Mail-Programm mit vorausgefüllter Nachricht. Ich antworte in der Regel innerhalb eines Tages.</p>
-          </form>
+          <div class="contact-direct">
+            <p class="cd-note">// zwei direkte Wege, kein Formular</p>
+            <a class="cd-row" href="mailto:kjavanappa@gmail.com?subject=Rolle%20besprechen">
+              <b>Sie besetzen eine Rolle</b>
+              <small>Rolle, Team, Standort. Ich antworte in der Regel innerhalb eines Tages.</small>
+            </a>
+            <a class="cd-row" href="mailto:kjavanappa@gmail.com?subject=Projekt%20scopen">
+              <b>Ihr AI-Workflow kommt nicht in Produktion</b>
+              <small>Diagnose, Deployment-Sprint oder EU-AI-Act-Readiness-Review.</small>
+            </a>
+          </div>
           </div>
         </div>
       
@@ -646,10 +609,6 @@
             <div class="ci">
               <span class="ci-ico"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM10 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.4c0-1.3-.02-2.96-1.8-2.96-1.8 0-2.08 1.4-2.08 2.86V21h-4z"/></svg></span>
               <div><small>LinkedIn</small><a href="https://www.linkedin.com/in/karthikjp/" target="_blank" rel="noopener">linkedin.com/in/karthikjp</a></div>
-            </div>
-            <div class="ci">
-              <span class="ci-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.6a2 2 0 0 1-.5 2.1L8.1 9.6a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.5 2.6.6a2 2 0 0 1 1.7 2z"/></svg></span>
-              <div><small>Telefon</small><a href="tel:+4917687949009">+49 176 8794 9009</a></div>
             </div>
             <div class="ci">
               <span class="ci-ico"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5A11.5 11.5 0 0 0 .5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-1.98c-3.2.7-3.87-1.54-3.87-1.54-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .96-.31 3.15 1.18a10.9 10.9 0 0 1 5.74 0c2.18-1.49 3.14-1.18 3.14-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.69 5.39-5.25 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.68.8.56A11.5 11.5 0 0 0 12 .5z"/></svg></span>
@@ -697,6 +656,6 @@
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
   </a>
 
-  <script src="assets/js/main.js?v=20260818b"></script>
+  <script src="assets/js/main.js?v=20260818c"></script>
 </body>
 </html>

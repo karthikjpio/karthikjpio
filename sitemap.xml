@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://karthikjp.io/</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://karthikjp.io/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://karthikjp.io/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://karthikjp.io/"/>
+    <lastmod>2026-08-18</lastmod>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://karthikjp.io/en/</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://karthikjp.io/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://karthikjp.io/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://karthikjp.io/"/>
+    <lastmod>2026-08-18</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://karthikjp.io/projekte.html</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://karthikjp.io/projekte.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://karthikjp.io/en/projekte.html"/>
+    <lastmod>2026-08-18</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://karthikjp.io/en/projekte.html</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://karthikjp.io/projekte.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://karthikjp.io/en/projekte.html"/>
+    <lastmod>2026-08-18</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://karthikjp.io/wall-of-love.html</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://karthikjp.io/wall-of-love.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://karthikjp.io/en/wall-of-love.html"/>
+    <lastmod>2026-08-18</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://karthikjp.io/en/wall-of-love.html</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://karthikjp.io/wall-of-love.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://karthikjp.io/en/wall-of-love.html"/>
+    <lastmod>2026-08-18</lastmod>
+    <priority>0.5</priority>
+  </url>
+</urlset>
