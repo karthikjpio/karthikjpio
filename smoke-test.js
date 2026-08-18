@@ -637,6 +637,20 @@ t("the scroll hint is a real link now, not a dead arrow", () => {
   const hint = $("#experience .scroll-hint a");
   return !!hint && hint.getAttribute("href") === "wall-of-love.html";
 });
+/* the repo description, homepage field and README all say "learnvokabeln.com", which
+   does not resolve. The domain is lernvokabeln.com (German lernen, no "a"). The site
+   must not repeat the typo, so this fails if the dead spelling ever appears. */
+t("the registry links the live Lernvokabeln domain, never the dead spelling", () => {
+  const reg = [PAGES["projekte.html"], PAGES["en/projekte.html"]];
+  const rowOk = reg.every((doc) =>
+    /<b>lernvokabeln<\/b>/.test(doc) &&
+    /sys-status s-live"><i><\/i>live/.test(doc.slice(doc.indexOf("<b>lernvokabeln</b>") - 400, doc.indexOf("<b>lernvokabeln</b>") + 400)) &&
+    /https:\/\/lernvokabeln\.com/.test(doc) &&
+    /github\.com\/karthikjpio\/Lernvokabeln/.test(doc));
+  const noTypo = Object.values(PAGES).every((doc) => !/learnvokabeln/i.test(doc));
+  if (!noTypo) console.log("    dead domain spelling present on a page");
+  return rowOk && noTypo;
+});
 t("no em dashes on any shipped page", () =>
   Object.values(PAGES).every((doc) => !doc.includes("—")));
 

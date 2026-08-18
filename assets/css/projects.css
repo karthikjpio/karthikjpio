@@ -184,3 +184,8 @@
 /* Wall of Love: every reference in full, one column, read top to bottom. The home
    page keeps the two strongest in a scroll strip; this page never scrolls sideways. */
 .wall-grid { display: grid; gap: 16px; max-width: 760px; }
+
+/* registry entries did not link out until lernvokabeln, which has a live URL and a
+   public repo worth reaching. Underlined, not just coloured: colour alone is not a link. */
+.sys-body a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+.sys-body a:hover { color: var(--text); }
