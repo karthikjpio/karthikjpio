@@ -94,6 +94,16 @@
     reveals.forEach((el) => io.observe(el));
   }
 
+  /* ---- Timeline: collapse the older roles on a phone --------------------
+     The markup ships every role open, so no-JS, print and desktop keep the whole
+     CV. Only here, where the timeline ran five screens, do the four older ones
+     fold away behind their own summary.
+     ponytail: read once at load, not on resize. A phone that rotates keeps what
+     it had, which is the right answer anyway once someone has opened one. */
+  if (window.matchMedia("(max-width: 620px)").matches) {
+    $$(".joblog .job:nth-child(n+3) .job-main[open]").forEach((d) => { d.open = false; });
+  }
+
   /* ---- Footer year ------------------------------------------------------ */
   const yearEl = $("#year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();

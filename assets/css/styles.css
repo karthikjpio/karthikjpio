@@ -699,11 +699,39 @@ main section[id], .job[id] { scroll-margin-top: 96px; }
 .job-main li { margin-bottom: 4px; font-size: 15px; }
 .job-oneline { margin: 4px 0 0; color: var(--muted); font-size: 15px; }
 
+/* The four older roles are <details open>: everything ships expanded, and main.js
+   closes them on a phone only, where the timeline was five screens of prose. So
+   no-JS, print and desktop all still get the whole CV for free. The summary has
+   to render exactly like the <div> it replaced, hence the killed marker. */
+.job-sum { list-style: none; cursor: default; pointer-events: none; }
+.job-sum::-webkit-details-marker { display: none; }
+
 @media (max-width: 860px) {
   .joblog::before { left: 4px; }
   .job { grid-template-columns: 1fr; gap: 8px; padding-left: 24px; }
   .job::before { left: 0; top: 8px; }
   .job-meta { text-align: left; display: flex; gap: 12px; align-items: baseline; }
+}
+
+/* Only where the disclosure does something does it advertise itself, or respond:
+   above this width it is inert, so a laptop click that was aiming to select the
+   role title cannot silently fold the entry away. */
+@media (max-width: 620px) {
+  /* 48px between entries was measured against open ones; collapsed they are
+     ~110px tall and the gap started to read as a section break */
+  .job { padding: 16px 0; }
+  .job-sum { cursor: pointer; pointer-events: auto; position: relative; padding-right: 24px; }
+  .job-sum::after {
+    content: "";
+    position: absolute; right: 4px; top: 8px;
+    width: 7px; height: 7px;
+    border-right: 2px solid var(--muted);
+    border-bottom: 2px solid var(--muted);
+    transform: rotate(45deg);
+    transition: transform .2s ease;
+  }
+  .job-main[open] > .job-sum::after { transform: rotate(-135deg); }
+  .job-sum:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 4px; }
 }
 
 /* ---------- education + awards ---------- */
@@ -987,14 +1015,49 @@ main section[id], .job[id] { scroll-margin-top: 96px; }
   .footer-top { flex-direction: column; gap: 32px; }
   .footer-cols { gap: 32px; }
   .footer-bottom { flex-direction: column; align-items: flex-start; gap: 12px; }
-  .footer { padding-bottom: 96px; }
+  /* was 96px to clear the floating to-top button, which is display:none here now */
+  .footer { padding-bottom: 32px; }
 
   /* On a phone the portrait was eating the first screen. The float is off at this
      width, so flex ordering is free: words first, face after the CTA. */
   .hero-top { display: flex; flex-direction: column; align-items: flex-start; }
   .hero-top > * { max-width: 100%; min-width: 0; }
   .hero-photo { order: 1; width: 220px; margin: 8px 0 0; }
-  .hero-avail { font-size: 12px; }
+
+  /* A 999px radius promises one line. This string is 66 characters and wraps at
+     every phone width there is, so the pill was a two-line lozenge straining at
+     its own border. Squared off, the second line reads as deliberate.
+     Block, not inline-flex: as a flex item the status dot could not sit on the
+     same line as a text run that wraps, so it stranded itself on its own row. */
+  .hero-avail { display: block; font-size: 12px; line-height: 1.5; border-radius: var(--radius); padding: 8px 12px; }
+  .hero-avail .st-ok { margin-right: 8px; }
+
+  /* Vertical rhythm. 96px of section padding plus the 128px top on #work and
+     #contact is a laptop measure: at 375px it stacked into a measured 135px of
+     empty screen at every seam, which reads as "the page ended" rather than as
+     air. Halved, the seams still separate without swallowing a screen. */
+  .section { padding: 48px 0; }
+  /* the ID rules outrank .section, so the 128px emphasis top has to be named to
+     be undone. On a phone every seam is worth the same 96px, not 176. */
+  #work, #contact { padding-top: 48px; }
+  .section-head { margin-bottom: 24px; }
+  .edu-split { margin-top: 32px; padding-top: 32px; }
+
+  /* Both of these had a floor sized for a 600px column, so on a 343px one the
+     lead ran seven lines and outweighed its own H1, and section headlines ran
+     five. The clamps stay continuous with the desktop values at 620px. */
+  .hero-lead { font-size: clamp(17px, 4.6vw, 21px); }
+  .section-head h2 { font-size: clamp(23px, 5.2vw, 26px); }
+
+  /* .to-top is a 42px fixed square 24px off an edge the container is only 16px
+     from, so it sat on top of body copy at three of eight sampled scroll
+     positions. The sticky nav is already the way back up. */
+  .to-top { display: none; }
+
+  /* the tp-fde panel one scroll above says this same sentence. On a laptop the
+     two sit far enough apart to read as diagram and conclusion; stacked on a
+     phone they read as a repeat. */
+  .overlap-close { display: none; }
 }
 /* no element may exceed the viewport on a phone */
 @media (max-width: 860px) {
@@ -1025,6 +1088,14 @@ main section[id], .job[id] { scroll-margin-top: 96px; }
   .ci-copy { min-height: 44px; padding-inline: 12px; }
   .brand { padding-block: 12px; }
   .cd-row { padding: 16px; }
+  /* the dropdown links were 36px, the footer icons 18px, the footer column links
+     25px and the EN switcher a 16x21 sliver wedged between two 44px buttons.
+     Inline links inside a sentence stay exempt, per the note above. */
+  .nav-links a { min-height: 44px; display: flex; align-items: center; }
+  .footer-social { gap: 0; margin-left: -12px; }
+  .footer-social a { min-width: 44px; min-height: 44px; display: inline-grid; place-items: center; }
+  .footer-col a { padding-block: 12px; margin-bottom: 0; }
+  .lang-switch a { min-width: 32px; min-height: 44px; display: inline-flex; align-items: center; justify-content: center; }
 }
 
 /* ---------- keyboard floor ----------
