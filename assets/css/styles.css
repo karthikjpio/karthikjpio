@@ -248,7 +248,10 @@ p { margin: 0 0 1em; }
 
 /* The claim is the LCP element: text, not an image. */
 .hero-h1 {
-  font-size: clamp(22px, 3.1vw, 36px);
+  /* the 3.1vw slope does not clear the floor until an 838px viewport, so every
+     phone got 22px: barely a step over the 17px lead under it, which is a
+     paragraph pair, not a hierarchy. 26px floor restores the ratio. */
+  font-size: clamp(26px, 3.1vw, 36px);
   max-width: 46ch;
   letter-spacing: -.03em;
   text-wrap: pretty;
