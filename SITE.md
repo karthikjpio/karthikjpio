@@ -23,12 +23,15 @@ switch survives with JavaScript off and each page stays inside the transfer budg
 - **German CV:** the German page links `assets/Karthik_Javanappa_CV_DE.pdf` (a German CV PDF is
   dropped into `assets/` separately; the link is wired with a `<!-- TODO: German CV PDF pending -->`
   marker). The English page keeps `assets/Karthik_Javanappa_CV.pdf`.
-- **Language level:** German page reads "Deutsch (B2, C1 in Arbeit)", English page "German (B2,
-  C1 in progress)". Only English + German are listed (Kannada/Hindi stay off the site).
+- **Language level:** German page reads "Englisch C1 · Deutsch B2", English page "English C1 ·
+  German B2". Stated flat, with no "C1 in progress" qualifier: the qualifier read as an apology
+  for the level rather than a statement of it, and `smoke-test.js` now asserts it is absent.
+  Only English + German are listed (Kannada/Hindi stay off the site).
 - **Shared CSS/JS:** both pages load the same `assets/css/styles.css` and `assets/js/main.js`. The
-  nav-collapse breakpoint is 940px (was 820px) so the five links plus the switcher, and the wider
-  German labels, never crowd the bar. `main.js` still holds two English-only form messages (submit
-  + validation notices) that flash on the German page; left untranslated to avoid touching JS.
+  nav-collapse breakpoint is 950px (was 820px) so the four links plus the switcher, and the wider
+  German labels, never crowd the bar. Below it the links become a dropdown that also carries a
+  `.nav-menu-cta` download button, because `.nav-cta` is hidden under 950px and a phone was
+  otherwise left with no call to action in the sticky bar.
 
 ## Run it
 
@@ -47,7 +50,7 @@ npm i -D playwright && npx playwright install chromium   # optional, for the lay
 node smoke-test.js
 ```
 
-99 assertions. Two layers, and the split matters:
+137 assertions. Two layers, and the split matters:
 
 - **jsdom** covers content and logic: the three case studies and their common structure,
   the interactive triad (radio-group state, auto-cycle, cleaned copy), the
@@ -76,7 +79,7 @@ smoke-test.js            the runnable check
 
 `smoke-test.js` loads `en/index.html` for its content assertions (English wording unchanged) and
 adds a German block that checks the root page: `lang="de"`, native German section copy, the DE|EN
-switcher wiring, the three hreflang alternates, the German CV link, and the B2/C1-in-Arbeit line.
+switcher wiring, the three hreflang alternates, the German CV link, and the language line.
 The transfer-budget check now gates BOTH pages under 32 KB gzipped.
 
 ## Rules this repo keeps

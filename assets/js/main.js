@@ -101,7 +101,9 @@
      ponytail: read once at load, not on resize. A phone that rotates keeps what
      it had, which is the right answer anyway once someone has opened one. */
   if (window.matchMedia("(max-width: 620px)").matches) {
-    $$(".joblog .job:nth-child(n+3) .job-main[open]").forEach((d) => { d.open = false; });
+    /* only the current role stays open. It has three long bullets and used to
+       be a wall exactly where a reader should want to keep going. */
+    $$(".joblog .job:nth-child(n+2) .job-main[open]").forEach((d) => { d.open = false; });
   }
 
   /* ---- Footer year ------------------------------------------------------ */

@@ -247,7 +247,15 @@ t("the consulting floor is present, concrete and below the hiring path", () => {
   const svc = $$("#contact .svc li").map((l) => l.textContent.trim());
   return aside && /Scope a project/.test(aside.textContent) &&
     svc.includes("AI workflow diagnostic") && svc.includes("EU AI Act readiness review") &&
-    (($("#contact .contact-info").compareDocumentPosition(aside) & window.Node.DOCUMENT_POSITION_CONTAINED_BY) !== 0);
+    /* "below the hiring path" has to mean below it in DOCUMENT order, not nested
+       inside the left column: the grid stacks left column first, so containment
+       in .contact-info put the day-rate pitch ABOVE the two hiring mailto rows on
+       every phone, the exact opposite of what this test is named for. */
+    /* FOLLOWING alone is not enough: it is also set for DESCENDANTS, so a node
+       nested inside .contact-right passed the very check meant to forbid nesting.
+       It has to follow AND not be contained. */
+    (($("#contact .contact-right").compareDocumentPosition(aside) & window.Node.DOCUMENT_POSITION_FOLLOWING) !== 0) &&
+    (($("#contact .contact-right").compareDocumentPosition(aside) & window.Node.DOCUMENT_POSITION_CONTAINED_BY) === 0);
 });
 /* the old form had no endpoint: it checked for empty strings, then opened a mailto.
    Two honest links do the same job and stop promising a submission that never happened. */
@@ -324,18 +332,41 @@ t("adjacent content sections alternate their background", () => {
   const secs = $$("main > section.section");
   return secs.every((s, i) => s.classList.contains("alt") === (i % 2 === 1));
 });
-t("every nav link points at a section that exists", () =>
-  $$("#navLinks a").every((a) => !!$(a.getAttribute("href"))));
+t("every in-page nav link points at a section that exists", () =>
+  $$("#navLinks a")
+    .map((a) => a.getAttribute("href"))
+    .filter((h) => h.startsWith("#"))      /* the dropdown CTA is a file, not an anchor */
+    .every((h) => !!$(h)));
 /* five nav items is more than a recruiter scans. Readiness folded into the overlap
    section and the references into the career section, which cost nothing structurally. */
-t("the nav stays at four items or fewer, on every page", () => {
+t("the nav stays at four section links or fewer, on every page", () => {
   const counts = Object.entries(PAGES_NAV).map(([n, doc]) => {
     const nav = doc.slice(doc.indexOf('id="navLinks"'), doc.indexOf("</nav>"));
-    return [n, (nav.match(/<a /g) || []).length];
+    /* Count SECTION links only. The rule exists so the primary nav does not grow
+       past four destinations; the dropdown CTA is a download, not a destination,
+       and it only renders below 940px where .nav-cta is hidden. */
+    return [n, (nav.match(/<a [^>]*href="#/g) || []).length];
   });
   const bad = counts.filter(([, c]) => c > 4);
   if (bad.length) console.log("    too many nav links: " + bad.map((b) => b.join("=")).join(", "));
   return bad.length === 0;
+});
+t("a phone still has a call to action in the sticky bar", () => {
+  /* .nav-cta is display:none below 950px, so without this the sticky bar on a
+     phone carried a logo, a language switch and a hamburger, and no way to act. */
+  const ok = Object.entries(PAGES_NAV).every(([, doc]) => {
+    const nav = doc.slice(doc.indexOf('id="navLinks"'), doc.indexOf("</nav>"));
+    return /class="nav-menu-cta"[^>]*download/.test(nav);
+  });
+  const shown = /min-width:\s*951px[^{]*\{\s*\.nav-menu-cta\s*\{\s*display:\s*none/.test(cssNoComments);
+  return ok && shown;
+});
+/* ::details-content with block-size 0 applied in every medium, so Cmd+P emitted
+   the two closed cases as bare title bars. The animation is screen-scoped now. */
+t("print opens the collapsed cases instead of emitting empty title bars", () => {
+  const screenScoped = /@media screen \{\s*\.case::details-content/.test(cssNoComments);
+  const printOpens = /@media print[\s\S]*?\.case::details-content \{[^}]*block-size: auto !important/.test(cssNoComments);
+  return screenScoped && printOpens;
 });
 
 /* ---- back-to-top and mobile menu behaviour ---- */
@@ -400,7 +431,7 @@ t("no hardcoded hex outside the token blocks except print and traffic tokens", (
   if (bad.length) console.log("    untokenised colours:", bad.join(", "));
   return bad.length === 0;
 });
-t("literal font sizes snap to the six-step scale (clamp display sizes exempt)", () => {
+t("literal font sizes snap to the six-step scale (display tier uses tokens)", () => {
   const sizes = new Set();
   for (const m of cssNoComments.matchAll(/font-size:\s*(\d+(?:\.\d+)?)px/g)) sizes.add(+m[1]);
   for (const m of cssNoComments.matchAll(/font:\s*[^;{}]*?\b(\d+(?:\.\d+)?)px[/\s]/g)) sizes.add(+m[1]);
@@ -408,6 +439,28 @@ t("literal font sizes snap to the six-step scale (clamp display sizes exempt)", 
   const off = [...sizes].filter((s) => !scale.includes(s));
   if (off.length) console.log("    off-scale sizes:", off.join(", "));
   return off.length === 0;
+});
+/* The display tier moved to --t-* tokens, which the assertion above cannot see:
+   a token definition is neither `font-size: Npx` nor a `font:` shorthand, so
+   without this the guard would silently stop guarding anything. */
+t("the fluid display scale is well formed and its mobile floors are not raised", () => {
+  const tok = {};
+  for (const m of cssNoComments.matchAll(/--(t-lg|t-xl|t-2xl):\s*clamp\(([\d.]+)rem,[^,]+,\s*([\d.]+)rem\)/g))
+    tok[m[1]] = { min: +m[2] * 16, max: +m[3] * 16 };
+  const all = ["t-lg", "t-xl", "t-2xl"].every((k) => tok[k]);
+  if (!all) return false;
+  /* every step grows, and the steps stay ordered at both ends */
+  const grows = Object.values(tok).every((t) => t.max > t.min);
+  const ordered = tok["t-lg"].min <= tok["t-xl"].min && tok["t-xl"].min <= tok["t-2xl"].min
+    && tok["t-lg"].max < tok["t-xl"].max && tok["t-xl"].max < tok["t-2xl"].max;
+  /* the 320px floors were set by measurement on a real phone. Raising them
+     re-breaks the density pass, so they are pinned here. */
+  const floorsHeld = tok["t-xl"].min <= 23 && tok["t-2xl"].min <= 26;
+  /* 72px Inter is the templated move this site must not make */
+  const ceilingSane = tok["t-2xl"].max <= 56;
+  /* tracking must travel with size, not sit at one value across the range */
+  const tracks = /--track-lg:/.test(cssNoComments) && /--track-2xl:/.test(cssNoComments);
+  return grows && ordered && floorsHeld && ceilingSane && tracks;
 });
 t("spacing snaps to a 4px ramp", () => {
   const ramp = new Set([0, 1, 2, 4, 8, 12, 16, 24, 32, 48, 64, 96, 128]);
@@ -432,8 +485,11 @@ t("no dead CSS: every class the stylesheet targets is used or runtime-known", ()
 /* ---- computed WCAG contrast over the token pairs the page actually uses ------
    Exact arithmetic on values parsed from the file, needs no layout. This is the
    one defect class a jsdom suite can verify precisely rather than approximately. */
+/* cssNoComments, not css: this parser is otherwise comment-blind, and prose that
+   happens to mention a token by name ("...too close to --card: a white card...")
+   parses as a declaration and silently replaces the real value. */
 const tokens = (block) => {
-  const m = css.match(new RegExp(block.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "\\s*\\{([^}]*)\\}"));
+  const m = cssNoComments.match(new RegExp(block.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "\\s*\\{([^}]*)\\}"));
   const out = {};
   for (const [, k, v] of (m ? m[1] : "").matchAll(/--([\w-]+):\s*([^;]+);/g)) out[k] = v.trim();
   return out;
@@ -492,6 +548,21 @@ const DIM_PAIRS = [["accent", "accent-dim", 13], ["live", "live-dim", 12], ["bui
     if (fails.length) console.log("    " + name + " contrast failures:\n      " + fails.join("\n      "));
     return fails.length === 0;
   });
+});
+/* The first version of that button was a bare .nav-menu-cta at (0,1,0), which lost
+   to .nav-links a at (0,1,1) and its ::before at (0,1,2). It shipped --muted text
+   on --accent, 1.74:1, reading "./lebenslauf.pdf", and every assertion passed. */
+t("the dropdown CTA wins its own specificity fight and clears AA", () => {
+  const scoped = /\.nav-links a\.nav-menu-cta \{/.test(cssNoComments) &&
+    /\.nav-links a\.nav-menu-cta::before \{ content: none/.test(cssNoComments);
+  const ratios = [":root", '[data-theme="light"]'].map((b) => {
+    const T = Object.assign({}, tokens(":root"), tokens(b));
+    const fg = b === ":root" ? T["bg"] : "#ffffff";
+    return ratio(fg, T["accent"]);
+  });
+  if (!scoped) console.log("    .nav-menu-cta is not scoped through .nav-links");
+  ratios.forEach((r, i) => { if (r < 4.5) console.log(`    CTA contrast ${i ? "light" : "dark"} = ${r.toFixed(2)}`); });
+  return scoped && ratios.every((r) => r >= 4.5);
 });
 t("the er-table 'flag' tint keeps its text AA in both themes", () => {
   const check = (block) => {
@@ -588,16 +659,25 @@ t("the nav icon buttons meet the 44px touch minimum", () => {
   const r = cssNoComments.match(/\.icon-btn \{([^}]*)\}/)[1];
   return /width: 44px/.test(r) && /height: 44px/.test(r);
 });
-t("every case ships collapsed, and only the first one signals to be opened", () => {
+t("the first case ships open, the rest closed, and none of them are exclusive", () => {
   const cases = $$("#work .case");
-  const allShut = cases.every((c) => !c.hasAttribute("open"));
-  const scoped = /\.case:first-of-type:not\(\[open\]\) > summary\.case-head::after \{ animation: case-chev-bounce/
-    .test(cssNoComments) &&
-    /\.case:first-of-type:not\(\[open\]\) > summary\.case-head \.case-num \{/.test(cssNoComments) &&
-    !/\n\.case:not\(\[open\]\) > summary\.case-head::after \{ animation/.test(cssNoComments);
-  const reducedMotion = /prefers-reduced-motion: reduce\)\s*\{[^}]*case-num[^}]*animation: none/.test(
-    cssNoComments.replace(/\n/g, " "));
-  return allShut && scoped && reducedMotion;
+  /* The hero's primary CTA lands on #work. Arriving at three closed bars hid the
+     strongest evidence on the site behind a click, so case 01 now ships expanded. */
+  const firstOpen = cases[0].hasAttribute("open");
+  const restShut = cases.slice(1).every((c) => !c.hasAttribute("open"));
+  /* no name= : an exclusive accordion cannot compare two systems, and closing an
+     earlier case out from under the reader scroll-jumps the page */
+  const notExclusive = cases.every((c) => !c.hasAttribute("name"));
+  /* the open case is now the affordance, so no chevron attract-loop should remain */
+  const noAttractLoop = !/case-chev-bounce|case-num-pulse/.test(cssNoComments);
+  return firstOpen && restShut && notExclusive && noAttractLoop;
+});
+t("the case disclosure animates in CSS with no JS height measurement", () => {
+  const hasClosed = /\.case::details-content \{[^}]*block-size: 0/.test(cssNoComments);
+  const hasOpen = /\.case\[open\]::details-content \{ block-size: auto/.test(cssNoComments);
+  const optIn = /:root \{[^}]*interpolate-size: allow-keywords/.test(cssNoComments);
+  const noJs = !/details|scrollHeight|::details-content/.test(js);
+  return hasClosed && hasOpen && optIn && noJs;
 });
 
 /* ---- distribution ---- */
@@ -651,10 +731,52 @@ t("the registry links the live Lernvokabeln domain, never the dead spelling", ()
   if (!noTypo) console.log("    dead domain spelling present on a page");
   return rowOk && noTypo;
 });
+/* The back-to-top control on wall-of-love.html was copy-pasted from projekte.html
+   and still pointed at #projects, an id that only exists on that other page, so
+   the button did nothing on either language of the references page. */
+t("every in-page anchor on every page resolves on that page", () => {
+  const bad = [];
+  for (const [name, doc] of Object.entries(PAGES)) {
+    const ids = new Set([...doc.matchAll(/\sid="([^"]+)"/g)].map((m) => m[1]));
+    for (const m of doc.matchAll(/href="#([^"]+)"/g))
+      if (!ids.has(m[1])) bad.push(`${name} -> #${m[1]}`);
+  }
+  if (bad.length) console.log("    dead anchors: " + bad.join(", "));
+  return bad.length === 0;
+});
+/* The footer invites the reader to inspect the source. For two years that
+   sentence was plain text, so the one gesture proving the site is hand-built went
+   nowhere, and the "last updated" date was hard-coded and a week stale. */
+t("the source invitation is a real link and the update date is machine-readable", () => {
+  const ok = Object.entries(PAGES)
+    .filter(([n]) => /index/.test(n))
+    .every(([, doc]) => {
+    const foot = doc.slice(doc.indexOf('class="footer-bottom"'));
+    return /<a href="https:\/\/github\.com\/karthikjpio\/[^"]*"[^>]*>[^<]*(Quelltext|View source)/.test(foot) &&
+      /<time datetime="\d{4}-\d{2}-\d{2}">/.test(foot);
+  });
+  return ok;
+});
 t("no em dashes on any shipped page", () =>
   Object.values(PAGES).every((doc) => !doc.includes("—")));
 
-const report = () => {
+const report = (full = true) => {
+  /* The footer invites the reader to "Quelltext ansehen und prüfen". SITE.md quoted
+     an assertion count that had drifted 33 behind reality, plus a nav-link count and
+     a language line that were both stale. Inviting inspection and then failing it is
+     worse than not inviting it, so the count now checks itself. Run here rather than
+     inline, because the Playwright layer registers its assertions asynchronously and
+     the total is only final at report time. */
+  /* Only when the layout pass actually ran. Without playwright it is skipped and
+     the suite is ~30 assertions shorter, which is a real difference, not a race:
+     checking the count regardless made the suite fail its own self-description on
+     any machine without the optional dependency. */
+  if (full) t("SITE.md states the real assertion count", () => {
+    const stated = +(fs.readFileSync("SITE.md", "utf8").match(/^(\d+) assertions\./m) || [])[1];
+    const actual = pass.length + fail.length + 1;   /* +1: this assertion itself */
+    if (stated !== actual) console.log(`    SITE.md says ${stated}, suite has ${actual}`);
+    return stated === actual;
+  });
   pass.forEach((p) => console.log("  ✓ " + p));
   if (fail.length) { console.log("\nFAIL:"); fail.forEach((f) => console.log("  ✗ " + f)); }
   console.log(`\n${pass.length} passed, ${fail.length} failed`);
@@ -673,7 +795,7 @@ const report = () => {
   if (!chromium) {
     console.log("\n  ! layout pass SKIPPED: no playwright.");
     console.log("    npm i -D playwright && npx playwright install chromium");
-    return report();
+    return report(false);
   }
   const url = "file://" + require("path").resolve(EN);
   const browser = await chromium.launch({ args: ["--no-sandbox"] });
@@ -712,13 +834,22 @@ const report = () => {
     if (w >= 700) t(`${w}px: the nav bar fits its own width`, () => r.navFits);
     await ctx.close();
   }
-  /* sweep the whole range: a nav that fits at 1024 and 1440 can still not fit at
-     1000, and phone spot-checks miss narrow bands. */
+  /* Sweep the whole range: a nav that fits at 1024 and 1440 can still not fit at
+     1000, and phone spot-checks miss narrow bands. 20px steps were not enough:
+     .nav-cta once returned six pixels before the bar could hold it, and this
+     sweep sampled 940 and 960 and stepped straight over 941-946. Every declared
+     breakpoint is now probed at its exact edge and one pixel either side. */
   const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
   const page = await ctx.newPage();
   await page.goto(url, { waitUntil: "load" });
   const bad = [];
-  for (let w = 320; w <= 1440; w += 20) {
+  /* every breakpoint named in the stylesheet, plus the pixel on each side of it */
+  const edges = [...new Set([...cssNoComments.matchAll(/(?:max|min)-width:\s*(\d+)px/g)]
+    .flatMap((m) => { const n = +m[1]; return [n - 1, n, n + 1]; })
+    .filter((n) => n >= 320 && n <= 1440))];
+  const widths = [...new Set([...Array.from({ length: 57 }, (_, i) => 320 + i * 20), ...edges])]
+    .filter((w) => w <= 1440).sort((a, b) => a - b);
+  for (const w of widths) {
     await page.setViewportSize({ width: w, height: 900 });
     await page.waitForTimeout(30);
     const r = await page.evaluate(() => {
